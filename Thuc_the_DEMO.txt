@@ -11,6 +11,9 @@
 
 6. hóa đơn chi tiết:Id hóa đơn chi tiết, ID hóa đơn, Id sản phẩm
 
+- sửa lần 1
+
+
 
 
 
