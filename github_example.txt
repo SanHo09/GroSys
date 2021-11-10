@@ -1,0 +1,7 @@
+-- Đưa file lên :
+	+ git add .
+	+ git commit -m"chi tiết"
+	+ git push origin main
+-- Đồng bộ file :
+	+ git fetch
+	+ git pull
