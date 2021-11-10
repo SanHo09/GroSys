@@ -66,6 +66,13 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         pnlGiaoDich = new RoundedPanel(17);
         jLabel4 = new javax.swing.JLabel();
+        pnlThongKe1 = new RoundedPanel(17);
+        jLabel19 = new javax.swing.JLabel();
+        jLabel20 = new javax.swing.JLabel();
+        pnlThongKe2 = new RoundedPanel(17);
+        jLabel23 = new javax.swing.JLabel();
+        jLabel24 = new javax.swing.JLabel();
+        btnThoat = new javax.swing.JButton();
         pnlMain = new RoundedPanel(30);
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
@@ -74,6 +81,9 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel21 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
         jLabel22 = new javax.swing.JLabel();
+        lblClock = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
+        jLabel18 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -270,7 +280,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel3.setText("Nguyễn Văn A");
         pnlDashBoard.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 150, -1));
 
-        pnlThongKe.setBackground(new java.awt.Color(250, 185, 88));
+        pnlThongKe.setBackground(new java.awt.Color(250, 132, 71));
         pnlThongKe.setForeground(new java.awt.Color(250, 197, 118));
         pnlThongKe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlThongKe.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -285,7 +295,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel6.setBackground(new java.awt.Color(255, 255, 255));
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("Thống Kê");
+        jLabel6.setText("Khuyến mãi");
 
         jLabel12.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8_combo_chart_30px.png"))); // NOI18N
@@ -310,7 +320,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        pnlDashBoard.add(pnlThongKe, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 90, 60));
+        pnlDashBoard.add(pnlThongKe, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 460, 90, 60));
 
         pnlHoaDon.setBackground(new java.awt.Color(127, 193, 94));
         pnlHoaDon.setForeground(new java.awt.Color(156, 199, 135));
@@ -477,6 +487,95 @@ public class MainFrame extends javax.swing.JFrame {
 
         pnlDashBoard.add(pnlGiaoDich, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 230, 200, 50));
 
+        pnlThongKe1.setBackground(new java.awt.Color(250, 185, 88));
+        pnlThongKe1.setForeground(new java.awt.Color(250, 197, 118));
+        pnlThongKe1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlThongKe1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pnlThongKe1MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                pnlThongKe1MouseExited(evt);
+            }
+        });
+
+        jLabel19.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel19.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel19.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel19.setText("Thống Kê");
+
+        jLabel20.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel20.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8_combo_chart_30px.png"))); // NOI18N
+
+        javax.swing.GroupLayout pnlThongKe1Layout = new javax.swing.GroupLayout(pnlThongKe1);
+        pnlThongKe1.setLayout(pnlThongKe1Layout);
+        pnlThongKe1Layout.setHorizontalGroup(
+            pnlThongKe1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel19, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlThongKe1Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabel20)
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+        pnlThongKe1Layout.setVerticalGroup(
+            pnlThongKe1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlThongKe1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel19)
+                .addContainerGap())
+        );
+
+        pnlDashBoard.add(pnlThongKe1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 90, 60));
+
+        pnlThongKe2.setBackground(new java.awt.Color(230, 62, 201));
+        pnlThongKe2.setForeground(new java.awt.Color(250, 197, 118));
+        pnlThongKe2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        pnlThongKe2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                pnlThongKe2MouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                pnlThongKe2MouseExited(evt);
+            }
+        });
+
+        jLabel23.setBackground(new java.awt.Color(255, 255, 255));
+        jLabel23.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel23.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel23.setText("Hợp tác");
+
+        jLabel24.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel24.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8_combo_chart_30px.png"))); // NOI18N
+
+        javax.swing.GroupLayout pnlThongKe2Layout = new javax.swing.GroupLayout(pnlThongKe2);
+        pnlThongKe2.setLayout(pnlThongKe2Layout);
+        pnlThongKe2Layout.setHorizontalGroup(
+            pnlThongKe2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel23, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlThongKe2Layout.createSequentialGroup()
+                .addGap(28, 28, 28)
+                .addComponent(jLabel24)
+                .addContainerGap(32, Short.MAX_VALUE))
+        );
+        pnlThongKe2Layout.setVerticalGroup(
+            pnlThongKe2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlThongKe2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel24, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel23)
+                .addContainerGap())
+        );
+
+        pnlDashBoard.add(pnlThongKe2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 90, 60));
+
+        btnThoat.setBackground(new java.awt.Color(255, 255, 255));
+        btnThoat.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        btnThoat.setText("THOÁT");
+        pnlDashBoard.add(btnThoat, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 540, 200, -1));
+
         jPanel1.add(pnlDashBoard, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 220, 580));
 
         pnlMain.setBackground(new java.awt.Color(255, 255, 255));
@@ -526,13 +625,24 @@ public class MainFrame extends javax.swing.JFrame {
         pnlMain.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 10, 190, 40));
 
         jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/Welcome_1.gif"))); // NOI18N
-        pnlMain.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 660, 360));
+        pnlMain.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 70, 660, 360));
 
-        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
-        jLabel22.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel22.setFont(new java.awt.Font("Tahoma", 1, 36)); // NOI18N
+        jLabel22.setForeground(new java.awt.Color(250, 197, 118));
         jLabel22.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel22.setText("Welcome To GroSys");
-        pnlMain.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 90, -1, -1));
+        jLabel22.setText("Chào Mừng trở lại");
+        pnlMain.add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 460, 410, 40));
+
+        lblClock.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        lblClock.setForeground(new java.awt.Color(153, 153, 153));
+        lblClock.setText("Đồng hồ");
+        pnlMain.add(lblClock, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 540, 160, -1));
+        pnlMain.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 540, 130, -1));
+
+        jLabel18.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        jLabel18.setForeground(new java.awt.Color(153, 153, 153));
+        jLabel18.setText("Được tạo bởi : Nhóm 7");
+        pnlMain.add(jLabel18, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 550, 160, -1));
 
         jPanel1.add(pnlMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 720, 580));
 
@@ -666,6 +776,22 @@ public class MainFrame extends javax.swing.JFrame {
         pnlNhanVien.setBackground(new Color(254,135,138));
     }//GEN-LAST:event_pnlNhanVienMouseExited
 
+    private void pnlThongKe1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlThongKe1MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pnlThongKe1MouseEntered
+
+    private void pnlThongKe1MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlThongKe1MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pnlThongKe1MouseExited
+
+    private void pnlThongKe2MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlThongKe2MouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pnlThongKe2MouseEntered
+
+    private void pnlThongKe2MouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlThongKe2MouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pnlThongKe2MouseExited
+
     /**
      * @param args the command line arguments
      */
@@ -702,17 +828,24 @@ public class MainFrame extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnThoat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
+    private javax.swing.JLabel jLabel18;
+    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
+    private javax.swing.JLabel jLabel23;
+    private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -724,6 +857,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lbTrangchu;
+    private javax.swing.JLabel lblClock;
     private javax.swing.JLabel lblGioiThieu;
     private javax.swing.JLabel lblHuongDan;
     private javax.swing.JLabel lblImage;
@@ -739,6 +873,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pnlSanPham;
     private javax.swing.JPanel pnlStaffImage;
     private javax.swing.JPanel pnlThongKe;
+    private javax.swing.JPanel pnlThongKe1;
+    private javax.swing.JPanel pnlThongKe2;
     // End of variables declaration//GEN-END:variables
 
     private void prepareUI() {

@@ -48,6 +48,11 @@
             <artifactId>AbsoluteLayout</artifactId>
             <version>RELEASE90</version>
         </dependency>
+        <dependency>
+            <groupId>net.codejava</groupId>
+            <artifactId>eduSys</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
     </dependencies>
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
