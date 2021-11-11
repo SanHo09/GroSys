@@ -1,18 +1,17 @@
 /*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
+ * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.grosys.DAO;
+package com.grosys.dao;
 
 import java.util.List;
 
 /**
  *
- * @author HP
+ * @author ADMIN
  */
 public abstract class grosysDAO<E,K> {
-    abstract public void insert(E etity);
+    abstract public void insert(E entity);
     abstract public void update(E entity);
     abstract public void delete(K id);
     abstract public List<E>selectAll();

@@ -5,6 +5,7 @@
  */
 package com.grosys.DAO;
 
+import com.grosys.dao.grosysDAO;
 import com.grosys.help.Xjdbc;
 import com.grosys.untity.hoaDon;
 import java.sql.ResultSet;
@@ -34,6 +35,7 @@ public class hoaDonDAO extends grosysDAO<hoaDon, String>{
                model.getNgayLHD(),
                model.getSoTien(),
                model.getMaNV());
+               model.getMaHD();
     }
 
     
