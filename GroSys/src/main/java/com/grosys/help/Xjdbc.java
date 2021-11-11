@@ -5,7 +5,6 @@
  */
 package com.grosys.help;
 
-import com.edusys.utils.jdbcHelper;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -47,7 +46,7 @@ public class Xjdbc {
     
     public static ResultSet query(String sql, Object ...args)  {
         try{
-            PreparedStatement stmt = jdbcHelper.getStmt(sql, args);
+            PreparedStatement stmt = Xjdbc.getStmt(sql, args);
             return stmt.executeQuery();   
         } catch (Exception ex) {
             throw new RuntimeException(ex);
@@ -56,7 +55,7 @@ public class Xjdbc {
     
     public static Object value(String sql, Object ...args) {
         try {
-            ResultSet rs = jdbcHelper.query(sql, args);
+            ResultSet rs = Xjdbc.query(sql, args);
             if(rs.next()) {
                 return rs.getObject(0);
             }
@@ -70,7 +69,7 @@ public class Xjdbc {
     
     public static int update(String sql, Object ...args) {
         try {
-            PreparedStatement stmt = jdbcHelper.getStmt(sql, args);
+            PreparedStatement stmt = Xjdbc.getStmt(sql, args);
             try {
                 return stmt.executeUpdate();
             }
