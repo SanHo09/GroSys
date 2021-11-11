@@ -5,7 +5,10 @@
  */
 package com.grosys.UI;
 
-import com.grosys.help.MsgBox;
+
+import com.grosys.DAO1.NhanvienDao;
+import com.grosys.DAO1.sanPhamDAO;
+import com.grosys.untity.sanPham;
 import java.awt.Color;
 import java.awt.Panel;
 import java.awt.event.ComponentAdapter;
@@ -17,6 +20,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
+import utils.MsgBox;
+import utils.XDate;
 
 
 /**
@@ -28,12 +33,16 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
+    
+    NhanvienDao dao = new NhanvienDao();
     public Login() {
         setUndecorated(true);
         initComponents();
         pnlDangNhap.setVisible(true);
         pnlQuenMatKhau.setVisible(false);
         prepareUI();
+        
+        
     }
 
     /**
@@ -46,6 +55,7 @@ public class Login extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        jCalendar1 = new com.toedter.calendar.JCalendar();
         pnlDangNhap = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -705,6 +715,7 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JPanel btnDangNhap;
     private javax.swing.JPanel btnLayLaiMatKhau;
     private javax.swing.ButtonGroup buttonGroup1;
+    private com.toedter.calendar.JCalendar jCalendar1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

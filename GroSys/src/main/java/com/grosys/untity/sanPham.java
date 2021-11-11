@@ -20,6 +20,10 @@ public class sanPham {
     private String donViTinh;
     private int soLuong;
     private String anh;
+    private String MaNPP;
+    private String MaNSX;
+    private String TenNSX;
+    private double GiaNhap; 
 
     public String getMaSP() {
         return maSP;
@@ -83,6 +87,38 @@ public class sanPham {
 
     public void setAnh(String anh) {
         this.anh = anh;
+    }
+
+    public String getMaNPP() {
+        return MaNPP;
+    }
+
+    public String getMaNSX() {
+        return MaNSX;
+    }
+
+    public String getTenNSX() {
+        return TenNSX;
+    }
+
+    public double getGiaNhap() {
+        return GiaNhap;
+    }
+
+    public void setMaNPP(String MaNPP) {
+        this.MaNPP = MaNPP;
+    }
+
+    public void setMaNSX(String MaNSX) {
+        this.MaNSX = MaNSX;
+    }
+
+    public void setTenNSX(String TenNSX) {
+        this.TenNSX = TenNSX;
+    }
+
+    public void setGiaNhap(double GiaNhap) {
+        this.GiaNhap = GiaNhap;
     }
     
 }
