@@ -10,6 +10,7 @@ package com.grosys.untity;
  * @author HP
  */
 public class hoaDon {
+<<<<<<< HEAD
     private String maHD;
     private String ngayLHD;
     private double soTien;
@@ -47,5 +48,7 @@ public class hoaDon {
         this.maNV = maNV;
     }
     
+=======
+>>>>>>> 2f084724af751b88dc499ac631e830791fb645da
     
 }
