@@ -5,13 +5,15 @@
  */
 package com.grosys.untity;
 
+import java.util.Date;
+
 /**
  *
  * @author HP
  */
 public class hoaDon {
     private String maHD;
-    private String ngayLHD;
+    private Date ngayLHD;
     private double soTien;
     private String maNV;
 
@@ -23,11 +25,11 @@ public class hoaDon {
         this.maHD = maHD;
     }
 
-    public String getNgayLHD() {
+    public Date getNgayLHD() {
         return ngayLHD;
     }
 
-    public void setNgayLHD(String ngayLHD) {
+    public void setNgayLHD(Date ngayLHD) {
         this.ngayLHD = ngayLHD;
     }
 

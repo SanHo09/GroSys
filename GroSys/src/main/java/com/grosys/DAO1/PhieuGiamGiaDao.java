@@ -5,8 +5,7 @@
  */
 package com.grosys.DAO1;
 
-
-import com.grosys.untity.khuyenMai;
+import com.grosys.untity.PhieuGiamGia;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,57 +13,58 @@ import utils.Xjdbc;
 
 /**
  *
- * @author HP
+ * @author ADMIN
  */
-public class khuyenMaiDAO extends grosysDAO<khuyenMai, String>{
+public class PhieuGiamGiaDao extends grosysDAO<PhieuGiamGia, String> {
 
-    
-    public void insert(khuyenMai model) {
-        String sql ="INSERT INTO (MaHV, MaSP, HanSD, MaNV)VALUES(?,?,?,?)";
-        Xjdbc.update(sql,
+    @Override
+    public void insert(PhieuGiamGia model) {
+        String sql ="INSERT INTO PhieuGiamGia(MaHV, HanSD, MaNV, MaSP)VALUES(?,?,?,?)";
+               Xjdbc.update(sql,
                model.getMaHV(),
-               model.getMaSP(),
                model.getHanSD(),
-               model.getMaNV());
+               model.getMaNV(),
+               model.getMaSP());
     }
 
-    
-    public void update(khuyenMai model) {
-        String sql ="UPDATE PhieuGiamGia SET MaSP=?, HanSD=?, MaNV=? WHERE MaHV=?";
+    @Override
+    public void update(PhieuGiamGia model) {
+        String sql ="UPDATE PhieuGiamGia SET HanSD=?, MaNV=? Where MaHV=? and MaSP=?";
         Xjdbc.update(sql,
-               model.getMaSP(),
                model.getHanSD(),
-               model.getMaNV());
+               model.getMaNV(),
+               model.getMaHV());
+               model.getMaSP();
     }
 
-    
-    public void delete(String MaHV) {
+    @Override
+    public void delete(String id) {
         String sql="DELETE FROM PhieuGiamGia WHERE MaHV=?";
-        Xjdbc.update(sql, MaHV);
+        Xjdbc.update(sql, id);
     }
 
-    
-    public List<khuyenMai> selectAll() {
-        String sql="SELECT*FROM PhieuGiamGia";
+    @Override
+    public List<PhieuGiamGia> selectAll() {
+         String sql="SELECT*FROM PhieuGiamGia";
         return this.selectBySql(sql);
     }
 
-    
-    public khuyenMai selectById(String mahv) {
-        String sql="SELECT * FROM PhieuGiamGia WHERE MaHV=?";
-        List<khuyenMai> list = selectBySql(sql, mahv);
+    @Override
+    public PhieuGiamGia selectById(String id) {
+        String sql="SELECT * FROM HoaDon WHERE MaHD=?";
+        List<PhieuGiamGia> list = selectBySql(sql, id);
         return list.size() > 0 ? list.get(0) : null;
     }
 
-    
-    protected List<khuyenMai> selectBySql(String sql, Object... args) {
-        List<khuyenMai> list = new ArrayList<khuyenMai>();
+    @Override
+    protected List<PhieuGiamGia> selectBySql(String sql, Object... args) {
+        List<PhieuGiamGia> list = new ArrayList<PhieuGiamGia>();
         try {
             ResultSet rs = null;
             try {
                 rs = Xjdbc.query(sql, args);
                 while(rs.next()){
-                    khuyenMai entity =new khuyenMai();
+                    PhieuGiamGia entity =new PhieuGiamGia();
                     entity.setMaHV(rs.getString("MaHV"));
                     entity.setMaSP(rs.getString("MaSP"));
                     entity.setHanSD(rs.getDate("HanSD"));

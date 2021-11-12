@@ -67,7 +67,7 @@ public class hoaDonDAO extends grosysDAO<hoaDon, String>{
                 while(rs.next()){
                     hoaDon entity =new hoaDon();
                     entity.setMaHD(rs.getString("MaHD"));
-                    entity.setNgayLHD(rs.getString("NgayLHD"));
+                    entity.setNgayLHD(rs.getDate("NgayLHD"));
                     entity.setSoTien(rs.getInt("SoTien"));
                     entity.setMaNV(rs.getString("MaNV"));
                     list.add(entity);

@@ -55,7 +55,7 @@ EXEC sp_GiaoDich 'SP01', 1
 -- Xóa Sản phẩm + xóa Chitiethopdong
 -- Chọn theo mã 
 -- cập nhật lại select BY sql gồm : sp.MaSP, sp.TenSP, sp.MaLSP, lsp.TenLSP, sp.GiaBan,
-			sp.HanSuDung, sp.DonViTinh, sp.SoLuong, sp.Anh, nsx.MaNSX,nsx.TenNSX
+			--sp.HanSuDung, sp.DonViTinh, sp.SoLuong, sp.Anh, nsx.MaNSX,nsx.TenNSX
 
 
 -- Nguyên

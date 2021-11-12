@@ -6,7 +6,7 @@
 package com.grosys.DAO1;
 
 
-import com.grosys.DAO.*;
+
 import com.grosys.untity.sanPham;
 import java.sql.ResultSet;
 import java.util.ArrayList;
