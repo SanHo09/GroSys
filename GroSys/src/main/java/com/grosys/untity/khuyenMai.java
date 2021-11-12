@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author HP
  */
-public class khuyenMai {
+public class KhuyenMai {
     private String maHV;
     private String maSP;
     private Date hanSD;

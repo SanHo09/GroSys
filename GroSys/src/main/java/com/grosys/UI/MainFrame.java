@@ -5,7 +5,7 @@
  */
 package com.grosys.UI;
 
-import com.grosys.DAO1.sanPhamDAO;
+import com.grosys.DAO1.SanPhamDAO;
 import com.toedter.calendar.JCalendar;
 import java.awt.Color;
 import java.awt.event.ComponentAdapter;
@@ -29,7 +29,7 @@ public class MainFrame extends javax.swing.JFrame {
         setUndecorated(true);
         initComponents();
         prepareUI();
-        sanPhamDAO dao = new sanPhamDAO();
+        SanPhamDAO dao = new SanPhamDAO();
     }
 
     /**

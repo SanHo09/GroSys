@@ -6,7 +6,7 @@
 package com.grosys.DAO1;
 
 
-import com.grosys.untity.hoaDon;
+import com.grosys.untity.HoaDon;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +16,10 @@ import utils.Xjdbc;
  *
  * @author HP
  */
-public class hoaDonDAO extends grosysDAO<hoaDon, String>{
+public class HoaDonDAO extends GrosysDAO<HoaDon, String>{
 
     
-    public void insert(hoaDon model) {
+    public void insert(HoaDon model) {
        String sql ="INSERT INTO HoaDon(MaHD, NgayLHD, SoTien, MaNV)VALUES(?,?,?,?)";
        Xjdbc.update(sql,
                model.getMaHD(),
@@ -29,7 +29,7 @@ public class hoaDonDAO extends grosysDAO<hoaDon, String>{
     }
 
     
-    public void update(hoaDon model) {
+    public void update(HoaDon model) {
         String sql ="UPDATE HoaDon SET NgayLHD=?, SoTien=?, MaNV=? Where MaHD=?";
         Xjdbc.update(sql,
                model.getNgayLHD(),
@@ -45,27 +45,27 @@ public class hoaDonDAO extends grosysDAO<hoaDon, String>{
     }
 
     
-    public List<hoaDon> selectAll() {
+    public List<HoaDon> selectAll() {
         String sql="SELECT*FROM HoaDon";
         return this.selectBySql(sql);
     }
 
     
-    public hoaDon selectById(String mahd) {
+    public HoaDon selectById(String mahd) {
         String sql="SELECT * FROM HoaDon WHERE MaHD=?";
-        List<hoaDon> list = selectBySql(sql, mahd);
+        List<HoaDon> list = selectBySql(sql, mahd);
         return list.size() > 0 ? list.get(0) : null;
     }
 
     
-    protected List<hoaDon> selectBySql(String sql, Object... args) {
-        List<hoaDon> list = new ArrayList<hoaDon>();
+    protected List<HoaDon> selectBySql(String sql, Object... args) {
+        List<HoaDon> list = new ArrayList<HoaDon>();
         try {
             ResultSet rs = null;
             try {
                 rs = Xjdbc.query(sql, args);
                 while(rs.next()){
-                    hoaDon entity =new hoaDon();
+                    HoaDon entity =new HoaDon();
                     entity.setMaHD(rs.getString("MaHD"));
                     entity.setNgayLHD(rs.getString("NgayLHD"));
                     entity.setSoTien(rs.getInt("SoTien"));

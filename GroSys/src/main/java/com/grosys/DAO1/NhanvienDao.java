@@ -5,7 +5,7 @@
 package com.grosys.DAO1;
 import com.grosys.untity.Nhanvien;
 import java.util.List;
-import com.grosys.untity.hoaDon;
+import com.grosys.untity.HoaDon;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import utils.Xjdbc;
@@ -14,7 +14,7 @@ import utils.Xjdbc;
  * @author ADMIN
  */
 
-public class NhanvienDao extends grosysDAO<Nhanvien, String> {
+public class NhanvienDao extends GrosysDAO<Nhanvien, String> {
     
 
     @Override

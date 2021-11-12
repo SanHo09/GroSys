@@ -5,7 +5,6 @@
  */
 package utils;
 
-import com.grosys.help.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

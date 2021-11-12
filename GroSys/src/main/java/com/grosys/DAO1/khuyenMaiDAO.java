@@ -5,8 +5,7 @@
  */
 package com.grosys.DAO1;
 
-import com.grosys.DAO.*;
-import com.grosys.untity.khuyenMai;
+import com.grosys.untity.KhuyenMai;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +15,10 @@ import utils.Xjdbc;
  *
  * @author HP
  */
-public class khuyenMaiDAO extends grosysDAO<khuyenMai, String>{
+public class KhuyenMaiDAO extends GrosysDAO<KhuyenMai, String>{
 
     
-    public void insert(khuyenMai model) {
+    public void insert(KhuyenMai model) {
         String sql ="INSERT INTO (MaHV, MaSP, HanSD, MaNV)VALUES(?,?,?,?)";
         Xjdbc.update(sql,
                model.getMaHV(),
@@ -29,7 +28,7 @@ public class khuyenMaiDAO extends grosysDAO<khuyenMai, String>{
     }
 
     
-    public void update(khuyenMai model) {
+    public void update(KhuyenMai model) {
         String sql ="UPDATE PhieuGiamGia SET MaSP=?, HanSD=?, MaNV=? WHERE MaHV=?";
         Xjdbc.update(sql,
                model.getMaSP(),
@@ -44,27 +43,27 @@ public class khuyenMaiDAO extends grosysDAO<khuyenMai, String>{
     }
 
     
-    public List<khuyenMai> selectAll() {
+    public List<KhuyenMai> selectAll() {
         String sql="SELECT*FROM PhieuGiamGia";
         return this.selectBySql(sql);
     }
 
     
-    public khuyenMai selectById(String mahv) {
+    public KhuyenMai selectById(String mahv) {
         String sql="SELECT * FROM PhieuGiamGia WHERE MaHV=?";
-        List<khuyenMai> list = selectBySql(sql, mahv);
+        List<KhuyenMai> list = selectBySql(sql, mahv);
         return list.size() > 0 ? list.get(0) : null;
     }
 
     
-    protected List<khuyenMai> selectBySql(String sql, Object... args) {
-        List<khuyenMai> list = new ArrayList<khuyenMai>();
+    protected List<KhuyenMai> selectBySql(String sql, Object... args) {
+        List<KhuyenMai> list = new ArrayList<KhuyenMai>();
         try {
             ResultSet rs = null;
             try {
                 rs = Xjdbc.query(sql, args);
                 while(rs.next()){
-                    khuyenMai entity =new khuyenMai();
+                    KhuyenMai entity =new KhuyenMai();
                     entity.setMaHV(rs.getString("MaHV"));
                     entity.setMaSP(rs.getString("MaSP"));
                     entity.setHanSD(rs.getDate("HanSD"));

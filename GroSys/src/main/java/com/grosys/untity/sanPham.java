@@ -11,7 +11,7 @@ import java.util.Date;
  *
  * @author HP
  */
-public class sanPham {
+public class SanPham {
     private String maSP;
     private String tenSP;
     private String maLSP;

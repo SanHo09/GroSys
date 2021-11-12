@@ -9,7 +9,7 @@ package com.grosys.untity;
  *
  * @author HP
  */
-public class hoaDon {
+public class HoaDon {
     private String maHD;
     private String ngayLHD;
     private double soTien;
