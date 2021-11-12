@@ -5,7 +5,8 @@
  */
 package com.grosys.UI;
 
-import com.grosys.DAO1.sanPhamDAO;
+import com.grosys.DAO1.SanPhamDAO;
+import com.grosys.untity.SanPham;
 import com.toedter.calendar.JCalendar;
 import java.awt.Color;
 import java.awt.event.ComponentAdapter;
@@ -26,14 +27,14 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
-    sanPhamDAO dao = new sanPhamDAO();
+    
     
     public MainFrame() {
 
         setUndecorated(true);
         initComponents();
         prepareUI();
-        lblTenNhanVien.setText(Auth.user.getHoten());
+        
     }
 
     /**
@@ -905,6 +906,9 @@ public class MainFrame extends javax.swing.JFrame {
         pnlKhuyenMai.setOpaque(false);
         pnlThongKe.setOpaque(false);
         pnlHopTac.setOpaque(false);
+        
+        
+        lblTenNhanVien.setText(Auth.user.getHoten());
     }
 
     private void LabelfocusGain(JLabel label, String path) {

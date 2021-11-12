@@ -7,9 +7,13 @@ package com.grosys.UI;
 
 
 import com.grosys.DAO1.NhanvienDao;
-import com.grosys.DAO1.sanPhamDAO;
+
+import com.grosys.DAO1.SanPhamDAO;
 import com.grosys.untity.Nhanvien;
-import com.grosys.untity.sanPham;
+import com.grosys.untity.SanPham;
+import com.grosys.DAO1.SanPhamDAO;
+import com.grosys.untity.SanPham;
+
 import java.awt.Color;
 import java.awt.Panel;
 import java.awt.event.ComponentAdapter;
@@ -43,6 +47,7 @@ public class Login extends javax.swing.JFrame {
         pnlDangNhap.setVisible(true);
         pnlQuenMatKhau.setVisible(false);
         prepareUI();
+        
         
         
     }

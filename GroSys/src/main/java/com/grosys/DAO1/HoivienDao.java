@@ -3,9 +3,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.grosys.DAO1;
-import com.grosys.DAO.*;
+
 import com.grosys.untity.Hoivien;
-import com.grosys.untity.hoaDon;
+import com.grosys.untity.HoaDon;
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +15,7 @@ import utils.Xjdbc;
  *
  * @author ADMIN
  */
-public class HoivienDao extends grosysDAO<Hoivien, String> {
+public class HoivienDao extends GrosysDAO<Hoivien, String> {
     
     @Override
     public void insert(Hoivien model) {

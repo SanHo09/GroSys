@@ -53,12 +53,46 @@ EXEC sp_GiaoDich 'SP01', 1
 
 -- Trung
 -- Xóa Sản phẩm + xóa Chitiethopdong
+CREATE PROC sp_Xoa_SanPham  @MaSP NVARCHAR(50)
+							
+AS
+BEGIN 
+	BEGIN TRY
+		BEGIN TRAN 
+			DELETE FROM SanPham 
+			Where MaSP=@MaSP
+			DELETE FROM ChiTietHopDong 
+			Where MaSP=@MaSP
+		COMMIT TRAN
+	END TRY
+	BEGIN CATCH
+		RAISERROR (N'không thể xóa được',16,1)
+		ROLLBACK TRAN
+	END CATCH
+END
+GO
+EXEC sp_Xoa_SanPham 'SP11'
 -- Chọn theo mã 
--- cập nhật lại select BY sql gồm : sp.MaSP, sp.TenSP, sp.MaLSP, lsp.TenLSP, sp.GiaBan,
+<<<<<<< HEAD
+-- cập nhật lại select BY sql gồm : sp.MaSP, sp.TenSP, sp.MaLSP, lsp.TenLSP, sp.GiaBan, sp.HanSuDung, sp.DonViTinh, sp.SoLuong, sp.Anh, nsx.MaNSX,nsx.TenNSX
+CREATE PROC sp_LoadSanPhamTheoID @MaSP NVARCHAR(50)
+AS 
+BEGIN 
+	SELECT sp.MaSP, sp.TenSP, sp.MaLSP, lsp.TenLSP, sp.GiaBan,
 			sp.HanSuDung, sp.DonViTinh, sp.SoLuong, sp.Anh, nsx.MaNSX,nsx.TenNSX
+	FROM SanPham sp JOIN ChiTietHopDong ct ON sp.MaSP = ct.MaSP
+					JOIN NhaSanXuat nsx ON ct.MaNSX = nsx.MaNSX
+					JOIN LoaiSanPham lsp ON sp.MaLSP = lsp.MaLSP
+					Where sp.MaSP=@MaSP
+					
+END
+=======
+-- cập nhật lại select BY sql gồm : sp.MaSP, sp.TenSP, sp.MaLSP, lsp.TenLSP, sp.GiaBan,
+			--sp.HanSuDung, sp.DonViTinh, sp.SoLuong, sp.Anh, nsx.MaNSX,nsx.TenNSX
+>>>>>>> 1c0e5013fb1c844c79c04f11d50cc1dfcafd9f2e
 
+GO
 
+EXEC sp_LoadSanPhamTheoID 'SP09'
 -- Nguyên
 -- thêm chitietHoadon, Phieugiamgia, hoivien
-
-

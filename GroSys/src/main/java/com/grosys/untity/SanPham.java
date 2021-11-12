@@ -11,11 +11,13 @@ import java.util.Date;
  *
  * @author HP
  */
-public class sanPham {
+public class SanPham {
     private String maSP;
     private String tenSP;
     private String maLSP;
+    private String TenLSP;
     private double giaBan;
+    private double GiaNhap; 
     private Date hanSuDung;
     private String donViTinh;
     private int soLuong;
@@ -23,8 +25,17 @@ public class sanPham {
     private String MaNPP;
     private String MaNSX;
     private String TenNSX;
-    private double GiaNhap; 
+    
+    
+    public String getTenLSP() {
+        return TenLSP;
+    }
 
+    public void setTenLSP(String TenLSP) {
+        this.TenLSP = TenLSP;
+    }
+    
+    
     public String getMaSP() {
         return maSP;
     }

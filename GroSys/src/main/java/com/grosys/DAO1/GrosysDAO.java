@@ -10,7 +10,7 @@ import java.util.List;
  *
  * @author ADMIN
  */
-public abstract class grosysDAO<E,K> {
+public abstract class GrosysDAO<E,K> {
     abstract public void insert(E entity);
     abstract public void update(E entity);
     abstract public void delete(K id);

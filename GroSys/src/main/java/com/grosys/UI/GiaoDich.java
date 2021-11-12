@@ -16,7 +16,7 @@ public class GiaoDich extends javax.swing.JFrame {
      */
     public GiaoDich() {
         initComponents();
-        prepareUI()
+        prepareUI();
     }
 
     /**
@@ -28,23 +28,40 @@ public class GiaoDich extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        panel1 = new java.awt.Panel();
+        jTabbedPane1 = new javax.swing.JTabbedPane();
+        pnlDanhSach = new javax.swing.JPanel();
+        pnlChiTiet = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout panel1Layout = new javax.swing.GroupLayout(panel1);
-        panel1.setLayout(panel1Layout);
-        panel1Layout.setHorizontalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 900, Short.MAX_VALUE)
+        javax.swing.GroupLayout pnlDanhSachLayout = new javax.swing.GroupLayout(pnlDanhSach);
+        pnlDanhSach.setLayout(pnlDanhSachLayout);
+        pnlDanhSachLayout.setHorizontalGroup(
+            pnlDanhSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 678, Short.MAX_VALUE)
         );
-        panel1Layout.setVerticalGroup(
-            panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 600, Short.MAX_VALUE)
+        pnlDanhSachLayout.setVerticalGroup(
+            pnlDanhSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 574, Short.MAX_VALUE)
         );
 
-        getContentPane().add(panel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 600));
+        jTabbedPane1.addTab("Danh Sách", pnlDanhSach);
+
+        javax.swing.GroupLayout pnlChiTietLayout = new javax.swing.GroupLayout(pnlChiTiet);
+        pnlChiTiet.setLayout(pnlChiTietLayout);
+        pnlChiTietLayout.setHorizontalGroup(
+            pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 678, Short.MAX_VALUE)
+        );
+        pnlChiTietLayout.setVerticalGroup(
+            pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 574, Short.MAX_VALUE)
+        );
+
+        jTabbedPane1.addTab("tab1", pnlChiTiet);
+
+        getContentPane().add(jTabbedPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 0, 680, 600));
 
         pack();
         setLocationRelativeTo(null);
@@ -86,7 +103,9 @@ public class GiaoDich extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private java.awt.Panel panel1;
+    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JPanel pnlChiTiet;
+    private javax.swing.JPanel pnlDanhSach;
     // End of variables declaration//GEN-END:variables
 
     private void prepareUI() {
