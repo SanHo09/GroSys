@@ -6,7 +6,12 @@
 package com.grosys.DAO1;
 
 
+<<<<<<< HEAD
 import com.grosys.untity.SanPham;
+=======
+
+import com.grosys.untity.sanPham;
+>>>>>>> 1c0e5013fb1c844c79c04f11d50cc1dfcafd9f2e
 import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;

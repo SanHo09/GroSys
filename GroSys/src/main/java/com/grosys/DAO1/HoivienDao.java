@@ -3,6 +3,10 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.grosys.DAO1;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 1c0e5013fb1c844c79c04f11d50cc1dfcafd9f2e
 import com.grosys.untity.Hoivien;
 import com.grosys.untity.HoaDon;
 import java.sql.ResultSet;

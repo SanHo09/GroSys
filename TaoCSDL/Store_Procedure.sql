@@ -73,6 +73,7 @@ END
 GO
 EXEC sp_Xoa_SanPham 'SP11'
 -- Chọn theo mã 
+<<<<<<< HEAD
 -- cập nhật lại select BY sql gồm : sp.MaSP, sp.TenSP, sp.MaLSP, lsp.TenLSP, sp.GiaBan, sp.HanSuDung, sp.DonViTinh, sp.SoLuong, sp.Anh, nsx.MaNSX,nsx.TenNSX
 CREATE PROC sp_LoadSanPhamTheoID @MaSP NVARCHAR(50)
 AS 
@@ -85,6 +86,10 @@ BEGIN
 					Where sp.MaSP=@MaSP
 					
 END
+=======
+-- cập nhật lại select BY sql gồm : sp.MaSP, sp.TenSP, sp.MaLSP, lsp.TenLSP, sp.GiaBan,
+			--sp.HanSuDung, sp.DonViTinh, sp.SoLuong, sp.Anh, nsx.MaNSX,nsx.TenNSX
+>>>>>>> 1c0e5013fb1c844c79c04f11d50cc1dfcafd9f2e
 
 GO
 
