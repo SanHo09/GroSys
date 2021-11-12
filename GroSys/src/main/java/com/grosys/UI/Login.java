@@ -8,6 +8,7 @@ package com.grosys.UI;
 
 import com.grosys.DAO1.NhanvienDao;
 import com.grosys.DAO1.sanPhamDAO;
+import com.grosys.untity.Nhanvien;
 import com.grosys.untity.sanPham;
 import java.awt.Color;
 import java.awt.Panel;
@@ -20,6 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.border.MatteBorder;
+import utils.Auth;
 import utils.MsgBox;
 import utils.XDate;
 
@@ -126,6 +128,9 @@ public class Login extends javax.swing.JFrame {
 
         btnDangNhap.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnDangNhap.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnDangNhapMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 btnDangNhapMouseEntered(evt);
             }
@@ -675,6 +680,24 @@ public class Login extends javax.swing.JFrame {
             System.exit(0);
         }
     }//GEN-LAST:event_txtQuit2MouseClicked
+
+    private void btnDangNhapMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnDangNhapMouseClicked
+        // TODO add your handling code here:
+        System.out.println("ok");
+        String MaNV = txtMaNV.getText();
+        String matKhau = txtMatKhau.getText();
+        Nhanvien nv = dao.selectById(MaNV);
+        if(nv==null) {
+            MsgBox.alert(this, "Nhân viên không tồn tại");
+        } else if(!matKhau.equals(nv.getMatkhau())) {
+            MsgBox.alert(this, "Sai mật khẩu");
+        } else {
+            Auth.user = nv;
+            new MainFrame().setVisible(true);
+            this.dispose();
+        }
+        
+    }//GEN-LAST:event_btnDangNhapMouseClicked
 
     /**
      * @param args the command line arguments

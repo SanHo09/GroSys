@@ -15,6 +15,7 @@ import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import utils.Auth;
 import utils.RoundedPanel;
 /**
  *
@@ -25,11 +26,14 @@ public class MainFrame extends javax.swing.JFrame {
     /**
      * Creates new form MainFrame
      */
+    sanPhamDAO dao = new sanPhamDAO();
+    
     public MainFrame() {
+
         setUndecorated(true);
         initComponents();
         prepareUI();
-        sanPhamDAO dao = new sanPhamDAO();
+        lblTenNhanVien.setText(Auth.user.getHoten());
     }
 
     /**
@@ -55,7 +59,7 @@ public class MainFrame extends javax.swing.JFrame {
         pnlStaffImage = new RoundedPanel(150);
         lblImage = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
+        lblTenNhanVien = new javax.swing.JLabel();
         pnlKhuyenMai = new RoundedPanel(17);
         jLabel6 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -278,11 +282,11 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2.setText("Nhân viên");
         pnlDashBoard.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 200, 110, -1));
 
-        jLabel3.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Nguyễn Văn A");
-        pnlDashBoard.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 150, -1));
+        lblTenNhanVien.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        lblTenNhanVien.setForeground(new java.awt.Color(153, 153, 153));
+        lblTenNhanVien.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblTenNhanVien.setText("Nguyễn Văn A");
+        pnlDashBoard.add(lblTenNhanVien, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 150, -1));
 
         pnlKhuyenMai.setBackground(new java.awt.Color(250, 132, 71));
         pnlKhuyenMai.setForeground(new java.awt.Color(250, 197, 118));
@@ -767,7 +771,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void pnlKhuyenMaiMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlKhuyenMaiMouseExited
         // TODO add your handling code here:
-        pnlKhuyenMai.setBackground(new Color(250,185,88));
+        pnlKhuyenMai.setBackground(new Color(250,132,71));
     }//GEN-LAST:event_pnlKhuyenMaiMouseExited
 
     private void pnlNhanVienMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlNhanVienMouseEntered
@@ -850,7 +854,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
@@ -866,6 +869,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblHuongDan;
     private javax.swing.JLabel lblImage;
     private javax.swing.JLabel lblTaiKhoan;
+    private javax.swing.JLabel lblTenNhanVien;
     private javax.swing.JLabel lblThongBao;
     private javax.swing.JLabel lblTinNhan;
     private javax.swing.JPanel pnlDashBoard;
@@ -899,6 +903,8 @@ public class MainFrame extends javax.swing.JFrame {
         pnlSanPham.setOpaque(false);
         pnlNhanVien.setOpaque(false);
         pnlKhuyenMai.setOpaque(false);
+        pnlThongKe.setOpaque(false);
+        pnlHopTac.setOpaque(false);
     }
 
     private void LabelfocusGain(JLabel label, String path) {
