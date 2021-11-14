@@ -5,7 +5,12 @@
  */
 package com.grosys.UI;
 
+import java.io.File;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 import utils.HeaderColor;
+import utils.XImage;
 
 /**
  *
@@ -35,7 +40,7 @@ public class NhanVien extends javax.swing.JPanel {
         VaiTroGroup = new javax.swing.ButtonGroup();
         jScrollPane11 = new javax.swing.JScrollPane();
         tblNhanVien = new javax.swing.JTable();
-        lblImage = new javax.swing.JLabel();
+        lblAnh = new javax.swing.JLabel();
         txtMaNV = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
@@ -101,9 +106,14 @@ public class NhanVien extends javax.swing.JPanel {
 
         add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 375, 720, 160));
 
-        lblImage.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        lblImage.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        add(lblImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 45, 191, 180));
+        lblAnh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAnh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8_contacts_150px_1.png"))); // NOI18N
+        lblAnh.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblAnhMouseClicked(evt);
+            }
+        });
+        add(lblAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 45, 191, 180));
         add(txtMaNV, new org.netbeans.lib.awtextra.AbsoluteConstraints(383, 48, 331, -1));
 
         jLabel14.setText("Mã Nhân Viên:");
@@ -144,25 +154,25 @@ public class NhanVien extends javax.swing.JPanel {
         btnThem.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnThem.setForeground(new java.awt.Color(255, 255, 255));
         btnThem.setText("Thêm");
-        add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, 90, 32));
+        add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, -1, 32));
 
         btnXoa.setBackground(new java.awt.Color(73, 164, 255));
         btnXoa.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnXoa.setForeground(new java.awt.Color(255, 255, 255));
         btnXoa.setText("Xóa");
-        add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 240, 73, 32));
+        add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, 73, 32));
 
         btnMoi.setBackground(new java.awt.Color(73, 164, 255));
         btnMoi.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnMoi.setForeground(new java.awt.Color(255, 255, 255));
         btnMoi.setText("Mới");
-        add(btnMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 280, 73, 27));
+        add(btnMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 280, 73, 30));
 
         btnSua.setBackground(new java.awt.Color(73, 164, 255));
         btnSua.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnSua.setForeground(new java.awt.Color(255, 255, 255));
         btnSua.setText("Sửa");
-        add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 90, 27));
+        add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 80, 30));
 
         btnThongKe.setBackground(new java.awt.Color(73, 164, 255));
 
@@ -258,6 +268,11 @@ public class NhanVien extends javax.swing.JPanel {
 
     }//GEN-LAST:event_tblNhanVienMouseClicked
 
+    private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
+        // TODO add your handling code here:
+        chooseImage(lblAnh);
+    }//GEN-LAST:event_lblAnhMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup VaiTroGroup;
@@ -283,7 +298,7 @@ public class NhanVien extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JTextField jTextField3;
-    private javax.swing.JLabel lblImage;
+    private javax.swing.JLabel lblAnh;
     private javax.swing.JRadioButton rdoNhanVien;
     private javax.swing.JRadioButton rdoQuanLy;
     private javax.swing.JTable tblNhanVien;
@@ -296,6 +311,19 @@ public class NhanVien extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void prepareUI() {
+        lblAnh.setSize(220,120);
+        
         tblNhanVien.getTableHeader().setDefaultRenderer(new HeaderColor());
+    }
+    private void chooseImage(JLabel lblIcon) {
+        JFileChooser filechooser = new JFileChooser();
+        if (filechooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+            File file = filechooser.getSelectedFile();
+            XImage.save(file);
+            ImageIcon icon = XImage.read(file.getName(), lblIcon);
+            lblIcon.setIcon(icon);
+            lblIcon.setToolTipText(file.getName());
+            lblIcon.setIcon(icon);
+        }
     }
 }

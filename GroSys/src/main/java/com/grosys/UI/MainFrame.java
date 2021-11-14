@@ -267,6 +267,11 @@ public class MainFrame extends javax.swing.JFrame {
         pnlStaffImage.setOpaque(false);
 
         lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8_contacts_150px_1.png"))); // NOI18N
+        lblImage.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblImageMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlStaffImageLayout = new javax.swing.GroupLayout(pnlStaffImage);
         pnlStaffImage.setLayout(pnlStaffImageLayout);
@@ -870,6 +875,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void pnlNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlNhanVienMouseClicked
         // TODO add your handling code here:
+        
         setForm(nhanVien1);
     }//GEN-LAST:event_pnlNhanVienMouseClicked
 
@@ -897,6 +903,11 @@ public class MainFrame extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnThoatMouseExited
+
+    private void lblImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImageMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_lblImageMouseClicked
 
     /**
      * @param args the command line arguments

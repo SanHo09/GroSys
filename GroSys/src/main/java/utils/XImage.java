@@ -34,7 +34,7 @@ public class XImage {
     }
     
     public static ImageIcon read(String fileName, JLabel lblImage) {
-        File path = new File("Data",fileName);
+        File path = new File("logos",fileName);
         ImageIcon myImage = new ImageIcon(path.getAbsolutePath());
         Image img = myImage.getImage();
         Image newImg = img.getScaledInstance(lblImage.getWidth(), lblImage.getHeight(), Image.SCALE_SMOOTH);
