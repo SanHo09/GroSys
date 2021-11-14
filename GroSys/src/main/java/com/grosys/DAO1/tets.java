@@ -22,7 +22,7 @@ public class tets {
     
     public static void main(String[] args) throws SQLException {
         SanPhamDAO dao = new SanPhamDAO();
-        List<SanPham> list = dao.selectAll();
-        list.forEach(i->System.out.println(i.getMaSP()));
+        SanPham sp = dao.selectById("Sp01");
+        System.out.println(sp.getTenLSP());
     }
 }

@@ -46,7 +46,7 @@ public class SanPhamDAO extends GrosysDAO<SanPham, String>{
     
     public void update(SanPham model) {
         String sql ="UPDATE SanPham SET TenSP=?, MaLSP=?, GiaBan=?, HanSuDung=?, DonViTinh=?, SoLuong=?, Anh=? WHERE MaSP=?";
-        Xjdbc.query(sql,
+        Xjdbc.update(sql,
                 model.getTenSP(),
                 model.getMaLSP(),
                 model.getGiaBan(),
@@ -75,12 +75,13 @@ public class SanPhamDAO extends GrosysDAO<SanPham, String>{
                 model.setTenSP(rs.getString("TenSP"));
                 model.setGiaNhap(rs.getDouble("GiaNhap"));
                 model.setMaLSP(rs.getString("MaLSP"));
+                model.setTenLSP(rs.getString("TenLSP"));
                 model.setGiaBan(rs.getFloat("GiaBan"));
                 model.setHanSuDung(rs.getDate("HanSuDung"));
                 model.setDonViTinh(rs.getString("DonViTinh"));
                 model.setSoLuong(rs.getInt("SoLuong"));
                 model.setAnh(rs.getString("Anh"));
-                model.setTenLSP(rs.getString("TenLSP"));
+                
                 list.add(model);
             }
                 
@@ -93,7 +94,7 @@ public class SanPhamDAO extends GrosysDAO<SanPham, String>{
 
     
     public SanPham selectById(String masp) {
-        String sql="{CALL sp_LoadSanPhamTheoID WHERE MaSP(?)}";
+        String sql="{CALL sp_LoadSanPhamTheoID(?)}";
         List<SanPham> list = selectBySql(sql, masp);
         return list.size() > 0 ? list.get(0) : null;
     }
@@ -110,6 +111,7 @@ public class SanPhamDAO extends GrosysDAO<SanPham, String>{
                     entity.setMaSP(rs.getString("MaSP"));
                     entity.setTenSP(rs.getString("TenSP"));
                     entity.setMaLSP(rs.getString("MaLSP"));
+                    entity.setTenLSP(rs.getString("TenLSP"));
                     entity.setGiaBan(rs.getDouble("GiaBan"));
                     entity.setHanSuDung(rs.getDate("HanSuDung"));
                     entity.setDonViTinh(rs.getString("DonViTinh"));
@@ -117,7 +119,7 @@ public class SanPhamDAO extends GrosysDAO<SanPham, String>{
                     entity.setAnh(rs.getString("Anh"));
                     entity.setMaNPP(rs.getString("MaNPP"));
                     entity.setMaNSX(rs.getString("MaNSX"));
-                    entity.setTenNSX(rs.getString("TenNXS"));
+                    entity.setTenNSX(rs.getString("TenNSX"));
                     entity.setGiaNhap(rs.getDouble("GiaNhap"));
                     list.add(entity);
                 }
