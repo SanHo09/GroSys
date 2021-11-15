@@ -880,8 +880,12 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void pnlNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlNhanVienMouseClicked
         // TODO add your handling code here:
-        
-        setForm(nhanVien1);
+        if (!Auth.isManager()) {
+            MsgBox.alert(this, "Bạn không có quyền");
+        }
+        else{
+            setForm(nhanVien1);
+        }
     }//GEN-LAST:event_pnlNhanVienMouseClicked
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
