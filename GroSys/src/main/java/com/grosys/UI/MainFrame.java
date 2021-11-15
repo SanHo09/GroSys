@@ -10,13 +10,18 @@ import com.grosys.DAO1.SanPhamDAO;
 import com.grosys.untity.SanPham;
 import com.toedter.calendar.JCalendar;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.RoundRectangle2D;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Locale;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.Timer;
 import utils.Auth;
 import utils.MsgBox;
 import utils.RoundedPanel;
@@ -1007,6 +1012,7 @@ public class MainFrame extends javax.swing.JFrame {
                     
                 }
             });
+        loadClock();
         pnlHeader.setOpaque(false);
         pnlDashBoard.setOpaque(false);
         pnlMain.setOpaque(false);
@@ -1039,6 +1045,18 @@ public class MainFrame extends javax.swing.JFrame {
             if(arr[i]==pnlSelect)
                 arr[i].setVisible(true);
         }
+    }
+
+    private void loadClock() {
+        new Timer(1000, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Date now = new Date();
+                SimpleDateFormat formatter = new SimpleDateFormat("hh:mm:ss a");
+                lblClock.setText(formatter.format(now));
+            }
+        }).start();
+    
     }
     
     
