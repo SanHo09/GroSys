@@ -5,11 +5,17 @@
  */
 package com.grosys.UI;
 
+import com.grosys.DAO1.NhanvienDao;
+import com.grosys.untity.Nhanvien;
 import java.io.File;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.table.DefaultTableModel;
+import utils.Auth;
 import utils.HeaderColor;
+import utils.MsgBox;
 import utils.XImage;
 
 /**
@@ -154,24 +160,44 @@ public class NhanVien extends javax.swing.JPanel {
         btnThem.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnThem.setForeground(new java.awt.Color(255, 255, 255));
         btnThem.setText("Thêm");
+        btnThem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemActionPerformed(evt);
+            }
+        });
         add(btnThem, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, -1, 32));
 
         btnXoa.setBackground(new java.awt.Color(73, 164, 255));
         btnXoa.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnXoa.setForeground(new java.awt.Color(255, 255, 255));
         btnXoa.setText("Xóa");
+        btnXoa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaActionPerformed(evt);
+            }
+        });
         add(btnXoa, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 240, 73, 32));
 
         btnMoi.setBackground(new java.awt.Color(73, 164, 255));
         btnMoi.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnMoi.setForeground(new java.awt.Color(255, 255, 255));
         btnMoi.setText("Mới");
+        btnMoi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMoiActionPerformed(evt);
+            }
+        });
         add(btnMoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 280, 73, 30));
 
         btnSua.setBackground(new java.awt.Color(73, 164, 255));
         btnSua.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnSua.setForeground(new java.awt.Color(255, 255, 255));
         btnSua.setText("Sửa");
+        btnSua.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaActionPerformed(evt);
+            }
+        });
         add(btnSua, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 280, 80, 30));
 
         btnThongKe.setBackground(new java.awt.Color(73, 164, 255));
@@ -265,13 +291,34 @@ public class NhanVien extends javax.swing.JPanel {
 
     private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
         // TODO add your handling code here:
-
+        this.row = tblNhanVien.getSelectedRow();
+        this.edit();
     }//GEN-LAST:event_tblNhanVienMouseClicked
 
     private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
         // TODO add your handling code here:
         chooseImage(lblAnh);
     }//GEN-LAST:event_lblAnhMouseClicked
+
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
+        // TODO add your handling code here:
+        this.insert();
+    }//GEN-LAST:event_btnThemActionPerformed
+
+    private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
+        // TODO add your handling code here:
+        this.delete();
+    }//GEN-LAST:event_btnXoaActionPerformed
+
+    private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        // TODO add your handling code here:
+        this.update();
+    }//GEN-LAST:event_btnSuaActionPerformed
+
+    private void btnMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiActionPerformed
+        // TODO add your handling code here:
+        this.clearFrom();
+    }//GEN-LAST:event_btnMoiActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -314,6 +361,8 @@ public class NhanVien extends javax.swing.JPanel {
         lblAnh.setSize(220,120);
         
         tblNhanVien.getTableHeader().setDefaultRenderer(new HeaderColor());
+        
+        fillTable();
     }
     private void chooseImage(JLabel lblIcon) {
         JFileChooser filechooser = new JFileChooser();
@@ -326,4 +375,96 @@ public class NhanVien extends javax.swing.JPanel {
             lblIcon.setIcon(icon);
         }
     }
+    
+    NhanvienDao dao = new NhanvienDao();
+    int row=-1;
+    
+    void insert(){
+        Nhanvien nv = getFrom();
+        try {
+               dao.insert(nv);this.fillTable();this.clearFrom();
+               MsgBox.alert(this, "Thêm mới thành công");
+           } catch (Exception e) {
+               MsgBox.alert(this, "Thêm mới thất bại");
+           }
+    }
+    
+    void update(){
+        Nhanvien nv = getFrom();
+        try {
+               dao.update(nv);this.fillTable();
+               MsgBox.alert(this, "Cập nhập thành công");
+            } catch (Exception e) {
+               MsgBox.alert(this, "Cập nhập thất bại");
+            }
+    }
+    
+    void delete(){
+        if(MsgBox.confirm(this, "Bạn thực sự muốn xóa nhân viên này?")){
+            String manv = txtMaNV.getText();
+            try {
+                dao.delete(manv);this.fillTable();this.clearFrom();
+                MsgBox.alert(this, "Xóa thành công");
+            } catch (Exception e) {
+                MsgBox.alert(this, "Xóa thất bại");
+            }
+        }
+    }
+    
+    void clearFrom(){
+        Nhanvien nv = new Nhanvien();
+        this.setFrom(nv);
+        this.row = -1;
+    }
+    
+    void edit(){
+        String manv = (String) tblNhanVien.getValueAt(this.row, 0);
+        Nhanvien nv = dao.selectById(manv);
+        this.setFrom(nv);
+    }
+    
+    void fillTable(){
+        DefaultTableModel model = (DefaultTableModel) tblNhanVien.getModel();
+        model.setRowCount(0);
+        try {
+            List<Nhanvien> list = dao.selectAll();
+            for(Nhanvien nv : list){
+                Object[] row ={
+                    nv.getMaNV(),
+                    nv.getHoten(),
+                    nv.getEmail(),
+                    nv.getSDT(),
+                    nv.isVaitro()?"Quản Lý":"Nhân Viên"
+                };
+                model.addRow(row);
+            }
+        } catch (Exception e) {
+            MsgBox.alert(this, "Lỗi truy vấn dữ liệu!");
+        }
+    }
+    
+    void setFrom(Nhanvien nv){
+        txtMaNV.setText(nv.getMaNV());
+        txtTenNV.setText(nv.getHoten());
+        txtSDT.setText(nv.getSDT());
+        txtEmail.setText(nv.getEmail());
+        rdoNhanVien.setSelected(nv.isVaitro());
+        rdoQuanLy.setSelected(nv.isVaitro());
+        txtMatKhau.setText(nv.getMatkhau());
+        txtXacNhan.setText(nv.getMatkhau());
+    }
+    
+    Nhanvien getFrom(){
+        Nhanvien nv = new Nhanvien();
+        nv.setMaNV(txtMaNV.getText());
+        nv.setHoten(txtTenNV.getText());
+        nv.setSDT(txtSDT.getText());
+        nv.setEmail(txtEmail.getText());
+        nv.setMaNV(txtMatKhau.getText());
+        nv.setVaitro(rdoQuanLy.isSelected());
+        nv.setMatkhau(txtMatKhau.getText());
+        nv.setMatkhau(txtXacNhan.getText());
+        return nv;
+    }
+    
 }
