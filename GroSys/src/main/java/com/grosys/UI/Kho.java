@@ -5,7 +5,10 @@
  */
 package com.grosys.UI;
 
+import com.grosys.DAO1.SanPhamDAO;
+import com.grosys.untity.SanPham;
 import java.io.File;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -13,6 +16,7 @@ import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import utils.HeaderColor;
+import utils.MsgBox;
 import utils.XImage;
 
 /**
@@ -27,7 +31,34 @@ public class Kho extends javax.swing.JPanel {
     public Kho() {
         initComponents();
         prepareUI();
-        
+        fillTable();
+    }
+    SanPhamDAO dao =new SanPhamDAO();
+    void chonAnh (){
+         JFileChooser fc=new JFileChooser();
+        if (fc.showOpenDialog(this)==JFileChooser.APPROVE_OPTION) {
+          File file =fc.getSelectedFile();
+          XImage.save(file);
+            ImageIcon icon =XImage.read(file.getName(),lblAnh);
+            lblAnh.setIcon(icon);
+            lblAnh.setToolTipText(file.getName());
+        }
+    }
+         
+    void fillTable(){
+        DefaultTableModel model =(DefaultTableModel) tblDanhSachSanPham.getModel();
+        model.setRowCount(0);
+        try {
+            List<SanPham> list=dao.selectAll();
+            for (SanPham sp : list) {
+                Object[] row ={sp.getMaSP(),sp.getTenSP(),sp.getTenLSP(),
+                    sp.getGiaBan(),sp.getHanSuDung()
+                    ,sp.getDonViTinh(),sp.getSoLuong(),sp.getTenNSX(),sp.getAnh()};
+               model.addRow(row);
+            }
+        } catch (Exception e) {
+            MsgBox.alert(this,"Lỗi truy vấn dữ liệu");
+        }  
     }
 
     /**
