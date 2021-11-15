@@ -5,10 +5,14 @@
  */
 package com.grosys.UI;
 
+import com.grosys.DAO1.NhaPhanPhoiDAO;
+import com.grosys.DAO1.NhaSanXuatDAO;
 import com.grosys.DAO1.SanPhamDAO;
+import com.grosys.untity.NhaSanXuat;
 import com.grosys.untity.SanPham;
 import java.io.File;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -28,38 +32,19 @@ public class Kho extends javax.swing.JPanel {
     /**
      * Creates new form Kho
      */
+    
+    SanPhamDAO dao =new SanPhamDAO();
+    NhaSanXuatDAO nsxDao = new NhaSanXuatDAO();
+    NhaPhanPhoiDAO nppDao = new NhaPhanPhoiDAO();
+    
     public Kho() {
         initComponents();
         prepareUI();
+        fillToComboboxNSX();
         fillTable();
     }
-    SanPhamDAO dao =new SanPhamDAO();
-    void chonAnh (){
-         JFileChooser fc=new JFileChooser();
-        if (fc.showOpenDialog(this)==JFileChooser.APPROVE_OPTION) {
-          File file =fc.getSelectedFile();
-          XImage.save(file);
-            ImageIcon icon =XImage.read(file.getName(),lblAnh);
-            lblAnh.setIcon(icon);
-            lblAnh.setToolTipText(file.getName());
-        }
-    }
-         
-    void fillTable(){
-        DefaultTableModel model =(DefaultTableModel) tblDanhSachSanPham.getModel();
-        model.setRowCount(0);
-        try {
-            List<SanPham> list=dao.selectAll();
-            for (SanPham sp : list) {
-                Object[] row ={sp.getMaSP(),sp.getTenSP(),sp.getTenLSP(),
-                    sp.getGiaBan(),sp.getHanSuDung()
-                    ,sp.getDonViTinh(),sp.getSoLuong(),sp.getTenNSX(),sp.getAnh()};
-               model.addRow(row);
-            }
-        } catch (Exception e) {
-            MsgBox.alert(this,"Lỗi truy vấn dữ liệu");
-        }  
-    }
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -105,9 +90,9 @@ public class Kho extends javax.swing.JPanel {
         lblAnh = new javax.swing.JLabel();
         txtHanSuDung1 = new javax.swing.JTextField();
         pnlCbbNhaPhanPhoi = new javax.swing.JPanel();
-        cboNhaPhanPhoi = new javax.swing.JComboBox<>();
+        cbbNhaSanXuat = new javax.swing.JComboBox<>();
         pnlCbbNhaSanXuat1 = new javax.swing.JPanel();
-        cboNhaSanXuat = new javax.swing.JComboBox<>();
+        cbbNhaPhanPhoi = new javax.swing.JComboBox<>();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -331,36 +316,36 @@ public class Kho extends javax.swing.JPanel {
         jTabbedPane1.addTab("Cập nhật sản phẩm", tabsCapNhatSanPham);
 
         pnlCbbNhaPhanPhoi.setBackground(new java.awt.Color(255, 255, 255));
-        pnlCbbNhaPhanPhoi.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nhà Phân Phối", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
+        pnlCbbNhaPhanPhoi.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nhà Sản Xuất", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
         pnlCbbNhaPhanPhoi.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cboNhaPhanPhoi.addMouseListener(new java.awt.event.MouseAdapter() {
+        cbbNhaSanXuat.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cboNhaPhanPhoiMouseClicked(evt);
+                cbbNhaSanXuatMouseClicked(evt);
             }
         });
-        cboNhaPhanPhoi.addActionListener(new java.awt.event.ActionListener() {
+        cbbNhaSanXuat.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboNhaPhanPhoiActionPerformed(evt);
+                cbbNhaSanXuatActionPerformed(evt);
             }
         });
-        pnlCbbNhaPhanPhoi.add(cboNhaPhanPhoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 250, -1));
+        pnlCbbNhaPhanPhoi.add(cbbNhaSanXuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 250, -1));
 
         pnlCbbNhaSanXuat1.setBackground(new java.awt.Color(255, 255, 255));
-        pnlCbbNhaSanXuat1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nhà Sản Xuất", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
+        pnlCbbNhaSanXuat1.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Nhà Phân Phối", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.TOP));
         pnlCbbNhaSanXuat1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        cboNhaSanXuat.addMouseListener(new java.awt.event.MouseAdapter() {
+        cbbNhaPhanPhoi.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cboNhaSanXuatMouseClicked(evt);
+                cbbNhaPhanPhoiMouseClicked(evt);
             }
         });
-        cboNhaSanXuat.addActionListener(new java.awt.event.ActionListener() {
+        cbbNhaPhanPhoi.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cboNhaSanXuatActionPerformed(evt);
+                cbbNhaPhanPhoiActionPerformed(evt);
             }
         });
-        pnlCbbNhaSanXuat1.add(cboNhaSanXuat, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 240, -1));
+        pnlCbbNhaSanXuat1.add(cbbNhaPhanPhoi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 240, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -390,15 +375,15 @@ public class Kho extends javax.swing.JPanel {
         
     }//GEN-LAST:event_tblDanhSachSanPhamMouseClicked
 
-    private void cboNhaPhanPhoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboNhaPhanPhoiMouseClicked
+    private void cbbNhaSanXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbbNhaSanXuatMouseClicked
         // TODO add your handling code here:
 
-    }//GEN-LAST:event_cboNhaPhanPhoiMouseClicked
+    }//GEN-LAST:event_cbbNhaSanXuatMouseClicked
 
-    private void cboNhaPhanPhoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboNhaPhanPhoiActionPerformed
+    private void cbbNhaSanXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbNhaSanXuatActionPerformed
         // TODO add your handling code here:
         
-    }//GEN-LAST:event_cboNhaPhanPhoiActionPerformed
+    }//GEN-LAST:event_cbbNhaSanXuatActionPerformed
 
     private void cbbLoaiSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbbLoaiSanPhamMouseClicked
         // TODO add your handling code here:
@@ -420,13 +405,13 @@ public class Kho extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbbDonViTinhActionPerformed
 
-    private void cboNhaSanXuatMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cboNhaSanXuatMouseClicked
+    private void cbbNhaPhanPhoiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cbbNhaPhanPhoiMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_cboNhaSanXuatMouseClicked
+    }//GEN-LAST:event_cbbNhaPhanPhoiMouseClicked
 
-    private void cboNhaSanXuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cboNhaSanXuatActionPerformed
+    private void cbbNhaPhanPhoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbNhaPhanPhoiActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_cboNhaSanXuatActionPerformed
+    }//GEN-LAST:event_cbbNhaPhanPhoiActionPerformed
 
     private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
         // TODO add your handling code here:
@@ -447,8 +432,8 @@ public class Kho extends javax.swing.JPanel {
     private javax.swing.JPanel btnXuatFileExcel;
     private javax.swing.JComboBox<String> cbbDonViTinh;
     private javax.swing.JComboBox<String> cbbLoaiSanPham;
-    private javax.swing.JComboBox<String> cboNhaPhanPhoi;
-    private javax.swing.JComboBox<String> cboNhaSanXuat;
+    private javax.swing.JComboBox<String> cbbNhaPhanPhoi;
+    private javax.swing.JComboBox<String> cbbNhaSanXuat;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -489,19 +474,7 @@ public class Kho extends javax.swing.JPanel {
         model.getColumn(6).setPreferredWidth(80);
         model.getColumn(7).setPreferredWidth(140);
         
-        DefaultTableModel tbl = (DefaultTableModel)tblDanhSachSanPham.getModel();
-        Object obj[] = {
-            "SP01",
-            "Tên Sản Phẩm",
-            "Loại Sản Phẩm",
-            1000000,
-            "11/14/2021",
-            "Chai ",
-            50,
-            "Nhà Sản Xuất",
-            "No Image"
-        };
-        tbl.addRow(obj);
+        
     }
     
     private void chooseImage(JLabel lblIcon) {
@@ -515,4 +488,47 @@ public class Kho extends javax.swing.JPanel {
             lblIcon.setIcon(icon);
         }
     }
+    
+    void chonAnh (){
+         JFileChooser fc=new JFileChooser();
+        if (fc.showOpenDialog(this)==JFileChooser.APPROVE_OPTION) {
+          File file =fc.getSelectedFile();
+          XImage.save(file);
+            ImageIcon icon =XImage.read(file.getName(),lblAnh);
+            lblAnh.setIcon(icon);
+            lblAnh.setToolTipText(file.getName());
+        }
+    }
+         
+    void fillTable(){
+        DefaultTableModel model =(DefaultTableModel) tblDanhSachSanPham.getModel();
+        model.setRowCount(0);
+        try {
+            List<SanPham> list=dao.selectAll();
+            for (SanPham sp : list) {
+                Object[] row ={sp.getMaSP(),sp.getTenSP(),sp.getTenLSP(),
+                    sp.getGiaBan(),sp.getHanSuDung()
+                    ,sp.getDonViTinh(),sp.getSoLuong(),sp.getTenNSX(),sp.getAnh()};
+               model.addRow(row);
+            }
+        } catch (Exception e) {
+            MsgBox.alert(this,"Lỗi truy vấn dữ liệu");
+        }  
+    }
+    
+    private void fillToComboboxNSX() {
+        DefaultComboBoxModel model = (DefaultComboBoxModel)cbbNhaSanXuat.getModel();
+        model.removeAllElements();
+        try {
+            List<NhaSanXuat> list = nsxDao.selectAll();
+            for(NhaSanXuat i: list) {
+                model.addElement(i);
+            }
+        } catch(Exception ex) {
+            ex.printStackTrace();
+            MsgBox.alert(this,"Lỗi truy vấn dữ liệu");
+        }
+    }
+    
+    
 }

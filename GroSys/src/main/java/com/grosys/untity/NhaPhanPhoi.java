@@ -58,4 +58,11 @@ public class NhaPhanPhoi {
     public void setNamHoptac(Date NamHoptac) {
         this.NamHoptac = NamHoptac;
     }  
+
+    @Override
+    public String toString() {
+        return this.getTenNPP();
+    }
+    
+    
 }

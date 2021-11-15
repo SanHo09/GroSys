@@ -38,6 +38,7 @@ public class MainFrame extends javax.swing.JFrame {
     NhanvienDao nvdao = new NhanvienDao();
     public MainFrame() {
         Auth.user = nvdao.selectById("NV01");
+        Auth.user.setVaitro(true);
         setUndecorated(true);
         initComponents();
         prepareUI();
@@ -484,6 +485,9 @@ public class MainFrame extends javax.swing.JFrame {
         pnlGiaoDich.setForeground(new java.awt.Color(242, 242, 242));
         pnlGiaoDich.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlGiaoDich.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlGiaoDichMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 pnlGiaoDichMouseEntered(evt);
             }
@@ -917,6 +921,12 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         
     }//GEN-LAST:event_lblImageMouseClicked
+
+    private void pnlGiaoDichMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlGiaoDichMouseClicked
+        // TODO add your handling code here:
+        this.dispose();
+        new GiaoDich().setVisible(true);
+    }//GEN-LAST:event_pnlGiaoDichMouseClicked
 
     /**
      * @param args the command line arguments

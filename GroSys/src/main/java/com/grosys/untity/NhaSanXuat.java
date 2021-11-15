@@ -58,6 +58,13 @@ public class NhaSanXuat {
     public void setMaNPP(String MaNPP) {
         this.MaNPP = MaNPP;
     }
+
+    @Override
+    public String toString() {
+        return this.getTenNSX();
+    }
+    
+    
     
     
 }

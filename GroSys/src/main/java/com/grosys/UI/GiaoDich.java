@@ -814,6 +814,7 @@ public class GiaoDich extends javax.swing.JFrame {
         // TODO add your handling code here:
         if(MsgBox.confirm(this, "bạn Có chắc muốn thoát chức năng ?")) {
             this.dispose();
+            new MainFrame().setVisible(true);
         }
     }//GEN-LAST:event_pnlHangHoaItem2MouseClicked
 

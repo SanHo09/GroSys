@@ -56,7 +56,9 @@ public class NhaSanXuatDAO extends GrosysDAO<NhaSanXuat, String>{
         List<NhaSanXuat> list = selectBySql(sql, id);
         return list.size() > 0 ? list.get(0) : null;
     }
-
+    
+    
+    
     @Override
     protected List<NhaSanXuat> selectBySql(String sql, Object... args) {
          List<NhaSanXuat> list = new ArrayList<NhaSanXuat>();

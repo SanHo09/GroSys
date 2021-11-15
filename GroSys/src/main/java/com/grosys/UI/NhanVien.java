@@ -302,7 +302,12 @@ public class NhanVien extends javax.swing.JPanel {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-        this.insert();
+        if(!txtMatKhau.getText().equals(txtXacNhan.getText())) {
+            MsgBox.alert(this, "2 mật khẩu không trùng nhau");
+        }
+        else {
+            this.insert();
+        }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
@@ -385,14 +390,15 @@ public class NhanVien extends javax.swing.JPanel {
                dao.insert(nv);this.fillTable();this.clearFrom();
                MsgBox.alert(this, "Thêm mới thành công");
            } catch (Exception e) {
-               MsgBox.alert(this, "Thêm mới thất bại");
+               
            }
     }
     
     void update(){
         Nhanvien nv = getFrom();
         try {
-               dao.update(nv);this.fillTable();
+               dao.update(nv);
+               this.fillTable();
                MsgBox.alert(this, "Cập nhập thành công");
             } catch (Exception e) {
                MsgBox.alert(this, "Cập nhập thất bại");
@@ -403,10 +409,15 @@ public class NhanVien extends javax.swing.JPanel {
         if(MsgBox.confirm(this, "Bạn thực sự muốn xóa nhân viên này?")){
             String manv = txtMaNV.getText();
             try {
-                dao.delete(manv);this.fillTable();this.clearFrom();
+                dao.delete(manv);
+                this.fillTable();
+                this.clearFrom();
                 MsgBox.alert(this, "Xóa thành công");
-            } catch (Exception e) {
-                MsgBox.alert(this, "Xóa thất bại");
+            } catch (NullPointerException e) {
+                
+            } catch (Exception ex) {
+                MsgBox.alert(this, "Xóa thất bại, vui lòng kiểm tra lại khóa ");
+                ex.printStackTrace();
             }
         }
     }
@@ -452,6 +463,8 @@ public class NhanVien extends javax.swing.JPanel {
         rdoQuanLy.setSelected(nv.isVaitro());
         txtMatKhau.setText(nv.getMatkhau());
         txtXacNhan.setText(nv.getMatkhau());
+        lblAnh.setIcon(XImage.read(nv.getAnh(), lblAnh));
+        lblAnh.setToolTipText(nv.getAnh());
     }
     
     Nhanvien getFrom(){
@@ -460,10 +473,9 @@ public class NhanVien extends javax.swing.JPanel {
         nv.setHoten(txtTenNV.getText());
         nv.setSDT(txtSDT.getText());
         nv.setEmail(txtEmail.getText());
-        nv.setMaNV(txtMatKhau.getText());
         nv.setVaitro(rdoQuanLy.isSelected());
         nv.setMatkhau(txtMatKhau.getText());
-        nv.setMatkhau(txtXacNhan.getText());
+        nv.setAnh(lblAnh.getToolTipText());
         return nv;
     }
     

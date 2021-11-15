@@ -47,7 +47,7 @@ public class NhanvienDao extends GrosysDAO<Nhanvien, String> {
 
     @Override
     public void delete(String MaNV) {
-        String sql ="Delete from Nhanvien where MaNV";
+        String sql ="Delete from Nhanvien where MaNV=?";
         Xjdbc.update(sql,MaNV);
     }
 
