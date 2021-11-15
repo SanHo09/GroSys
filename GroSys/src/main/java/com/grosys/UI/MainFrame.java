@@ -104,10 +104,10 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel18 = new javax.swing.JLabel();
         nhanVien1 = new com.grosys.UI.NhanVien();
+        taiKhoan1 = new com.grosys.UI.TaiKhoan();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
-        setPreferredSize(new java.awt.Dimension(1000, 720));
         setSize(new java.awt.Dimension(1000, 720));
 
         jPanel1.setBackground(new java.awt.Color(239, 244, 247));
@@ -124,6 +124,9 @@ public class MainFrame extends javax.swing.JFrame {
         lblTaiKhoan.setText("Tài khoản");
         lblTaiKhoan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblTaiKhoan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTaiKhoanMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblTaiKhoanMouseEntered(evt);
             }
@@ -721,6 +724,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jPanel1.add(pnlMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 720, 580));
         jPanel1.add(nhanVien1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, -1, 590));
+        jPanel1.add(taiKhoan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, -1, 590));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -928,6 +932,11 @@ public class MainFrame extends javax.swing.JFrame {
         new GiaoDich().setVisible(true);
     }//GEN-LAST:event_pnlGiaoDichMouseClicked
 
+    private void lblTaiKhoanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTaiKhoanMouseClicked
+        // TODO add your handling code here:
+        setForm(taiKhoan1);
+    }//GEN-LAST:event_lblTaiKhoanMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1014,6 +1023,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pnlNhanVien;
     private javax.swing.JPanel pnlStaffImage;
     private javax.swing.JPanel pnlThongKe;
+    private com.grosys.UI.TaiKhoan taiKhoan1;
     // End of variables declaration//GEN-END:variables
 
     private void prepareUI() {
@@ -1053,7 +1063,7 @@ public class MainFrame extends javax.swing.JFrame {
         label.setIcon(new ImageIcon(path));
     }
     private void setForm(JPanel pnlSelect) {
-        JPanel[] arr = {pnlMain, kho1, nhanVien1};
+        JPanel[] arr = {pnlMain, kho1, nhanVien1, taiKhoan1};
         for(int i=0;i<arr.length;i++) {
             arr[i].setVisible(false);
             if(arr[i]==pnlSelect)
