@@ -475,7 +475,7 @@ public class NhanVien extends javax.swing.JPanel {
     
     Nhanvien getFrom(){
         Nhanvien nv = new Nhanvien();
-        nv.setMaNV(txtMaNV.getText());
+        nv.setMaNV(txtMaNV.getText()); 
         nv.setHoten(txtTenNV.getText());
         nv.setSDT(txtSDT.getText());
         nv.setEmail(txtEmail.getText());
