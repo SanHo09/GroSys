@@ -316,24 +316,44 @@ public class Kho extends javax.swing.JPanel {
         btnFirst.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnFirst.setForeground(new java.awt.Color(255, 255, 255));
         btnFirst.setText("<|");
+        btnFirst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFirstActionPerformed(evt);
+            }
+        });
         tabsCapNhatSanPham.add(btnFirst, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 350, 75, 30));
 
         btnPrev.setBackground(new java.awt.Color(73, 164, 255));
         btnPrev.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnPrev.setForeground(new java.awt.Color(255, 255, 255));
         btnPrev.setText("<<");
+        btnPrev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrevActionPerformed(evt);
+            }
+        });
         tabsCapNhatSanPham.add(btnPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 350, 67, 30));
 
         btnNext.setBackground(new java.awt.Color(73, 164, 255));
         btnNext.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnNext.setForeground(new java.awt.Color(255, 255, 255));
         btnNext.setText(">>");
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
         tabsCapNhatSanPham.add(btnNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 350, 69, 30));
 
         btnLast.setBackground(new java.awt.Color(73, 164, 255));
         btnLast.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
         btnLast.setForeground(new java.awt.Color(255, 255, 255));
         btnLast.setText("|>");
+        btnLast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLastActionPerformed(evt);
+            }
+        });
         tabsCapNhatSanPham.add(btnLast, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 350, 78, 30));
 
         lblAnh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/No_image.jpg"))); // NOI18N
@@ -516,6 +536,26 @@ public class Kho extends javax.swing.JPanel {
         updateStatus();
     }//GEN-LAST:event_btnMoiActionPerformed
 
+    private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
+        // TODO add your handling code here:
+        fist();
+    }//GEN-LAST:event_btnFirstActionPerformed
+
+    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
+        // TODO add your handling code here:
+        prev();
+    }//GEN-LAST:event_btnPrevActionPerformed
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        // TODO add your handling code here:
+        next();
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
+        // TODO add your handling code here:
+        last();
+    }//GEN-LAST:event_btnLastActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFirst;
@@ -696,6 +736,8 @@ public class Kho extends javax.swing.JPanel {
         sp.setMaSP(txtMaSanPham.getText());
         sp.setTenSP(txtTenSanPham.getText());
         sp.setDonViTinh((String)cbbDonViTinh.getSelectedItem());
+        sp.setTenLSP((String)cbbLoaiSanPham.getSelectedItem());
+        System.out.println(sp.getTenLSP());
         sp.setGiaNhap(Double.parseDouble(txtGiaNhap.getText()));
         sp.setGiaBan(Double.parseDouble(txtGiaBan.getText()));
         sp.setMaNSX(nsx.getMaNSX());

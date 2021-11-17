@@ -105,6 +105,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel18 = new javax.swing.JLabel();
         nhanVien1 = new com.grosys.UI.NhanVien();
         taiKhoan1 = new com.grosys.UI.TaiKhoan();
+        hopTac1 = new com.grosys.UI.HopTac();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -573,6 +574,9 @@ public class MainFrame extends javax.swing.JFrame {
         pnlHopTac.setForeground(new java.awt.Color(250, 197, 118));
         pnlHopTac.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlHopTac.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlHopTacMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 pnlHopTacMouseEntered(evt);
             }
@@ -725,6 +729,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1.add(pnlMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 720, 580));
         jPanel1.add(nhanVien1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, -1, 590));
         jPanel1.add(taiKhoan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, -1, 590));
+        jPanel1.add(hopTac1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 720, 590));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -937,6 +942,11 @@ public class MainFrame extends javax.swing.JFrame {
         setForm(taiKhoan1);
     }//GEN-LAST:event_lblTaiKhoanMouseClicked
 
+    private void pnlHopTacMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlHopTacMouseClicked
+        // TODO add your handling code here:
+        setForm(hopTac1);
+    }//GEN-LAST:event_pnlHopTacMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -974,6 +984,7 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel btnThoat;
+    private com.grosys.UI.HopTac hopTac1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1063,7 +1074,7 @@ public class MainFrame extends javax.swing.JFrame {
         label.setIcon(new ImageIcon(path));
     }
     private void setForm(JPanel pnlSelect) {
-        JPanel[] arr = {pnlMain, kho1, nhanVien1, taiKhoan1};
+        JPanel[] arr = {pnlMain, kho1, nhanVien1, taiKhoan1, hopTac1};
         for(int i=0;i<arr.length;i++) {
             arr[i].setVisible(false);
             if(arr[i]==pnlSelect)
