@@ -57,7 +57,11 @@ public void update(SanPham model) {
 
     
     public void delete(String MaSP) {
+<<<<<<< HEAD
         String sql="{CALL sp_Xoa_SanPham(?)}";
+=======
+        String sql="{CALL sp_Xoa_SanPham MaSP(?)}";
+>>>>>>> 32cf145f67ff348519a7a7557918269f8272300e
         Xjdbc.query(sql, MaSP);
     }
 
