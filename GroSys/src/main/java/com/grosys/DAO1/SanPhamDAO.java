@@ -53,12 +53,13 @@ public class SanPhamDAO extends GrosysDAO<SanPham, String>{
                 model.getHanSuDung(),
                 model.getDonViTinh(),
                 model.getSoLuong(),
-                model.getAnh());
+                model.getAnh(),
+                model.getMaSP());
     }
 
     
     public void delete(String MaSP) {
-        String sql="{CALL sp_Xoa_SanPham WHERE MaSP(?)}";
+        String sql="{CALL sp_Xoa_SanPham MaSP(?)}";
         Xjdbc.query(sql, MaSP);
     }
 

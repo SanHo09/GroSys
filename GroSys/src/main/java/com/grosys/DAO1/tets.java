@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import utils.XDate;
 import utils.Xjdbc;
 
 /**
@@ -22,7 +23,12 @@ public class tets {
     
     public static void main(String[] args) throws SQLException {
         SanPhamDAO dao = new SanPhamDAO();
-        SanPham sp = dao.selectById("Sp01");
-        System.out.println(sp.getTenLSP());
+        SanPham sp = dao.selectById("sp01");
+        sp.setMaSP("sp11");
+        System.out.println(sp.getHanSuDung());
+        String sql = "{CALL sp_Them_SanPham (?,?,?,?,?,?,?,?,?,?,?)}";
+        Xjdbc.query(sql, "NPP01", "NSS01", "SP13", "San Pham 12", 12,"LSP01",
+                    12, XDate.toDate("16-11-2021", "dd-MM-yyyy"), "Chai", 12, "");
+        
     }
 }
