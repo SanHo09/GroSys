@@ -17,6 +17,7 @@ import utils.Auth;
 import utils.HeaderColor;
 import utils.MsgBox;
 import utils.XImage;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -312,7 +313,11 @@ public class NhanVien extends javax.swing.JPanel {
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
         // TODO add your handling code here:
-        this.delete();
+        if(rdoQuanLy.isSelected()){
+            MsgBox.alert(this, "Không thể xóa quản lý");
+        }else{
+            this.delete();
+        }
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
@@ -385,6 +390,7 @@ public class NhanVien extends javax.swing.JPanel {
     int row=-1;
     
     void insert(){
+        if(!validates()) return;
         Nhanvien nv = getFrom();
         try {
                dao.insert(nv);this.fillTable();this.clearFrom();
@@ -479,4 +485,32 @@ public class NhanVien extends javax.swing.JPanel {
         return nv;
     }
     
+    boolean validates(){
+        if (txtMaNV.getText().equals("")) {
+            MsgBox.alert(this, "Mã nhân viên không được để trống");
+            txtMaNV.requestFocus();
+            return false;
+        }
+        if (txtTenNV.getText().equals("")) {
+            MsgBox.alert(this, "Tên nhân viên không được để trống");
+            txtTenNV.requestFocus();
+            return false;
+        }
+        if (txtSDT.getText().matches("")) {
+            MsgBox.alert(this, "SĐT không được để trống");
+            txtSDT.requestFocus();
+            return false;
+        }
+        if (txtEmail.getText().matches("")) {
+            MsgBox.alert(this, "Email nhân viên không được để trống");
+            txtEmail.requestFocus();
+            return false;
+        }
+        if (txtMatKhau.getText().matches("")) {
+            MsgBox.alert(this, "Mật khẩu không được để trống");
+            txtMatKhau.requestFocus();
+            return false;
+        }
+        return true;
+    }
 }
