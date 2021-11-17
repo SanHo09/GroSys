@@ -21,8 +21,7 @@ import utils.Xjdbc;
 public class tets {
     
     public static void main(String[] args) throws SQLException {
-        SanPhamDAO dao = new SanPhamDAO();
-        SanPham sp = dao.selectById("Sp01");
-        System.out.println(sp.getTenLSP());
+        LoaiSanPhamDAO dap = new LoaiSanPhamDAO();
+        System.out.println(dap.selectById("LSP01").getMaLSP());
     }
 }

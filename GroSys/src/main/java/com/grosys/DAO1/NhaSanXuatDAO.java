@@ -83,5 +83,10 @@ public class NhaSanXuatDAO extends GrosysDAO<NhaSanXuat, String>{
         }
         return list;
     }
+    public List<NhaSanXuat> selectByNhaphanPhoi(String maNPP) {
+       String sql ="Select * from nhasanxuat where MaNPP=?";
+       return this.selectBySql(sql,maNPP);
     }
+    }
+
     

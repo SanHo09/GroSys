@@ -5,6 +5,7 @@
  */
 package utils;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
@@ -13,19 +14,27 @@ import java.util.Date;
  * @author Sang
  */
 public class XDate {
-    static SimpleDateFormat formatter = new SimpleDateFormat();
-    public static Date toDate(String date, String pattern) {
+     public static final SimpleDateFormat DATE_FORMATER = new SimpleDateFormat("yyyy-MM-dd");
+
+    public static Date toDate(String date,String...pattern){
         try {
-            formatter.applyPattern(pattern);
-            return formatter.parse(date);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            throw new RuntimeException(ex);
+            if(pattern.length>0)DATE_FORMATER.applyPattern(pattern[0]);
+            if(date==null)return XDate.now();
+            return DATE_FORMATER.parse(date);
+        } catch (ParseException ex) {
+            throw new RuntimeException(ex); 
         }
     }
-    public static String toString(Date date, String pattern) {
-        formatter.applyPattern(pattern);
-        return formatter.format(date);
+    
+    public static String toString(Date date, String...pattern){
+        if(pattern.length>0)DATE_FORMATER.applyPattern(pattern[0]);
+        if(date==null)date=XDate.now();
+        return DATE_FORMATER.format(date);
+    }
+
+    //lấy giờ hiện tại
+    public static Date now() {
+        return new Date();   //new Date lấy giờ hiện tại
     }
     public static Date addDays(Date date, long days)  {
         date.setTime(date.getTime() + days * 24 * 60 * 60 * 1000);

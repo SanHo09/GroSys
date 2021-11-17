@@ -27,27 +27,13 @@ public class SanPhamDAO extends GrosysDAO<SanPham, String>{
 
     
     public void insert(SanPham model) {
-        String sql ="{CALL sp_Them_SanPham (?,?,?,?,?,?,?,?,?,?,?,?)}";
+        String sql ="{CALL sp_Them_SanPham (?,?,?,?,?,?,?,?,?,?,?)}";
         Xjdbc.query(sql,
-                model.getMaSP(),
-                model.getTenSP(),
-                model.getMaLSP(),
-                model.getGiaBan(),
-                model.getHanSuDung(),
-                model.getDonViTinh(),
-                model.getSoLuong(),
-                model.getAnh(),
                 model.getMaNPP(),
                 model.getMaNSX(),
-                model.getTenNSX(),
-                model.getGiaNhap());
-    }
-
-    
-    public void update(SanPham model) {
-        String sql ="UPDATE SanPham SET TenSP=?, MaLSP=?, GiaBan=?, HanSuDung=?, DonViTinh=?, SoLuong=?, Anh=? WHERE MaSP=?";
-        Xjdbc.update(sql,
+                model.getMaSP(),
                 model.getTenSP(),
+                model.getGiaNhap(),
                 model.getMaLSP(),
                 model.getGiaBan(),
                 model.getHanSuDung(),
@@ -56,9 +42,22 @@ public class SanPhamDAO extends GrosysDAO<SanPham, String>{
                 model.getAnh());
     }
 
+public void update(SanPham model) {
+        String sql ="UPDATE SanPham SET TenSP=?, MaLSP=?, GiaBan=?, HanSuDung=?, DonViTinh=?, SoLuong=?, Anh=? WHERE MaSP=?";
+        Xjdbc.update(sql,
+                model.getTenSP(),
+                model.getMaLSP(),
+                model.getGiaBan(),
+                model.getHanSuDung(),
+                model.getDonViTinh(),
+                model.getSoLuong(),
+                model.getAnh(),
+                model.getMaSP());
+    }
+
     
     public void delete(String MaSP) {
-        String sql="{CALL sp_Xoa_SanPham WHERE MaSP(?)}";
+        String sql="{CALL sp_Xoa_SanPham(?)}";
         Xjdbc.query(sql, MaSP);
     }
 
@@ -132,6 +131,15 @@ public class SanPhamDAO extends GrosysDAO<SanPham, String>{
             throw new RuntimeException(ex);
         }
         return list;
+    }
+    public List<SanPham> selectbyNhaSanXuat(String MaNSX){    
+       String sql ="SELECT sp.MaSP, sp.TenSP, sp.MaLSP, lsp.TenLSP AS 'TenLSP', ct.GiaNhap, sp.GiaBan,\n" +
+"			sp.HanSuDung, sp.DonViTinh, sp.SoLuong, sp.Anh, nsx.MaNSX,nsx.TenNSX, ct.MaNPP\n" +
+"	FROM SanPham sp JOIN ChiTietHopDong ct ON sp.MaSP = ct.MaSP\n" +
+"					JOIN NhaSanXuat nsx ON ct.MaNSX = nsx.MaNSX\n" +
+"					JOIN LoaiSanPham lsp ON sp.MaLSP = lsp.MaLSP\n" +
+"					Where ct.MaNSX=?";
+        return this.selectBySql(sql, MaNSX);
     }
     
 }

@@ -3,7 +3,7 @@ GO
 
 -- report SanPham
 -- Nhằm load sản phẩm hiển thị lên bảng giao dịch
-CREATE PROC sp_LoadSanPham 
+CREATE PROC sp_LoadSanPham @MaNSX nvarchar(50)
 AS 
 BEGIN 
 	SELECT sp.MaSP, sp.TenSP, sp.MaLSP, lsp.TenLSP, sp.GiaBan,
@@ -11,7 +11,8 @@ BEGIN
 	FROM SanPham sp JOIN ChiTietHopDong ct ON sp.MaSP = ct.MaSP
 					JOIN NhaSanXuat nsx ON ct.MaNSX = nsx.MaNSX
 					JOIN LoaiSanPham lsp ON sp.MaLSP = lsp.MaLSP
-					
+					where nsx.MaNSX=@MaNSX;
+					 
 END
 
 GO
