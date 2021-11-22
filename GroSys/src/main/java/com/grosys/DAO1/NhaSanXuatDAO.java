@@ -52,7 +52,7 @@ public class NhaSanXuatDAO extends GrosysDAO<NhaSanXuat, String>{
 
     @Override
     public NhaSanXuat selectById(String id) {
-         String sql="SELECT * FROM HoaDon WHERE MaHD=?";
+         String sql="SELECT * FROM NhaSanXuat WHERE MaNSX=?";
         List<NhaSanXuat> list = selectBySql(sql, id);
         return list.size() > 0 ? list.get(0) : null;
     }
@@ -87,6 +87,6 @@ public class NhaSanXuatDAO extends GrosysDAO<NhaSanXuat, String>{
        String sql ="Select * from nhasanxuat where MaNPP=?";
        return this.selectBySql(sql,maNPP);
     }
-    }
+}
 
     

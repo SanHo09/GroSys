@@ -5,11 +5,14 @@
  */
 package com.grosys.UI;
 
+import com.grosys.DAO1.SanPhamDAO;
+import com.grosys.untity.SanPham;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.List;
 import javax.swing.DefaultCellEditor;
 import javax.swing.Icon;
 import javax.swing.ImageIcon;
@@ -41,11 +44,13 @@ public class GiaoDich extends javax.swing.JFrame {
      */
     JLabel lblThem = new JLabel();
     JLabel lblLoaiBo = new JLabel();
+    SanPhamDAO spDao = new SanPhamDAO();
+    
     public GiaoDich() {
         initComponents();
         prepareUI();
         fillToTableSanPham();
-        fillToTableGioHang();
+        
         
         
     }
@@ -457,7 +462,7 @@ public class GiaoDich extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        tblDanhSachSanPham.setRowHeight(25);
+        tblDanhSachSanPham.setRowHeight(30);
         tblDanhSachSanPham.setSelectionBackground(new java.awt.Color(230, 111, 71));
         tblDanhSachSanPham.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         tblDanhSachSanPham.setShowGrid(true);
@@ -496,11 +501,11 @@ public class GiaoDich extends javax.swing.JFrame {
 
             },
             new String [] {
-                "MaSP", "TenSP", "SoLuongMua", "TenNSX", "GiaBan", "Anh", "Loai Bo"
+                "TenSP", "TenNSX", "GiaBan", "SoLuongMua", "Anh", "Loai Bo"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false, false, false, false
+                false, false, false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -513,6 +518,11 @@ public class GiaoDich extends javax.swing.JFrame {
         tblGiohang.setShowGrid(true);
         tblGiohang.setShowVerticalLines(false);
         tblGiohang.getTableHeader().setReorderingAllowed(false);
+        tblGiohang.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblGiohangMouseClicked(evt);
+            }
+        });
         jScrollPane14.setViewportView(tblGiohang);
 
         jLabel13.setBackground(new java.awt.Color(102, 102, 102));
@@ -821,7 +831,7 @@ public class GiaoDich extends javax.swing.JFrame {
     private void tblDanhSachSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDanhSachSanPhamMouseClicked
         // TODO add your handling code here:
         if(tblDanhSachSanPham.getSelectedColumn()==6) {
-            System.out.println(tblDanhSachSanPham.getValueAt(tblDanhSachSanPham.getSelectedRow(), 0));
+            addToCard();
         }
     }//GEN-LAST:event_tblDanhSachSanPhamMouseClicked
 
@@ -846,6 +856,13 @@ public class GiaoDich extends javax.swing.JFrame {
         // TODO add your handling code here:
         setForm(pnlChiTiet);
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void tblGiohangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGiohangMouseClicked
+        // TODO add your handling code here:
+        if(tblGiohang.getSelectedColumn()==5) {
+            removeFromCard();
+        }
+    }//GEN-LAST:event_tblGiohangMouseClicked
 
     /**
      * @param args the command line arguments
@@ -987,50 +1004,26 @@ public class GiaoDich extends javax.swing.JFrame {
 
     private void fillToTableSanPham() {
         DefaultTableModel model = (DefaultTableModel)tblDanhSachSanPham.getModel();
-        Object[] obj1 = {
-            "SP01",
-            "Sản Phẩm 1",
-            10000,
-            50,
-            "Nhà Sản Xuất 1",
-            "Ảnh",
-            lblThem
-        };
-        Object[] obj2 = {
-            "SP02",
-            "Sản Phẩm 2",
-            10000,
-            50,
-            "Nhà Sản Xuất 2",
-            "Ảnh",
-            lblThem
-        };
-        Object[] obj3 = {
-            "SP03",
-            "Sản Phẩm 2",
-            10000,
-            50,
-            "Nhà Sản Xuất 2",
-            "Ảnh",
-            lblThem
-        };
-        model.addRow(obj1);
-        model.addRow(obj2);
-        model.addRow(obj3);
+        model.setRowCount(0);
+        List<SanPham> list = spDao.selectAll();
+        for(SanPham i: list) {
+            Object[] obj = {
+                i.getMaSP(),
+                i.getTenSP(),
+                i.getGiaBan(),
+                i.getSoLuong(),
+                i.getTenNSX(),
+                i.getAnh(),
+                lblThem
+            };
+            model.addRow(obj);
+        }
+        
+        
     }
     
     void fillToTableGioHang() {
-        DefaultTableModel model = (DefaultTableModel)tblGiohang.getModel();
-        Object[] obj1 = {
-            "SP01",
-            "Sản Phẩm 1",
-            10000,
-            "Nhà Sản Xuất 1",
-            50000,
-            "Ảnh",
-            lblLoaiBo
-        };
-        model.addRow(obj1);
+        
     }
     
     
@@ -1068,6 +1061,48 @@ public class GiaoDich extends javax.swing.JFrame {
         }
     }
     
+    private void addToCard() {
+        int selectRow = tblDanhSachSanPham.getSelectedRow();
+        String tenSP = String.valueOf(tblDanhSachSanPham.getValueAt(selectRow, 1));
+        String tenNSX = String.valueOf(tblDanhSachSanPham.getValueAt(selectRow, 4));
+        String anh = String.valueOf(tblDanhSachSanPham.getValueAt(selectRow, 5));
+        double giaBan = Double.parseDouble(String.valueOf(tblDanhSachSanPham.getValueAt(selectRow, 2)));
+        int soLuong = 1;
+        // xem có tồn tại sản phẩm trong giỏ hàng chưa, nều rồi, tăng số lượng mua 
+        boolean exist = true;
+        for(int i=0;i<tblGiohang.getRowCount();i++) {
+            int soLuongMua = Integer.parseInt(String.valueOf(tblGiohang.getValueAt(i, 3)));
+            if(tenSP.equalsIgnoreCase(String.valueOf(tblGiohang.getValueAt(i, 0)))) {
+                exist = false;
+                tblGiohang.setValueAt(soLuongMua+1, i, 3);
+                break;
+            }
+        }
+        if(exist==true) {
+            DefaultTableModel model = (DefaultTableModel)tblGiohang.getModel();
+            Object[] row = {
+                tenSP,
+                tenNSX,
+                giaBan,
+                soLuong,
+                anh,
+                lblLoaiBo   
+            };
+
+            model.addRow(row);
+        }
+    }
+    
+    private void removeFromCard() {
+        int row = tblGiohang.getSelectedRow();
+        int soLuongMua = Integer.parseInt(String.valueOf(tblGiohang.getValueAt(row, 3)));
+        DefaultTableModel model = (DefaultTableModel)tblGiohang.getModel();
+        if(soLuongMua == 1) {
+            model.removeRow(row);
+        } else {
+            tblGiohang.setValueAt(soLuongMua-1, row, 3);
+        }
+    }
     
     
 }

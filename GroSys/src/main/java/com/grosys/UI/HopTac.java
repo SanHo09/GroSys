@@ -5,7 +5,17 @@
  */
 package com.grosys.UI;
 
+import com.grosys.DAO1.NhaPhanPhoiDAO;
+import com.grosys.DAO1.NhaSanXuatDAO;
+import com.grosys.untity.NhaPhanPhoi;
+import com.grosys.untity.NhaSanXuat;
+import java.awt.Color;
+import java.util.List;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableModel;
 import utils.HeaderColor;
+import utils.RoundedPanel;
+import utils.XDate;
 
 /**
  *
@@ -16,9 +26,16 @@ public class HopTac extends javax.swing.JPanel {
     /**
      * Creates new form HopTac
      */
+    
+    NhaSanXuatDAO nsxDao = new NhaSanXuatDAO();
+    NhaPhanPhoiDAO nppDao = new NhaPhanPhoiDAO();
+    
     public HopTac() {
         initComponents();
         prepareUI();
+        fillToComboBox();
+        fillToTableNSX();
+        fillToTableNPP();
     }
 
     /**
@@ -43,13 +60,13 @@ public class HopTac extends javax.swing.JPanel {
         jLabel5 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         txtDiaChiNSX = new javax.swing.JTextArea();
-        btnSuaNSX = new javax.swing.JPanel();
+        btnSuaNSX = new RoundedPanel(12);
         jLabel6 = new javax.swing.JLabel();
-        btnMoiNSX = new javax.swing.JPanel();
+        btnMoiNSX = new RoundedPanel(12);
         jLabel7 = new javax.swing.JLabel();
-        btnThemNSX = new javax.swing.JPanel();
+        btnThemNSX = new RoundedPanel(12);
         jLabel8 = new javax.swing.JLabel();
-        btnXoaNSX = new javax.swing.JPanel();
+        btnXoaNSX = new RoundedPanel(12);
         jLabel9 = new javax.swing.JLabel();
         jScrollPane11 = new javax.swing.JScrollPane();
         tblNSX = new javax.swing.JTable();
@@ -65,13 +82,13 @@ public class HopTac extends javax.swing.JPanel {
         jLabel13 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         txtDiaChiNPP = new javax.swing.JTextArea();
-        btnThemNPP = new javax.swing.JPanel();
+        btnThemNPP = new RoundedPanel(12);
         jLabel14 = new javax.swing.JLabel();
-        btnSuaNPP = new javax.swing.JPanel();
+        btnSuaNPP = new RoundedPanel(12);
         jLabel15 = new javax.swing.JLabel();
-        btnXoaNPP = new javax.swing.JPanel();
+        btnXoaNPP = new RoundedPanel(12);
         jLabel16 = new javax.swing.JLabel();
-        btnMoiNPP = new javax.swing.JPanel();
+        btnMoiNPP = new RoundedPanel(12);
         jLabel17 = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(255, 255, 255));
@@ -104,14 +121,16 @@ public class HopTac extends javax.swing.JPanel {
         jLabel5.setText("Địa chỉ:");
         tabNhaSanXuat.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 280, -1, -1));
 
-        txtDiaChiNSX.setColumns(20);
+        txtDiaChiNSX.setColumns(15);
         txtDiaChiNSX.setRows(5);
+        txtDiaChiNSX.setTabSize(5);
         jScrollPane2.setViewportView(txtDiaChiNSX);
 
         tabNhaSanXuat.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 310, 180, 100));
 
         btnSuaNSX.setBackground(new java.awt.Color(10, 102, 194));
         btnSuaNSX.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSuaNSX.setOpaque(false);
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -135,7 +154,13 @@ public class HopTac extends javax.swing.JPanel {
         tabNhaSanXuat.add(btnSuaNSX, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 440, 80, 30));
 
         btnMoiNSX.setBackground(new java.awt.Color(10, 102, 194));
+        btnMoiNSX.setOpaque(false);
         btnMoiNSX.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMoiNSX.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMoiNSXMouseClicked(evt);
+            }
+        });
 
         jLabel7.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel7.setForeground(new java.awt.Color(255, 255, 255));
@@ -160,6 +185,12 @@ public class HopTac extends javax.swing.JPanel {
 
         btnThemNSX.setBackground(new java.awt.Color(10, 102, 194));
         btnThemNSX.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnThemNSX.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnThemNSXMouseClicked(evt);
+            }
+        });
+        btnThemNSX.setOpaque(false);
 
         jLabel8.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(255, 255, 255));
@@ -184,6 +215,7 @@ public class HopTac extends javax.swing.JPanel {
 
         btnXoaNSX.setBackground(new java.awt.Color(10, 102, 194));
         btnXoaNSX.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnXoaNSX.setOpaque(false);
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -212,11 +244,11 @@ public class HopTac extends javax.swing.JPanel {
 
             },
             new String [] {
-                "MaNSX", "TenNSX", "TenNPP", "DiaChi"
+                "MaNSX", "TenNSX", "DiaChi"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, false
+                false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -249,11 +281,11 @@ public class HopTac extends javax.swing.JPanel {
 
             },
             new String [] {
-                "MaNPP", "TenNPP", "DiaChi"
+                "MaNPP", "TenNPP", "DiaChi", "NamHopTac"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false, false, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -298,6 +330,12 @@ public class HopTac extends javax.swing.JPanel {
 
         btnThemNPP.setBackground(new java.awt.Color(10, 102, 194));
         btnThemNPP.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnThemNPP.setOpaque(false);
+        btnThemNPP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnThemNPPMouseClicked(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
@@ -322,6 +360,7 @@ public class HopTac extends javax.swing.JPanel {
 
         btnSuaNPP.setBackground(new java.awt.Color(10, 102, 194));
         btnSuaNPP.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnSuaNPP.setOpaque(false);
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
@@ -346,6 +385,7 @@ public class HopTac extends javax.swing.JPanel {
 
         btnXoaNPP.setBackground(new java.awt.Color(10, 102, 194));
         btnXoaNPP.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnXoaNPP.setOpaque(false);
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
@@ -370,6 +410,12 @@ public class HopTac extends javax.swing.JPanel {
 
         btnMoiNPP.setBackground(new java.awt.Color(10, 102, 194));
         btnMoiNPP.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnMoiNPP.setOpaque(false);
+        btnMoiNPP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMoiNPPMouseClicked(evt);
+            }
+        });
 
         jLabel17.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel17.setForeground(new java.awt.Color(255, 255, 255));
@@ -408,16 +454,43 @@ public class HopTac extends javax.swing.JPanel {
 
     private void cbbNhaPhanPhoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbNhaPhanPhoiActionPerformed
         // TODO add your handling code here:
+        fillToTableNSX();
     }//GEN-LAST:event_cbbNhaPhanPhoiActionPerformed
 
     private void tblNSXMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNSXMouseClicked
         // TODO add your handling code here:
-
+        String maNsx = String.valueOf(tblNSX.getValueAt(tblNSX.getSelectedRow(), 0));
+        NhaSanXuat nsx = nsxDao.selectById(maNsx);
+        setFormNSX(nsx);
+        updateStatusNSX(false);
     }//GEN-LAST:event_tblNSXMouseClicked
 
     private void tblNPPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNPPMouseClicked
         // TODO add your handling code here:
+        String maNpp = String.valueOf(tblNPP.getValueAt(tblNPP.getSelectedRow(), 0));
+        NhaPhanPhoi npp = nppDao.selectById(maNpp);
+        setFormNPP(npp);
+        updateStatusNPP(false);
     }//GEN-LAST:event_tblNPPMouseClicked
+
+    private void btnThemNSXMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemNSXMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnThemNSXMouseClicked
+
+    private void btnMoiNSXMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMoiNSXMouseClicked
+        // TODO add your handling code here:
+        updateStatusNSX(true);
+    }//GEN-LAST:event_btnMoiNSXMouseClicked
+
+    private void btnMoiNPPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMoiNPPMouseClicked
+        // TODO add your handling code here:
+        updateStatusNPP(true);
+    }//GEN-LAST:event_btnMoiNPPMouseClicked
+
+    private void btnThemNPPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemNPPMouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_btnThemNPPMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -470,4 +543,113 @@ public class HopTac extends javax.swing.JPanel {
         tblNSX.getTableHeader().setDefaultRenderer(new HeaderColor());
         tblNPP.getTableHeader().setDefaultRenderer(new HeaderColor());
     }
+
+    private void fillToTableNSX() {
+        NhaPhanPhoi npp = (NhaPhanPhoi)cbbNhaPhanPhoi.getSelectedItem();
+        List<NhaSanXuat> list = nsxDao.selectByNhaphanPhoi(npp.getMaNPP());
+        DefaultTableModel model = (DefaultTableModel)tblNSX.getModel();
+        model.setRowCount(0);
+        for(NhaSanXuat i: list) {
+            Object[] row = {
+                i.getMaNSX(),
+                i.getTenNSX(),
+                i.getDiaChi(),
+                
+            };
+            model.addRow(row);
+        }
+        
+    }
+
+    private void fillToComboBox() {
+        List<NhaPhanPhoi> list = nppDao.selectAll();
+        DefaultComboBoxModel model = (DefaultComboBoxModel)cbbNhaPhanPhoi.getModel();
+        for(NhaPhanPhoi i : list) {
+            model.addElement(i);
+        }
+    }
+    
+    private void setFormNSX(NhaSanXuat nsx) {
+        txtMaNSX.setText(nsx.getMaNSX());
+        txtTenNSX.setText(nsx.getTenNSX());
+        txtDiaChiNSX.setText(nsx.getDiaChi());
+    }
+    
+    private void updateStatusNSX(boolean flag) {
+        // Moi 
+        if(flag==true) {
+            btnThemNSX.setBackground(new Color(10,102,194));
+            btnSuaNSX.setBackground(new Color(12,68,124));
+            btnXoaNSX.setBackground(new Color(12,68,124));
+        } else {
+            btnThemNSX.setBackground(new Color(12,68,124));
+            btnSuaNSX.setBackground(new Color(10,102,194));
+            btnXoaNSX.setBackground(new Color(10,102,194));
+        }
+    }
+    
+    private void updateStatusNPP(boolean flag) {
+        // Moi 
+        if(flag==true) {
+            btnThemNPP.setBackground(new Color(10,102,194));
+            btnSuaNPP.setBackground(new Color(12,68,124));
+            btnXoaNPP.setBackground(new Color(12,68,124));
+        } else {
+            btnThemNPP.setBackground(new Color(12,68,124));
+            btnSuaNPP.setBackground(new Color(10,102,194));
+            btnXoaNPP.setBackground(new Color(10,102,194));
+        }
+    }
+
+    private void fillToTableNPP() {
+        List<NhaPhanPhoi> list = nppDao.selectAll();
+        DefaultTableModel model = (DefaultTableModel)tblNPP.getModel();
+        for(NhaPhanPhoi i:list) {
+            Object[] obj = {
+                i.getMaNPP(),
+                i.getTenNPP(),
+                i.getDiaChi(),
+                i.getNamHoptac()
+            };
+            model.addRow(obj);
+        }
+    }
+    
+    private void setFormNPP(NhaPhanPhoi npp) {
+        txtMaNPP.setText(npp.getMaNPP());
+        txtTenNPP.setText(npp.getTenNPP());
+        txtDiaChiNPP.setText(npp.getDiaChi());
+    }
+    
+    private NhaSanXuat getFormNSX() {
+        String maNSX = txtMaNSX.getText();
+        String maNPP = String.valueOf(cbbNhaPhanPhoi.getSelectedItem());
+        String tenNSX = txtTenNSX.getText();
+        String diaChi = txtDiaChiNSX.getText();
+        
+        NhaSanXuat nsx = new NhaSanXuat();
+        nsx.setMaNSX(maNSX);
+        nsx.setMaNPP(maNPP);
+        nsx.setTenNSX(tenNSX);
+        nsx.setDiaChi(diaChi);
+        
+        return nsx;
+    }
+    
+    private NhaPhanPhoi getFormNPP() {
+        String maNPP = txtMaNPP.getText();
+        String tenNPP = txtTenNPP.getText();
+        String diaChi = txtDiaChiNPP.getText();
+        
+        NhaPhanPhoi npp = new NhaPhanPhoi();
+        npp.setMaNPP(maNPP);
+        npp.setTenNPP(tenNPP);
+        npp.setDiaChi(diaChi);
+        npp.setNamHoptac(XDate.now());
+        
+        return npp;
+    }
+
+    
+    
 }

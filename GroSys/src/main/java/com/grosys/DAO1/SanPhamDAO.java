@@ -28,7 +28,7 @@ public class SanPhamDAO extends GrosysDAO<SanPham, String>{
     
     public void insert(SanPham model) {
         String sql ="{CALL sp_Them_SanPham (?,?,?,?,?,?,?,?,?,?,?)}";
-        Xjdbc.query(sql,
+        Xjdbc.update(sql,
                 model.getMaNPP(),
                 model.getMaNSX(),
                 model.getMaSP(),
@@ -58,7 +58,7 @@ public void update(SanPham model) {
     
     public void delete(String MaSP) {
         String sql="{CALL sp_Xoa_SanPham(?)}";
-        Xjdbc.query(sql, MaSP);
+        Xjdbc.update(sql, MaSP);
     }
 
     
@@ -69,7 +69,8 @@ public void update(SanPham model) {
         try {
             while(rs.next()) {
                 SanPham model = new SanPham();
-                model.setMaNSX(rs.getString("MaNSX"));                                           
+                model.setMaNSX(rs.getString("MaNSX"));  
+                model.setTenNSX(rs.getString("TenNSX"));
                 model.setMaSP(rs.getString("MaSP"));
                 model.setTenSP(rs.getString("TenSP"));
                 model.setGiaNhap(rs.getDouble("GiaNhap"));
@@ -80,6 +81,7 @@ public void update(SanPham model) {
                 model.setDonViTinh(rs.getString("DonViTinh"));
                 model.setSoLuong(rs.getInt("SoLuong"));
                 model.setAnh(rs.getString("Anh"));
+                
                 
                 list.add(model);
             }

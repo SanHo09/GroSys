@@ -59,10 +59,7 @@ public class NhanVien extends javax.swing.JPanel {
         rdoNhanVien = new javax.swing.JRadioButton();
         rdoQuanLy = new javax.swing.JRadioButton();
         jLabel19 = new javax.swing.JLabel();
-        txtMatKhau = new javax.swing.JTextField();
         jLabel20 = new javax.swing.JLabel();
-        jLabel21 = new javax.swing.JLabel();
-        txtXacNhan = new javax.swing.JTextField();
         btnThem = new javax.swing.JButton();
         btnXoa = new javax.swing.JButton();
         btnMoi = new javax.swing.JButton();
@@ -75,6 +72,10 @@ public class NhanVien extends javax.swing.JPanel {
         jLabel3 = new javax.swing.JLabel();
         btnXuatFileExcel1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
+        txtXacNhan = new javax.swing.JPasswordField();
+        txtMatKhau = new javax.swing.JPasswordField();
+        chkHienMatKhau = new javax.swing.JCheckBox();
+        jLabel22 = new javax.swing.JLabel();
 
         jLabel16.setText("Mã Nhân Viên:");
 
@@ -111,7 +112,7 @@ public class NhanVien extends javax.swing.JPanel {
         });
         jScrollPane11.setViewportView(tblNhanVien);
 
-        add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 375, 720, 160));
+        add(jScrollPane11, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 385, 720, 150));
 
         lblAnh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAnh.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8_contacts_150px_1.png"))); // NOI18N
@@ -133,6 +134,12 @@ public class NhanVien extends javax.swing.JPanel {
         jLabel17.setText("Số Điện Thoại:");
         add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(263, 155, 93, -1));
         add(txtSDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(383, 151, 331, -1));
+
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailActionPerformed(evt);
+            }
+        });
         add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(383, 207, 331, -1));
 
         jLabel18.setText("Email:");
@@ -148,14 +155,9 @@ public class NhanVien extends javax.swing.JPanel {
 
         jLabel19.setText("Vai Trò:");
         add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(263, 255, 93, -1));
-        add(txtMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(383, 295, 331, -1));
 
         jLabel20.setText("Mật Khẩu:");
-        add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(263, 299, 93, -1));
-
-        jLabel21.setText("Xác Nhận:");
-        add(jLabel21, new org.netbeans.lib.awtextra.AbsoluteConstraints(263, 337, 93, -1));
-        add(txtXacNhan, new org.netbeans.lib.awtextra.AbsoluteConstraints(383, 333, 331, -1));
+        add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 293, 93, -1));
 
         btnThem.setBackground(new java.awt.Color(73, 164, 255));
         btnThem.setFont(new java.awt.Font("Tahoma", 1, 18)); // NOI18N
@@ -288,6 +290,19 @@ public class NhanVien extends javax.swing.JPanel {
         );
 
         add(btnXuatFileExcel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 540, 130, 30));
+        add(txtXacNhan, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 320, 330, -1));
+        add(txtMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 290, 330, -1));
+
+        chkHienMatKhau.setText("Hiện Mật Khẩu");
+        chkHienMatKhau.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                chkHienMatKhauActionPerformed(evt);
+            }
+        });
+        add(chkHienMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 350, -1, -1));
+
+        jLabel22.setText("Xác Nhận:");
+        add(jLabel22, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 323, 93, -1));
     }// </editor-fold>//GEN-END:initComponents
 
     private void tblNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblNhanVienMouseClicked
@@ -303,12 +318,10 @@ public class NhanVien extends javax.swing.JPanel {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-        if(!txtMatKhau.getText().equals(txtXacNhan.getText())) {
-            MsgBox.alert(this, "2 mật khẩu không trùng nhau");
+        if(validates()) {
+           insert();
         }
-        else {
-            this.insert();
-        }
+        
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
@@ -327,8 +340,24 @@ public class NhanVien extends javax.swing.JPanel {
 
     private void btnMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiActionPerformed
         // TODO add your handling code here:
+        
         this.clearFrom();
     }//GEN-LAST:event_btnMoiActionPerformed
+
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtEmailActionPerformed
+
+    private void chkHienMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_chkHienMatKhauActionPerformed
+        // TODO add your handling code here:
+        if(chkHienMatKhau.isSelected()){
+            txtMatKhau.setEchoChar((char)0);
+            txtXacNhan.setEchoChar((char)0);
+        } else {
+            txtMatKhau.setEchoChar('*');
+            txtXacNhan.setEchoChar('*');
+        }
+    }//GEN-LAST:event_chkHienMatKhauActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -341,6 +370,7 @@ public class NhanVien extends javax.swing.JPanel {
     private javax.swing.JButton btnXoa;
     private javax.swing.JPanel btnXuatFileExcel;
     private javax.swing.JPanel btnXuatFileExcel1;
+    private javax.swing.JCheckBox chkHienMatKhau;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
@@ -350,7 +380,7 @@ public class NhanVien extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel20;
-    private javax.swing.JLabel jLabel21;
+    private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane11;
@@ -361,10 +391,10 @@ public class NhanVien extends javax.swing.JPanel {
     private javax.swing.JTable tblNhanVien;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtMaNV;
-    private javax.swing.JTextField txtMatKhau;
+    private javax.swing.JPasswordField txtMatKhau;
     private javax.swing.JTextField txtSDT;
     private javax.swing.JTextField txtTenNV;
-    private javax.swing.JTextField txtXacNhan;
+    private javax.swing.JPasswordField txtXacNhan;
     // End of variables declaration//GEN-END:variables
 
     private void prepareUI() {
@@ -390,10 +420,10 @@ public class NhanVien extends javax.swing.JPanel {
     int row=-1;
     
     void insert(){
-        if(!validates()) return;
         Nhanvien nv = getFrom();
         try {
-               dao.insert(nv);this.fillTable();this.clearFrom();
+               dao.insert(nv);this.fillTable();
+               this.clearFrom();
                MsgBox.alert(this, "Thêm mới thành công");
            } catch (Exception e) {
                
@@ -430,8 +460,10 @@ public class NhanVien extends javax.swing.JPanel {
     
     void clearFrom(){
         Nhanvien nv = new Nhanvien();
+        nv.setAnh("user.png");
         this.setFrom(nv);
         this.row = -1;
+        txtMaNV.setEnabled(true);
     }
     
     void edit(){
@@ -461,12 +493,14 @@ public class NhanVien extends javax.swing.JPanel {
     }
     
     void setFrom(Nhanvien nv){
+        txtMaNV.setEnabled(false);
         txtMaNV.setText(nv.getMaNV());
         txtTenNV.setText(nv.getHoten());
         txtSDT.setText(nv.getSDT());
         txtEmail.setText(nv.getEmail());
         rdoNhanVien.setSelected(nv.isVaitro());
         rdoQuanLy.setSelected(nv.isVaitro());
+        rdoNhanVien.setSelected(!nv.isVaitro());
         txtMatKhau.setText(nv.getMatkhau());
         txtXacNhan.setText(nv.getMatkhau());
         lblAnh.setIcon(XImage.read(nv.getAnh(), lblAnh));
@@ -486,8 +520,14 @@ public class NhanVien extends javax.swing.JPanel {
     }
     
     boolean validates(){
+        Nhanvien nv = dao.selectById(txtMaNV.getText());
         if (txtMaNV.getText().equals("")) {
             MsgBox.alert(this, "Mã nhân viên không được để trống");
+            txtMaNV.requestFocus();
+            return false;
+        }
+        if(nv!=null) {
+            MsgBox.alert(this, "Nhân Viên đã tồn tại");
             txtMaNV.requestFocus();
             return false;
         }
@@ -510,6 +550,9 @@ public class NhanVien extends javax.swing.JPanel {
             MsgBox.alert(this, "Mật khẩu không được để trống");
             txtMatKhau.requestFocus();
             return false;
+        }
+        if(!txtMatKhau.getText().equals(txtXacNhan.getText())) {
+            MsgBox.alert(this, "2 mật khẩu không trùng nhau");
         }
         return true;
     }

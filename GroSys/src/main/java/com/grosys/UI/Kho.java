@@ -42,14 +42,14 @@ public class Kho extends javax.swing.JPanel {
     NhaSanXuatDAO nsxDao = new NhaSanXuatDAO();
     NhaPhanPhoiDAO nppDao = new NhaPhanPhoiDAO();
     LoaiSanPhamDAO lspdao=new LoaiSanPhamDAO();
-    
+    boolean themSanPham = true;
     public Kho() {
         initComponents();
         prepareUI();
         fillComboBoxNPP();
         fillToComboboxLSP();
         this.row=-1;
-         ClearForm();
+        
     }
     
     
@@ -97,12 +97,6 @@ public class Kho extends javax.swing.JPanel {
         btnLast = new javax.swing.JButton();
         lblAnh = new javax.swing.JLabel();
         txtHanSuDung1 = new javax.swing.JTextField();
-        lblmasp = new javax.swing.JLabel();
-        lbltensp = new javax.swing.JLabel();
-        lblsoluong = new javax.swing.JLabel();
-        lblgiaban = new javax.swing.JLabel();
-        lblhansudung = new javax.swing.JLabel();
-        lblgianhap = new javax.swing.JLabel();
         pnlCbbNhaPhanPhoi = new javax.swing.JPanel();
         cbbNhaSanXuat = new javax.swing.JComboBox<>();
         pnlCbbNhaSanXuat1 = new javax.swing.JPanel();
@@ -249,8 +243,8 @@ public class Kho extends javax.swing.JPanel {
         jLabel19.setText("Số Lượng:");
         tabsCapNhatSanPham.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(365, 147, 103, -1));
 
-        jLabel20.setText("Hạn Sử Dụng:");
-        tabsCapNhatSanPham.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 270, 103, -1));
+        jLabel20.setText("Hạn Sử Dụng: (Năm - Tháng - Ngày)");
+        tabsCapNhatSanPham.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 270, 210, -1));
 
         cbbDonViTinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "bịch", "chai", "lon", "hộp" }));
         cbbDonViTinh.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -368,30 +362,6 @@ public class Kho extends javax.swing.JPanel {
         txtHanSuDung1.setForeground(new java.awt.Color(51, 102, 255));
         tabsCapNhatSanPham.add(txtHanSuDung1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, 288, -1));
 
-        lblmasp.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        lblmasp.setForeground(new java.awt.Color(255, 0, 0));
-        tabsCapNhatSanPham.add(lblmasp, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 30, 160, 20));
-
-        lbltensp.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        lbltensp.setForeground(new java.awt.Color(255, 51, 51));
-        tabsCapNhatSanPham.add(lbltensp, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 93, 170, 20));
-
-        lblsoluong.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        lblsoluong.setForeground(new java.awt.Color(255, 51, 51));
-        tabsCapNhatSanPham.add(lblsoluong, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 160, 180, 20));
-
-        lblgiaban.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        lblgiaban.setForeground(new java.awt.Color(255, 51, 51));
-        tabsCapNhatSanPham.add(lblgiaban, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 220, 180, 20));
-
-        lblhansudung.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        lblhansudung.setForeground(new java.awt.Color(255, 0, 0));
-        tabsCapNhatSanPham.add(lblhansudung, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 280, 160, 20));
-
-        lblgianhap.setFont(new java.awt.Font("Tahoma", 1, 10)); // NOI18N
-        lblgianhap.setForeground(new java.awt.Color(255, 51, 51));
-        tabsCapNhatSanPham.add(lblgianhap, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 220, 150, 20));
-
         tabsanpham.addTab("Cập nhật sản phẩm", tabsCapNhatSanPham);
 
         pnlCbbNhaPhanPhoi.setBackground(new java.awt.Color(255, 255, 255));
@@ -452,10 +422,11 @@ public class Kho extends javax.swing.JPanel {
     private void tblDanhSachSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDanhSachSanPhamMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount()==2) {
-             
+            
             this.row=tblDanhSachSanPham.getSelectedRow();
             tabsanpham.setSelectedIndex(1);
             this.edit();
+            
         }
         
     }//GEN-LAST:event_tblDanhSachSanPhamMouseClicked
@@ -497,7 +468,7 @@ public class Kho extends javax.swing.JPanel {
 
     private void cbbNhaPhanPhoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbbNhaPhanPhoiActionPerformed
         // TODO add your handling code here:
-        fillComboBoxNPP();
+        fillToComboboxNSX();
     }//GEN-LAST:event_cbbNhaPhanPhoiActionPerformed
 
     private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
@@ -507,9 +478,9 @@ public class Kho extends javax.swing.JPanel {
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         // TODO add your handling code here:
-        Batloi();
-        if (loi==0) {
-        insert();   
+        this.themSanPham = true;
+        if (Batloi()) {
+            insert();
         }
         
     }//GEN-LAST:event_btnThemActionPerformed
@@ -521,16 +492,16 @@ public class Kho extends javax.swing.JPanel {
 
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
         // TODO add your handling code here:
-        Batloi();
-        if (loi==0) {
-        update();   
+        this.themSanPham = false;
+        if (Batloi()) {
+            update();
         }
+        fillTable();
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnMoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoiActionPerformed
         // TODO add your handling code here:
             
-        
         ClearForm();
         this.row =-1;
         updateStatus();
@@ -584,12 +555,6 @@ public class Kho extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JLabel lblAnh;
-    private javax.swing.JLabel lblgiaban;
-    private javax.swing.JLabel lblgianhap;
-    private javax.swing.JLabel lblhansudung;
-    private javax.swing.JLabel lblmasp;
-    private javax.swing.JLabel lblsoluong;
-    private javax.swing.JLabel lbltensp;
     private javax.swing.JPanel pnlCbbNhaPhanPhoi;
     private javax.swing.JPanel pnlCbbNhaSanXuat1;
     private javax.swing.JPanel tabsCapNhatSanPham;
@@ -704,7 +669,7 @@ public class Kho extends javax.swing.JPanel {
         btnThem.setEnabled(!edit);
         btnSua.setEnabled(edit);
         btnXoa.setEnabled(edit);
-        System.out.println(this.row);
+        
         //Trạng thái diều hướng
         btnFirst.setEnabled(edit&&!first);
         btnPrev.setEnabled(edit&&!first);
@@ -712,21 +677,29 @@ public class Kho extends javax.swing.JPanel {
         btnLast.setEnabled(edit&&!last);
     }
     
-    void setForm(SanPham sp){
-       
+    void setForm(SanPham sp){   
+
         LoaiSanPham lsp = lspdao.selectById(sp.getMaLSP());
+        
+        for(int i=0;i<cbbLoaiSanPham.getItemCount();i++) {
+            if(String.valueOf(cbbLoaiSanPham.getItemAt(i)).equalsIgnoreCase(lsp.getTenLSP())) 
+                cbbLoaiSanPham.setSelectedIndex(i);
+        }
+        cbbLoaiSanPham.getItemCount();
         txtMaSanPham.setText(sp.getMaSP());
         txtGiaBan.setText(String.valueOf(sp.getGiaBan()));
         txtHanSuDung1.setText(String.valueOf(sp.getHanSuDung()));
         txtSoLuong.setText(String.valueOf(sp.getSoLuong()));
         txtTenSanPham.setText(sp.getTenSP());
-        cbbLoaiSanPham.setSelectedItem(lsp);
+        
         if (sp.getAnh()!=null) {
             lblAnh.setToolTipText(sp.getAnh());
             lblAnh.setIcon(XImage.read(sp.getAnh(),lblAnh));
         }
+        
         cbbDonViTinh.setSelectedItem(sp.getDonViTinh());
         txtGiaNhap.setText(String.valueOf(sp.getGiaNhap()));    
+        
     }
     SanPham getForm(){
         SanPham sp =new SanPham();
@@ -736,11 +709,12 @@ public class Kho extends javax.swing.JPanel {
         sp.setMaSP(txtMaSanPham.getText());
         sp.setTenSP(txtTenSanPham.getText());
         sp.setDonViTinh((String)cbbDonViTinh.getSelectedItem());
-        sp.setTenLSP((String)cbbLoaiSanPham.getSelectedItem());
+        sp.setTenLSP(String.valueOf(cbbLoaiSanPham.getSelectedItem()));
         System.out.println(sp.getTenLSP());
         sp.setGiaNhap(Double.parseDouble(txtGiaNhap.getText()));
         sp.setGiaBan(Double.parseDouble(txtGiaBan.getText()));
         sp.setMaNSX(nsx.getMaNSX());
+        sp.setSoLuong(Integer.parseInt(txtSoLuong.getText()));
         sp.setMaNPP(npp.getMaNPP());
         sp.setMaLSP(lsp.getMaLSP());
         sp.setHanSuDung(XDate.toDate(txtHanSuDung1.getText()));
@@ -748,21 +722,16 @@ public class Kho extends javax.swing.JPanel {
         return sp;
     }
     void ClearForm(){
-        SanPham sp =new SanPham();
-            lblgiaban.setText("");
-            lblmasp.setText("");
-            lblgianhap.setText("");
-            lblhansudung.setText("");
-            lblsoluong.setText("");
-            lbltensp.setText("");
+        SanPham sp = new SanPham();
+        sp.setMaLSP("LSP01");
+        sp.setAnh("No_image.jpg");
         this.setForm(sp);
-        this.row=1;
+        this.row = 1;
         this.updateStatus();
     }
     void edit(){
-        String Masp =(String) tblDanhSachSanPham.getValueAt(this.row,0);
+        String Masp =(String)tblDanhSachSanPham.getValueAt(this.row,0);
         SanPham sp =dao.selectById(Masp);
-        System.out.println(this.row);
         this.setForm(sp);
         this.updateStatus();
     }
@@ -770,15 +739,14 @@ public class Kho extends javax.swing.JPanel {
         
         SanPham sp = getForm();
         
-          try {
+        try {
             MsgBox.alert(this, "Thêm Thành CÔng!");
-            dao.insert(sp);
-            this.fillTable();
             this.ClearForm();
-            
-        } catch (Exception e) {
+            this.fillTable();
+            dao.insert(sp);
 
-          
+        } catch (Exception e) {
+            this.fillTable();
         }
         
         
@@ -786,33 +754,38 @@ public class Kho extends javax.swing.JPanel {
     }
     void update(){
        
-          SanPham sp = getForm();
+        SanPham sp = getForm();
         try {
             MsgBox.alert(this, "Sửa Thành CÔng!");
-           
-            dao.update(sp);
             this.fillTable();
+            this.ClearForm();
+            dao.update(sp);
             
+
         } catch (Exception e) {
-            
-            e.printStackTrace();
-         
+
+            this.fillTable();
+
         }
         
         
     }
     void delete() {
-        if (MsgBox.confirm(this, "Bạn thực sự muốn xóa khóa học này?")) {
+        if (MsgBox.confirm(this, "Bạn thực sự muốn xóa Sản Phẩm này?")) {
             String MaSp= txtMaSanPham.getText();
             try {
-                dao.delete(MaSp);
                 this.fillTable();
-                this.ClearForm();
-                MsgBox.alert(this, "Xóa thành công!");
+                this.ClearForm();           
+                dao.delete(MaSp);
+                
             }  
             catch (Exception e) {
-                MsgBox.alert(this, " vui lòng kiểm tra khóa ngoại");
-                e.printStackTrace();
+                if(dao.selectById(MaSp)==null) 
+                    MsgBox.alert(this, "Xóa thành công!");
+                else
+                    MsgBox.alert(this, " vui lòng kiểm tra khóa ngoại");
+                this.fillTable();
+                
             }
         }
         
@@ -837,42 +810,38 @@ public class Kho extends javax.swing.JPanel {
        this.row++;
        this.edit();
     }
-    int loi=0;
-    void Batloi(){
-        loi=0;
+    
+    boolean Batloi(){
+        SanPham sp = dao.selectById(txtMaSanPham.getText());
+        if(sp!=null&&this.themSanPham==true) {
+            MsgBox.alert(this, "Trùng mã sản phẩm");
+            return false;
+        }
         if (txtGiaBan.getText().equals("0.0")) {
-            lblgiaban.setText("Bạn chưa nhập Giá bán");
-            loi++;
+            MsgBox.alert(this,"Bạn chưa nhập Giá bán");
+            return false;
         }
         if (txtMaSanPham.getText().equals("")) {
-            lblmasp.setText("Bạn chưa nhập Mã Sản Phẩm");
-            loi++;
+            MsgBox.alert(this,"Bạn chưa nhập Mã Sản Phẩm");
+            return false;
         }
         if (txtSoLuong.getText().equals("0")) {
-            lblsoluong.setText("Bạn chưa nhập số lượng");
-            loi++;
+            MsgBox.alert(this,"Bạn chưa nhập số lượng");
+            return false;
         }
         if (txtHanSuDung1.getText().equals("null")) {
-            lblhansudung.setText("Bạn chưa nhập hạn  sử dụng");
-            loi++;
+            MsgBox.alert(this,"Bạn chưa nhập hạn  sử dụng");
+            return false;
         }
         if (txtGiaNhap.getText().equals("0.0")) {
-            lblgianhap.setText("Bạn chưa nhập Giá nhập");
-            loi++;
+            MsgBox.alert(this,"Bạn chưa nhập Giá nhập");
+            return false;
         }
         if (txtTenSanPham.getText().equals("")) {
-            lbltensp.setText("Bạn chưa nhập tên sản phẩm");
-            loi++;
-        }
-        if (loi==0) {
-            lblgiaban.setText("");
-            lblmasp.setText("");
-            lblgianhap.setText("");
-            lblhansudung.setText("");
-            lblsoluong.setText("");
-            lbltensp.setText("");
-            
+            MsgBox.alert(this,"Bạn chưa nhập tên sản phẩm");
+            return false;
         }
         
+        return true;
     }
 }
