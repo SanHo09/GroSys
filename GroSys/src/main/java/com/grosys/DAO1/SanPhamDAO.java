@@ -1,4 +1,4 @@
-/*
+    /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
@@ -142,6 +142,16 @@ public void update(SanPham model) {
 "					JOIN LoaiSanPham lsp ON sp.MaLSP = lsp.MaLSP\n" +
 "					Where ct.MaNSX=?";
         return this.selectBySql(sql, MaNSX);
+    }
+    
+    public List<SanPham> selectByLoaiSanPham(String MaLSP) {
+        String sql = "SELECT sp.MaSP, sp.TenSP, sp.MaLSP, lsp.TenLSP AS 'TenLSP', ct.GiaNhap, sp.GiaBan,\n" +
+"			sp.HanSuDung, sp.DonViTinh, sp.SoLuong, sp.Anh, nsx.MaNSX,nsx.TenNSX, ct.MaNPP\n" +
+"	FROM SanPham sp JOIN ChiTietHopDong ct ON sp.MaSP = ct.MaSP\n" +
+"					JOIN NhaSanXuat nsx ON ct.MaNSX = nsx.MaNSX\n" +
+"					JOIN LoaiSanPham lsp ON sp.MaLSP = lsp.MaLSP\n" +
+"					Where sp.MaLSP = ?";
+        return this.selectBySql(sql, MaLSP);
     }
     
 }

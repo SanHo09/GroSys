@@ -12,8 +12,10 @@ import com.grosys.untity.NhaSanXuat;
 import java.awt.Color;
 import java.util.List;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
 import utils.HeaderColor;
+import utils.MsgBox;
 import utils.RoundedPanel;
 import utils.XDate;
 
@@ -112,6 +114,17 @@ public class HopTac extends javax.swing.JPanel {
 
         jLabel3.setText("Mã Nhà Sản Xuất");
         tabNhaSanXuat.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 140, -1, -1));
+
+        txtTimKiemNSX.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtTimKiemNSXMouseClicked(evt);
+            }
+        });
+        txtTimKiemNSX.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemNSXKeyReleased(evt);
+            }
+        });
         tabNhaSanXuat.add(txtTimKiemNSX, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 20, 120, -1));
 
         jLabel4.setText("Tên Nhà Sản Xuất");
@@ -131,6 +144,11 @@ public class HopTac extends javax.swing.JPanel {
         btnSuaNSX.setBackground(new java.awt.Color(10, 102, 194));
         btnSuaNSX.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSuaNSX.setOpaque(false);
+        btnSuaNSX.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSuaNSXMouseClicked(evt);
+            }
+        });
 
         jLabel6.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel6.setForeground(new java.awt.Color(255, 255, 255));
@@ -216,6 +234,11 @@ public class HopTac extends javax.swing.JPanel {
         btnXoaNSX.setBackground(new java.awt.Color(10, 102, 194));
         btnXoaNSX.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnXoaNSX.setOpaque(false);
+        btnXoaNSX.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXoaNSXMouseClicked(evt);
+            }
+        });
 
         jLabel9.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel9.setForeground(new java.awt.Color(255, 255, 255));
@@ -248,7 +271,7 @@ public class HopTac extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, true
+                false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -285,7 +308,7 @@ public class HopTac extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false, true
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -306,6 +329,12 @@ public class HopTac extends javax.swing.JPanel {
         jScrollPane12.setViewportView(tblNPP);
 
         tabNhaPhanPhoi.add(jScrollPane12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 510, 550));
+
+        txtTimKiemNPP.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemNPPKeyReleased(evt);
+            }
+        });
         tabNhaPhanPhoi.add(txtTimKiemNPP, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 20, 120, -1));
 
         jLabel10.setText("Tìm Kiếm:");
@@ -361,6 +390,11 @@ public class HopTac extends javax.swing.JPanel {
         btnSuaNPP.setBackground(new java.awt.Color(10, 102, 194));
         btnSuaNPP.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnSuaNPP.setOpaque(false);
+        btnSuaNPP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSuaNPPMouseClicked(evt);
+            }
+        });
 
         jLabel15.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel15.setForeground(new java.awt.Color(255, 255, 255));
@@ -386,6 +420,11 @@ public class HopTac extends javax.swing.JPanel {
         btnXoaNPP.setBackground(new java.awt.Color(10, 102, 194));
         btnXoaNPP.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnXoaNPP.setOpaque(false);
+        btnXoaNPP.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXoaNPPMouseClicked(evt);
+            }
+        });
 
         jLabel16.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel16.setForeground(new java.awt.Color(255, 255, 255));
@@ -475,22 +514,59 @@ public class HopTac extends javax.swing.JPanel {
 
     private void btnThemNSXMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemNSXMouseClicked
         // TODO add your handling code here:
+        themNhaSanXuat();
     }//GEN-LAST:event_btnThemNSXMouseClicked
 
     private void btnMoiNSXMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMoiNSXMouseClicked
         // TODO add your handling code here:
-        updateStatusNSX(true);
+        clearFormNSX();
     }//GEN-LAST:event_btnMoiNSXMouseClicked
 
     private void btnMoiNPPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMoiNPPMouseClicked
         // TODO add your handling code here:
-        updateStatusNPP(true);
+        clearFormNPP();
     }//GEN-LAST:event_btnMoiNPPMouseClicked
 
     private void btnThemNPPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemNPPMouseClicked
         // TODO add your handling code here:
-        
+        themNhaPhanPhoi();
     }//GEN-LAST:event_btnThemNPPMouseClicked
+
+    private void txtTimKiemNSXMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTimKiemNSXMouseClicked
+        // TODO add your handling code here:
+        
+        
+    }//GEN-LAST:event_txtTimKiemNSXMouseClicked
+
+    private void txtTimKiemNSXKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemNSXKeyReleased
+        // TODO add your handling code here:
+        timKiemNSX();
+    }//GEN-LAST:event_txtTimKiemNSXKeyReleased
+
+    private void txtTimKiemNPPKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemNPPKeyReleased
+        // TODO add your handling code here:
+        timKiemNPP();
+    }//GEN-LAST:event_txtTimKiemNPPKeyReleased
+
+    private void btnSuaNSXMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaNSXMouseClicked
+        // TODO add your handling code here:
+        capNhatNhaSanXuat(getFormNSX());
+    }//GEN-LAST:event_btnSuaNSXMouseClicked
+
+    private void btnXoaNSXMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaNSXMouseClicked
+        // TODO add your handling code here:
+        xoaNhaSanXuat(getFormNSX());
+    }//GEN-LAST:event_btnXoaNSXMouseClicked
+
+    private void btnSuaNPPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSuaNPPMouseClicked
+        // TODO add your handling code here:
+        capNhatNhaPhanPhoi(getFormNPP());
+    }//GEN-LAST:event_btnSuaNPPMouseClicked
+
+    private void btnXoaNPPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaNPPMouseClicked
+        // TODO add your handling code here:
+        xoaNhaPhanPhoi(getFormNPP());
+    }//GEN-LAST:event_btnXoaNPPMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -540,8 +616,22 @@ public class HopTac extends javax.swing.JPanel {
     // End of variables declaration//GEN-END:variables
 
     private void prepareUI() {
+        // Sửa đầu bảng
         tblNSX.getTableHeader().setDefaultRenderer(new HeaderColor());
         tblNPP.getTableHeader().setDefaultRenderer(new HeaderColor());
+        // Chỉnh độ dài cột
+        DefaultTableColumnModel modelNSX = (DefaultTableColumnModel)tblNSX.getColumnModel();
+        DefaultTableColumnModel modelNPP = (DefaultTableColumnModel)tblNPP.getColumnModel();
+        // NSX
+        modelNSX.getColumn(0).setPreferredWidth(60);
+        modelNSX.getColumn(2).setPreferredWidth(150);
+        //NPP
+        modelNPP.getColumn(1).setPreferredWidth(100);
+        
+        clearFormNSX();
+        clearFormNPP();
+        
+        
     }
 
     private void fillToTableNSX() {
@@ -567,21 +657,19 @@ public class HopTac extends javax.swing.JPanel {
         for(NhaPhanPhoi i : list) {
             model.addElement(i);
         }
+       
     }
     
-    private void setFormNSX(NhaSanXuat nsx) {
-        txtMaNSX.setText(nsx.getMaNSX());
-        txtTenNSX.setText(nsx.getTenNSX());
-        txtDiaChiNSX.setText(nsx.getDiaChi());
-    }
+    
     
     private void updateStatusNSX(boolean flag) {
-        // Moi 
+        txtMaNSX.setEditable(flag);
+        
         if(flag==true) {
             btnThemNSX.setBackground(new Color(10,102,194));
             btnSuaNSX.setBackground(new Color(12,68,124));
             btnXoaNSX.setBackground(new Color(12,68,124));
-        } else {
+        } else {   
             btnThemNSX.setBackground(new Color(12,68,124));
             btnSuaNSX.setBackground(new Color(10,102,194));
             btnXoaNSX.setBackground(new Color(10,102,194));
@@ -589,7 +677,7 @@ public class HopTac extends javax.swing.JPanel {
     }
     
     private void updateStatusNPP(boolean flag) {
-        // Moi 
+        txtMaNPP.setEditable(flag);
         if(flag==true) {
             btnThemNPP.setBackground(new Color(10,102,194));
             btnSuaNPP.setBackground(new Color(12,68,124));
@@ -604,6 +692,7 @@ public class HopTac extends javax.swing.JPanel {
     private void fillToTableNPP() {
         List<NhaPhanPhoi> list = nppDao.selectAll();
         DefaultTableModel model = (DefaultTableModel)tblNPP.getModel();
+        model.setRowCount(0);
         for(NhaPhanPhoi i:list) {
             Object[] obj = {
                 i.getMaNPP(),
@@ -615,6 +704,12 @@ public class HopTac extends javax.swing.JPanel {
         }
     }
     
+    private void setFormNSX(NhaSanXuat nsx) {
+        txtMaNSX.setText(nsx.getMaNSX());
+        txtTenNSX.setText(nsx.getTenNSX());
+        txtDiaChiNSX.setText(nsx.getDiaChi());
+    }
+    
     private void setFormNPP(NhaPhanPhoi npp) {
         txtMaNPP.setText(npp.getMaNPP());
         txtTenNPP.setText(npp.getTenNPP());
@@ -622,8 +717,9 @@ public class HopTac extends javax.swing.JPanel {
     }
     
     private NhaSanXuat getFormNSX() {
+        NhaPhanPhoi currentNSX = (NhaPhanPhoi)cbbNhaPhanPhoi.getSelectedItem();
         String maNSX = txtMaNSX.getText();
-        String maNPP = String.valueOf(cbbNhaPhanPhoi.getSelectedItem());
+        String maNPP = String.valueOf(currentNSX.getMaNPP());
         String tenNSX = txtTenNSX.getText();
         String diaChi = txtDiaChiNSX.getText();
         
@@ -649,6 +745,137 @@ public class HopTac extends javax.swing.JPanel {
         
         return npp;
     }
+
+    private void timKiemNSX() {
+        List<NhaSanXuat> list = nsxDao.selectAll();
+        String search = txtTimKiemNSX.getText();
+        System.out.println(search);
+        DefaultTableModel model = (DefaultTableModel)tblNSX.getModel();
+        model.setRowCount(0);
+        for(NhaSanXuat i: list) {
+            System.out.println(i.getMaNSX()+"   "+ i.getTenNSX());
+            if(i.getMaNSX().contains(search)||i.getTenNSX().contains(search)) {
+                Object[] row = {
+                    i.getMaNSX(),
+                    i.getTenNSX(),
+                    i.getDiaChi()
+                };
+                model.addRow(row);
+            }
+                       
+        }
+    }
+    
+    private void timKiemNPP() {
+        List<NhaPhanPhoi> list = nppDao.selectAll();
+        String search = txtTimKiemNPP.getText();
+        System.out.println(search);
+        DefaultTableModel model = (DefaultTableModel)tblNPP.getModel();
+        model.setRowCount(0);
+        for(NhaPhanPhoi i: list) {
+            System.out.println(i.getMaNPP()+"   "+ i.getTenNPP());
+            if(i.getMaNPP().contains(search)||i.getTenNPP().contains(search)) {
+                Object[] row = {
+                    i.getMaNPP(),
+                    i.getTenNPP(),
+                    i.getDiaChi(),
+                    i.getNamHoptac()
+                };
+                model.addRow(row);
+            }
+                       
+        }
+    }
+
+    private void clearFormNSX() {
+        updateStatusNSX(true);
+        NhaSanXuat nsx = new NhaSanXuat();
+        setFormNSX(nsx);
+    }
+    
+    private void clearFormNPP() {
+        updateStatusNPP(true);
+        NhaPhanPhoi npp = new NhaPhanPhoi();
+        setFormNPP(npp);
+    }
+
+    private void themNhaSanXuat() {
+        NhaSanXuat nsx = getFormNSX();
+        if(nsxDao.selectById(nsx.getMaNSX())!=null) {
+            MsgBox.alert(this, "Nhà Sản Xuất đã tồn tại !");
+        } else if(nsx.getMaNPP().equals("")||nsx.getTenNSX().equals("")||nsx.getDiaChi().equals("")) {
+            MsgBox.alert(this, "Vui Lòng nhập đủ thông tin !");
+        } else {
+            nsxDao.insert(nsx);
+            MsgBox.alert(this, "Thêm Thành Công");
+        }
+        clearFormNSX();
+        fillToTableNSX();
+        
+    }
+    
+    private void capNhatNhaSanXuat(NhaSanXuat nsx) {
+        if (nsx.getMaNPP().equals("") || nsx.getTenNSX().equals("") || nsx.getDiaChi().equals("")) {
+            MsgBox.alert(this, "Vui Lòng nhập đủ thông tin !");
+        }
+        else {
+            nsxDao.update(nsx);
+            MsgBox.alert(this, "Cập Nhật Thành Công");
+            clearFormNSX();
+            fillToTableNSX();
+        }
+    }
+    
+    private void xoaNhaSanXuat(NhaSanXuat nsx) {
+        try {
+            nsxDao.delete(nsx.getMaNSX());
+            MsgBox.alert(this, "Xóa Thành công");
+            clearFormNSX();
+            fillToTableNSX();
+        } catch(Exception ex) {
+            MsgBox.alert(this, "Xóa thất bại, Vui lòng kiểm tra lại !");
+        }
+    }
+    
+    private void themNhaPhanPhoi() {
+        NhaPhanPhoi npp = getFormNPP();
+        if(nppDao.selectById(npp.getMaNPP())!=null) {
+            MsgBox.alert(this, "Nhà Phân Phối đã tồn tại !");
+        } else if(npp.getMaNPP().equals("")||npp.getTenNPP().equals("")||npp.getDiaChi().equals("")) {
+            MsgBox.alert(this, "Vui Lòng nhập đủ thông tin !");
+        } else {
+            nppDao.insert(npp);
+            MsgBox.alert(this, "Thêm Thành Công");
+            clearFormNPP();
+        }
+        fillToTableNPP();
+        
+    }
+    
+    private void capNhatNhaPhanPhoi(NhaPhanPhoi npp) {
+        if (npp.getMaNPP().equals("") || npp.getTenNPP().equals("") || npp.getDiaChi().equals("")) {
+            MsgBox.alert(this, "Vui Lòng nhập đủ thông tin !");
+        }
+        else {
+            nppDao.update(npp);
+            MsgBox.alert(this, "Cập Nhật Thành Công");
+            clearFormNPP();
+            fillToTableNPP();
+        }
+    }
+    
+    private void xoaNhaPhanPhoi(NhaPhanPhoi npp) {
+        try {
+            nppDao.delete(npp.getMaNPP());
+            MsgBox.alert(this, "Xóa Thành công");
+            fillToTableNPP();
+            clearFormNPP();
+        } catch(Exception ex) {
+            MsgBox.alert(this, "Xóa thất bại, Vui lòng kiểm tra lại !");
+        }
+    }
+    
+    
 
     
     

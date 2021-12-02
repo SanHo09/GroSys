@@ -16,15 +16,17 @@ public class PhieuGiamGia {
     private String MaSP;
     private Date HanSD;
     private String MaNV;
+    private double giaTri;
 
     public PhieuGiamGia() {
     }
 
-    public PhieuGiamGia(String MaHV, String MaSP, Date HanSD, String MaNV) {
+    public PhieuGiamGia(String MaHV, String MaSP, Date HanSD, String MaNV, double giaTri) {
         this.MaHV = MaHV;
         this.MaSP = MaSP;
         this.HanSD = HanSD;
         this.MaNV = MaNV;
+        this.giaTri = giaTri;
     }
 
     public Date getHanSD() {
@@ -43,6 +45,10 @@ public class PhieuGiamGia {
         return MaSP;
     }
 
+    public double getGiaTri() {
+        return giaTri;
+    }
+    
     public void setMaHV(String MaHV) {
         this.MaHV = MaHV;
     }
@@ -58,6 +64,11 @@ public class PhieuGiamGia {
     public void setMaNV(String MaNV) {
         this.MaNV = MaNV;
     }
+
+    public void setGiaTri(double giaTri) {
+        this.giaTri = giaTri;
+    }
+    
     
     
 }

@@ -8,6 +8,7 @@ package com.grosys.DAO1;
 
 import com.grosys.untity.HoaDon;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import utils.Xjdbc;
@@ -80,6 +81,15 @@ public class HoaDonDAO extends GrosysDAO<HoaDon, String>{
             throw new RuntimeException(ex);
         }
         return list;
+    }
+    
+    public int countBill() throws SQLException {
+        String sql = "{CALL sp_soLuongHD}";
+        ResultSet rs = Xjdbc.query(sql);
+        while(rs.next()) {
+            return rs.getInt(1);
+        }
+        return 0;
     }
     
 }

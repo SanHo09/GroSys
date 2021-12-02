@@ -109,6 +109,10 @@
               </Constraints>
             </Component>
             <Component class="javax.swing.JTextField" name="txtTimKiemNSX">
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="txtTimKiemNSXMouseClicked"/>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimKiemNSXKeyReleased"/>
+              </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                   <AbsoluteConstraints x="580" y="20" width="120" height="-1"/>
@@ -172,6 +176,9 @@
                   <Color id="Hand Cursor"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSuaNSXMouseClicked"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new RoundedPanel(12)"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnSuaNSX.setOpaque(false);"/>
@@ -327,6 +334,9 @@
                   <Color id="Hand Cursor"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnXoaNSXMouseClicked"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new RoundedPanel(12)"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnXoaNSX.setOpaque(false);"/>
@@ -389,7 +399,7 @@
                       <Table columnCount="3" rowCount="0">
                         <Column editable="false" title="MaNSX" type="java.lang.Object"/>
                         <Column editable="false" title="TenNSX" type="java.lang.Object"/>
-                        <Column editable="true" title="DiaChi" type="java.lang.Object"/>
+                        <Column editable="false" title="DiaChi" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="rowHeight" type="int" value="25"/>
@@ -451,7 +461,7 @@
                         <Column editable="false" title="MaNPP" type="java.lang.Object"/>
                         <Column editable="false" title="TenNPP" type="java.lang.Object"/>
                         <Column editable="false" title="DiaChi" type="java.lang.Object"/>
-                        <Column editable="true" title="NamHopTac" type="java.lang.Object"/>
+                        <Column editable="false" title="NamHopTac" type="java.lang.Object"/>
                       </Table>
                     </Property>
                     <Property name="rowHeight" type="int" value="25"/>
@@ -472,6 +482,9 @@
               </SubComponents>
             </Container>
             <Component class="javax.swing.JTextField" name="txtTimKiemNPP">
+              <Events>
+                <EventHandler event="keyReleased" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtTimKiemNPPKeyReleased"/>
+              </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                   <AbsoluteConstraints x="580" y="20" width="120" height="-1"/>
@@ -614,6 +627,9 @@
                   <Color id="Hand Cursor"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnSuaNPPMouseClicked"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new RoundedPanel(12)"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnSuaNPP.setOpaque(false);"/>
@@ -664,6 +680,9 @@
                   <Color id="Hand Cursor"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnXoaNPPMouseClicked"/>
+              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new RoundedPanel(12)"/>
                 <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="btnXoaNPP.setOpaque(false);"/>

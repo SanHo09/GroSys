@@ -55,6 +55,13 @@ public class Hoivien {
     public void setTenHV(String TenHV) {
         this.TenHV = TenHV;
     }
+
+    @Override
+    public String toString() {
+        return this.MaHV +" "+ this.TenHV;
+    }
+    
+    
     
     
     

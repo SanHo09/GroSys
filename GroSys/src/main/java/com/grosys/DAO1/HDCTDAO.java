@@ -19,21 +19,22 @@ public class HDCTDAO extends GrosysDAO<HoaDonChiTiet, String> {
 
     @Override
     public void insert(HoaDonChiTiet model) {
-        String sql ="INSERT INTO HoaDonChiTiet(MaHDCT, MaHD, MaSanPham)VALUES(?,?,?)";
+        String sql ="INSERT INTO HoaDonChiTiet(MaHD, MaSanPham, SoLuong)VALUES(?,?,?)";
         Xjdbc.update(sql,
-                model.getMaHDCT(),
                model.getMaHD(),
-               model.getMaSP()
-               );
+               model.getMaSP(),
+               model.getSoLuong()
+        );
     }
 
     @Override
     public void update(HoaDonChiTiet model) {
-        String sql ="UPDATE HoaDonChiTiet SET MaHD=?, MaSanPham=? Where MaHDCT=?";
+        String sql ="UPDATE HoaDonChiTiet SET MaHD=?, MaSanPham=?, soLuong=? Where MaHDCT=?";
         Xjdbc.update(sql,
                model.getMaHD(),
                model.getMaSP(),
-               model.getMaHDCT());
+               model.getMaHDCT(),
+               model.getSoLuong());
     }
 
     @Override
@@ -44,13 +45,14 @@ public class HDCTDAO extends GrosysDAO<HoaDonChiTiet, String> {
 
     @Override
     public List<HoaDonChiTiet> selectAll() {
-        String sql="SELECT*FROM HoaDonChiTiet";
+        String sql="SELECT hdct.*, sp.TenSP AS 'TenSP', sp.GiaBan*hdct.SoLuong AS 'Gia'\n" +
+"FROM HoaDonChiTiet hdct JOIN SanPham sp ON hdct.MaSanPham = sp.MaSP";
         return this.selectBySql(sql);
     }
 
     @Override
     public HoaDonChiTiet selectById(String id) {
-         String sql="SELECT * FROM HoaDonChiTiet WHERE MaHD=?";
+        String sql="SELECT * FROM HoaDonChiTiet WHERE MaHDCT=?";
         List<HoaDonChiTiet> list = selectBySql(sql, id);
         return list.size() > 0 ? list.get(0) : null;
     }
@@ -67,6 +69,9 @@ public class HDCTDAO extends GrosysDAO<HoaDonChiTiet, String> {
                     entity.setMaHD(rs.getString("MaHD"));
                     entity.setMaHDCT(rs.getString("MaHDCT"));
                     entity.setMaSP(rs.getString("MaSanPham"));
+                    entity.setTenSP(rs.getString("TenSP"));
+                    entity.setSoLuong(rs.getInt("soLuong"));
+                    entity.setGia(rs.getDouble("Gia"));
                     list.add(entity);
                 }
             } finally{
@@ -77,6 +82,17 @@ public class HDCTDAO extends GrosysDAO<HoaDonChiTiet, String> {
             throw new RuntimeException(ex);
         }
         return list;
+    }
+    
+    public void thucHienGiaoDich(HoaDonChiTiet model) {
+        String sql = "{CALL sp_GiaoDich(?,?)}";
+        Xjdbc.update(sql, model.getMaSP(), model.getSoLuong());
+    }
+    
+    public List<HoaDonChiTiet> selectByMaHD(String MaHD) {
+        String sql="SELECT hdct.*, sp.TenSP AS 'TenSP', sp.GiaBan*hdct.SoLuong AS 'Gia'\n" +
+                "FROM HoaDonChiTiet hdct JOIN SanPham sp ON hdct.MaSanPham = sp.MaSP WHERE MaHD=?";
+        return this.selectBySql(sql, MaHD);
     }
     
 }

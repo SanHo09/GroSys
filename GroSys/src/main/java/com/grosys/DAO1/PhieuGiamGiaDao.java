@@ -19,17 +19,18 @@ public class PhieuGiamGiaDao extends GrosysDAO<PhieuGiamGia, String> {
 
     @Override
     public void insert(PhieuGiamGia model) {
-        String sql ="INSERT INTO PhieuGiamGia(MaHV, HanSD, MaNV, MaSP)VALUES(?,?,?,?)";
+        String sql ="INSERT INTO PhieuGiamGia(MaHV, HanSD, MaNV, MaSP, GiaTri)VALUES(?,?,?,?,?)";
                Xjdbc.update(sql,
-               model.getMaHV(),
-               model.getHanSD(),
-               model.getMaNV(),
-               model.getMaSP());
+                    model.getMaHV(),
+                    model.getHanSD(),
+                    model.getMaNV(),
+                    model.getMaSP(),
+                    model.getGiaTri());
     }
 
     @Override
     public void update(PhieuGiamGia model) {
-        String sql ="UPDATE PhieuGiamGia SET HanSD=?, MaNV=? Where MaHV=? and MaSP=?";
+        String sql ="UPDATE PhieuGiamGia SET HanSD=?, MaNV=?, giaTri=? Where MaHV=? and MaSP=?";
         Xjdbc.update(sql,
                model.getHanSD(),
                model.getMaNV(),
@@ -37,10 +38,9 @@ public class PhieuGiamGiaDao extends GrosysDAO<PhieuGiamGia, String> {
                model.getMaSP();
     }
 
-    @Override
-    public void delete(String id) {
-        String sql="DELETE FROM PhieuGiamGia WHERE MaHV=?";
-        Xjdbc.update(sql, id);
+    public void deleteByIdMaSP(String MaHV, String MaSP) {
+        String sql="DELETE PhieuGiamGia WHERE MaHV=? AND MaSP=?";
+        Xjdbc.update(sql, MaHV, MaSP);
     }
 
     @Override
@@ -69,6 +69,7 @@ public class PhieuGiamGiaDao extends GrosysDAO<PhieuGiamGia, String> {
                     entity.setMaSP(rs.getString("MaSP"));
                     entity.setHanSD(rs.getDate("HanSD"));
                     entity.setMaNV(rs.getString("MaNV"));
+                    entity.setGiaTri(rs.getDouble("GiaTri"));
                     list.add(entity);
                 }
             } finally{
@@ -80,5 +81,11 @@ public class PhieuGiamGiaDao extends GrosysDAO<PhieuGiamGia, String> {
         }
         return list;
     }
+
+    @Override
+    public void delete(String id) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
     
 }

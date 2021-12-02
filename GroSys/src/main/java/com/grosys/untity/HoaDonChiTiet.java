@@ -13,15 +13,21 @@ public class HoaDonChiTiet {
     private String MaHDCT;
     private String MaHD;
     private String MaSP;
-
+    private String tenSP;
+    private int soLuong;
+    private double gia;
+    
     public HoaDonChiTiet() {
     }
 
-    public HoaDonChiTiet(String MaHDCT, String MaHD, String MaSP) {
+    public HoaDonChiTiet(String MaHDCT, String MaHD, String MaSP, int soLuong) {
         this.MaHDCT = MaHDCT;
         this.MaHD = MaHD;
         this.MaSP = MaSP;
+        this.soLuong = soLuong;
     }
+
+    
 
     public String getMaHDCT() {
         return MaHDCT;
@@ -35,6 +41,19 @@ public class HoaDonChiTiet {
         return MaSP;
     }
 
+    public int getSoLuong() {
+        return soLuong;
+    }
+
+    public String getTenSP() {
+        return tenSP;
+    }
+
+    public double getGia() {
+        return gia;
+    }
+    
+    
     public void setMaHDCT(String MaHDCT) {
         this.MaHDCT = MaHDCT;
     }
@@ -46,7 +65,18 @@ public class HoaDonChiTiet {
     public void setMaSP(String MaSP) {
         this.MaSP = MaSP;
     }
-    
+
+    public void setSoLuong(int soLuong) {
+        this.soLuong = soLuong;
+    }
+
+    public void setTenSP(String tenSP) {
+        this.tenSP = tenSP;
+    }
+
+    public void setGia(double gia) {
+        this.gia = gia;
+    }
     
     
 }

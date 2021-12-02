@@ -582,8 +582,6 @@ public class Kho extends javax.swing.JPanel {
         model.getColumn(5).setPreferredWidth(80);
         model.getColumn(6).setPreferredWidth(80);
         model.getColumn(7).setPreferredWidth(140);
-        
-        
     }
     
     private void chooseImage(JLabel lblIcon) {
@@ -632,11 +630,11 @@ public class Kho extends javax.swing.JPanel {
 
         }
     }
-     void fillToComboboxLSP() {
-        DefaultComboBoxModel model = (DefaultComboBoxModel)cbbLoaiSanPham.getModel();
+    void fillToComboboxLSP() {
+        DefaultComboBoxModel model = (DefaultComboBoxModel) cbbLoaiSanPham.getModel();
         model.removeAllElements();
         List<LoaiSanPham> list = lspdao.selectAll();
-        for(LoaiSanPham i : list) {
+        for (LoaiSanPham i : list) {
             model.addElement(i);
         }
     }
@@ -678,13 +676,16 @@ public class Kho extends javax.swing.JPanel {
     }
     
     void setForm(SanPham sp){   
-
+        DefaultComboBoxModel model = (DefaultComboBoxModel)cbbLoaiSanPham.getModel();
         LoaiSanPham lsp = lspdao.selectById(sp.getMaLSP());
         
         for(int i=0;i<cbbLoaiSanPham.getItemCount();i++) {
             if(String.valueOf(cbbLoaiSanPham.getItemAt(i)).equalsIgnoreCase(lsp.getTenLSP())) 
                 cbbLoaiSanPham.setSelectedIndex(i);
         }
+        
+        
+        
         cbbLoaiSanPham.getItemCount();
         txtMaSanPham.setText(sp.getMaSP());
         txtGiaBan.setText(String.valueOf(sp.getGiaBan()));

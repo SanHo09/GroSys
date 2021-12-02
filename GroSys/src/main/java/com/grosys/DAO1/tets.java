@@ -22,15 +22,8 @@ import utils.Xjdbc;
 public class tets {
     
     public static void main(String[] args) throws SQLException {
-        LoaiSanPhamDAO dap = new LoaiSanPhamDAO();
-        System.out.println(dap.selectById("LSP01").getMaLSP());
-        SanPhamDAO dao = new SanPhamDAO();
-        SanPham sp = dao.selectById("sp01");
-        sp.setMaSP("sp11");
-        System.out.println(sp.getHanSuDung());
-        String sql = "{CALL sp_Them_SanPham (?,?,?,?,?,?,?,?,?,?,?)}";
-        Xjdbc.query(sql, "NPP01", "NSS01", "SP13", "San Pham 12", 12,"LSP01",
-                    12, XDate.toDate("16-11-2021", "dd-MM-yyyy"), "Chai", 12, "");
+        PhieuGiamGiaDao dao = new PhieuGiamGiaDao();
+        dao.deleteByIdMaSP("", "");
        
     }
 }

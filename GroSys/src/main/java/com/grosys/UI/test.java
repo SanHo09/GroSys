@@ -16,6 +16,7 @@ public class test extends javax.swing.JFrame {
      */
     public test() {
         initComponents();
+        
     }
 
     /**
@@ -27,7 +28,7 @@ public class test extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        hopTac1 = new com.grosys.UI.HopTac();
+        hoaDon1 = new com.grosys.UI.HoaDon();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -35,11 +36,13 @@ public class test extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(hopTac1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(hoaDon1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(hopTac1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(hoaDon1, javax.swing.GroupLayout.DEFAULT_SIZE, 576, Short.MAX_VALUE)
         );
 
         pack();
@@ -82,6 +85,6 @@ public class test extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.grosys.UI.HopTac hopTac1;
+    private com.grosys.UI.HoaDon hoaDon1;
     // End of variables declaration//GEN-END:variables
 }

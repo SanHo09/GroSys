@@ -20,7 +20,7 @@ public class NhaSanXuatDAO extends GrosysDAO<NhaSanXuat, String>{
 
     @Override
     public void insert(NhaSanXuat model) {
-         String sql ="INSERT INTO NhaSanXuat(MaNSX, TenNSX, DiaChi, MaNPP)VALUES(?,?,?,?)";
+         String sql ="INSERT INTO NhaSanXuat(MaNSX, TenNSX, DiaChi, MaNPP) VALUES(?,?,?,?)";
                Xjdbc.update(sql,
                model.getMaNSX(),
                model.getTenNSX(),

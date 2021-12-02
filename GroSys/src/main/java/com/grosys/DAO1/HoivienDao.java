@@ -45,16 +45,17 @@ public class HoivienDao extends GrosysDAO<Hoivien, String> {
 
     @Override
     public List<Hoivien> selectAll() {
-         String sql="SELECT*FROM Hocvien";
+         String sql="SELECT*FROM HoiVien";
         return this.selectBySql(sql);
     }
 
     @Override
-    public Hoivien selectById(String id) {
-         String sql="SELECT*FROM HoaDon where MaHV=?";
-        List<Hoivien> list =selectBySql(sql,id);
+    public Hoivien selectById(String maHV) {
+         String sql="SELECT*FROM HoiVien where MaHV=?";
+        List<Hoivien> list =selectBySql(sql,maHV);
         return list.size()>0 ? list.get(0) :null;
     }
+    
 
     @Override
     protected List<Hoivien> selectBySql(String sql, Object... args) {
@@ -79,5 +80,7 @@ public class HoivienDao extends GrosysDAO<Hoivien, String> {
             throw new RuntimeException(ex);
         }
         return list;   
-}
+    }
+    
+    
 }

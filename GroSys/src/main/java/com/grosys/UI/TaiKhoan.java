@@ -9,6 +9,7 @@ import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import utils.Auth;
 import utils.RoundedPanel;
 import utils.XImage;
 
@@ -23,7 +24,7 @@ public class TaiKhoan extends javax.swing.JPanel {
      */
     public TaiKhoan() {
         initComponents();
-        System.out.println(jPanel5.getSize());
+        
     }
 
     /**
@@ -61,9 +62,9 @@ public class TaiKhoan extends javax.swing.JPanel {
         lblSuaHoTen = new javax.swing.JLabel();
         lblSuaEmail = new javax.swing.JLabel();
         jSeparator4 = new javax.swing.JSeparator();
-        txtSoMatKhau = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         lblSuaMatKhau = new javax.swing.JLabel();
+        txtMatKhau = new javax.swing.JPasswordField();
         jPanel4 = new javax.swing.JPanel();
         jLabel10 = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
@@ -243,10 +244,6 @@ public class TaiKhoan extends javax.swing.JPanel {
         jSeparator4.setForeground(new java.awt.Color(237, 237, 237));
         jPanel2.add(jSeparator4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 220, 410, 10));
 
-        txtSoMatKhau.setForeground(new java.awt.Color(153, 153, 153));
-        txtSoMatKhau.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(161, 150, 154)));
-        jPanel2.add(txtSoMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, 200, 30));
-
         jLabel11.setFont(new java.awt.Font("Tahoma", 1, 13)); // NOI18N
         jLabel11.setForeground(new java.awt.Color(51, 51, 51));
         jLabel11.setText("Mật Khẩu:");
@@ -255,6 +252,10 @@ public class TaiKhoan extends javax.swing.JPanel {
         lblSuaMatKhau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8_edit_20px.png"))); // NOI18N
         lblSuaMatKhau.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jPanel2.add(lblSuaMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 320, -1, -1));
+
+        txtMatKhau.setForeground(new java.awt.Color(153, 153, 153));
+        txtMatKhau.setBorder(javax.swing.BorderFactory.createMatteBorder(0, 0, 1, 0, new java.awt.Color(161, 150, 154)));
+        jPanel2.add(txtMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 310, 200, 30));
 
         jPanel4.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -394,7 +395,7 @@ public class TaiKhoan extends javax.swing.JPanel {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, 410, Short.MAX_VALUE))
+                    .addComponent(jPanel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(34, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -466,8 +467,8 @@ public class TaiKhoan extends javax.swing.JPanel {
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtHoTen;
     private javax.swing.JTextField txtMaNV;
+    private javax.swing.JPasswordField txtMatKhau;
     private javax.swing.JTextField txtSoDienThoai;
-    private javax.swing.JTextField txtSoMatKhau;
     // End of variables declaration//GEN-END:variables
     private void chooseImage(JLabel lblIcon) {
         JFileChooser filechooser = new JFileChooser();
@@ -479,5 +480,14 @@ public class TaiKhoan extends javax.swing.JPanel {
             lblIcon.setToolTipText(file.getName());
             lblIcon.setIcon(icon);
         }
+    }
+
+    private void setFormTaiKhoan() {
+        txtMaNV.setText(Auth.user.getMaNV());
+        txtHoTen.setText(Auth.user.getHoten());
+        txtSoDienThoai.setText(Auth.user.getSDT());
+        txtEmail.setText(Auth.user.getEmail());
+        txtMatKhau.setText(Auth.user.getMatkhau());
+        
     }
 }
