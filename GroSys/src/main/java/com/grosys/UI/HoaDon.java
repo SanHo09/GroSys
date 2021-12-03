@@ -8,6 +8,7 @@ package com.grosys.UI;
 import com.grosys.DAO1.HDCTDAO;
 import com.grosys.DAO1.HoaDonDAO;
 import com.grosys.untity.HoaDonChiTiet;
+import java.awt.Desktop;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
@@ -19,10 +20,22 @@ import static java.awt.print.Printable.NO_SUCH_PAGE;
 import static java.awt.print.Printable.PAGE_EXISTS;
 import java.awt.print.PrinterException;
 import java.awt.print.PrinterJob;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.util.List;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import utils.HeaderColor;
+import utils.MsgBox;
 import utils.XDate;
 
 /**
@@ -38,6 +51,7 @@ public class HoaDon extends javax.swing.JPanel {
     HoaDonDAO hdDao = new HoaDonDAO();
     HDCTDAO hdctdao = new HDCTDAO();
     String MaHD = "";
+    boolean flag = true;
     public HoaDon() {
         initComponents();
         prepareUI();
@@ -93,6 +107,11 @@ public class HoaDon extends javax.swing.JPanel {
 
         btnXuatHoaDOn.setBackground(new java.awt.Color(73, 164, 255));
         btnXuatHoaDOn.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnXuatHoaDOn.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXuatHoaDOnMouseClicked(evt);
+            }
+        });
 
         jLabel14.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
         jLabel14.setForeground(new java.awt.Color(255, 255, 255));
@@ -117,6 +136,11 @@ public class HoaDon extends javax.swing.JPanel {
         add(btnXuatHoaDOn, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 540, 120, 30));
 
         btnXuatFileExcel.setBackground(new java.awt.Color(73, 164, 255));
+        btnXuatFileExcel.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXuatFileExcelMouseClicked(evt);
+            }
+        });
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
@@ -250,7 +274,7 @@ public class HoaDon extends javax.swing.JPanel {
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true, false, false
+                false, false, false, false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -326,6 +350,7 @@ public class HoaDon extends javax.swing.JPanel {
             setForm(false);
             fillToTableHDCT(this.MaHD);
             btnQuayLai.setVisible(true);
+            this.flag=false;
         }
     }//GEN-LAST:event_tblHoaDonMouseClicked
 
@@ -333,6 +358,7 @@ public class HoaDon extends javax.swing.JPanel {
         // TODO add your handling code here:
         setForm(true);
         btnQuayLai.setVisible(false);
+        this.flag=true;
     }//GEN-LAST:event_btnQuayLaiMouseClicked
 
     private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
@@ -362,7 +388,6 @@ public class HoaDon extends javax.swing.JPanel {
             if (i.getMaSP().contains(search) || i.getTenSP().contains(search) || String.valueOf(i.getSoLuong()).contains(search)) {
                 Object[] obj = {
                     i.getMaHD(),
-                    i.getMaSP(),
                     i.getTenSP(),
                     i.getSoLuong(),
                     i.getGia()
@@ -381,6 +406,26 @@ public class HoaDon extends javax.swing.JPanel {
         // TODO add your handling code here:
         btnXuatHoaDOn.setVisible(false);
     }//GEN-LAST:event_tblHoaDonFocusLost
+
+    private void btnXuatHoaDOnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatHoaDOnMouseClicked
+        // TODO add your handling code here:
+        PrinterJob pj = PrinterJob.getPrinterJob();
+        pj.setPrintable(new BillPrintable(), getPageFormat(pj));
+        try {
+            pj.print();
+            MsgBox.alert(this, "Xuất Hóa đơn thành công !");
+        } catch (PrinterException ex) {
+            ex.printStackTrace();
+        }
+    }//GEN-LAST:event_btnXuatHoaDOnMouseClicked
+
+    private void btnXuatFileExcelMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXuatFileExcelMouseClicked
+        // TODO add your handling code here:
+        if (flag==true)
+            exportToXls(tblHoaDon);
+        else 
+            exportToXls(tblHoaDonChiTiet);
+    }//GEN-LAST:event_btnXuatFileExcelMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -523,11 +568,11 @@ public class HoaDon extends javax.swing.JPanel {
                     int yShift = 10;
                     int headerRectHeight = 25;
                     int headerRectHeighta = 40;
-
+                    
                     g2d.setFont(new Font("Monospaced", Font.PLAIN, 10));
                     g2d.drawString("------------------------------------------------------------", 40, y);
                     y += yShift;
-                    g2d.drawString("                      Hóa Đơn: " + maHD + "                    ", 40, y);
+                    g2d.drawString("                      Hóa Đơn: " + MaHD + "                    ", 40, y);
                     y += yShift;
                     g2d.drawString("------------------------------------------------------------", 40, y);
                     y += headerRectHeight;
@@ -538,11 +583,11 @@ public class HoaDon extends javax.swing.JPanel {
                     y += yShift;
                     g2d.drawString("------------------------------------------------------------", 37, y);
                     y += headerRectHeight;
-
-                    for (int i = 0; i < tblGiohang.getRowCount(); i++) {
-                        String tenSP = String.valueOf(tblGiohang.getValueAt(i, 1));
-                        int soLuong = Integer.parseInt(String.valueOf(tblGiohang.getValueAt(i, 3)));
-                        double gia = Double.parseDouble(String.valueOf(tblGiohang.getValueAt(i, 2)));
+                    List<HoaDonChiTiet> list = hdctdao.selectByMaHD(MaHD);
+                    for (int i = 0; i < list.size(); i++) {
+                        String tenSP = list.get(i).getTenSP();
+                        int soLuong = list.get(i).getSoLuong();
+                        double gia = list.get(i).getGia();
                         int chuoi = 12;
                         int khoangCach = 15;
                         int chuoiLonHon = tenSP.length() - chuoi;
@@ -559,7 +604,8 @@ public class HoaDon extends javax.swing.JPanel {
 
                     g2d.drawString("------------------------------------------------------------", 37, y);
                     y += yShift;
-                    Double tongGia = Double.parseDouble(lblGiaTien.getText());
+                    com.grosys.untity.HoaDon hd = hdDao.selectById(MaHD);
+                    Double tongGia = hd.getSoTien();
                     g2d.drawString(" Thành Tiền: " + tongGia + "                           ", 37, y);
                     y += yShift;
                     g2d.drawString("------------------------------------------------------------", 37, y);
@@ -585,4 +631,66 @@ public class HoaDon extends javax.swing.JPanel {
             return result;
         }
     }
+    
+    private void exportToXls(JTable table) {
+        Workbook workbook = new XSSFWorkbook();
+        String titleSheet = this.flag?"Hóa Đơn":MaHD;
+        String titleFile = this.flag?"HoaDon.xlsx":MaHD+".xlsx";
+        Sheet sheet = workbook.createSheet(titleSheet);
+        org.apache.poi.ss.usermodel.Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerFont.setFontHeightInPoints((short)17);
+        headerFont.setColor(IndexedColors.RED.getIndex());
+        
+        CellStyle headerCellStyle = workbook.createCellStyle();
+        headerCellStyle.setFont(headerFont);
+        
+        Row headerRow = sheet.createRow(0);
+        for(int i=0;i<table.getColumnCount();i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(table.getModel().getColumnName(i));
+            cell.setCellStyle(headerCellStyle);
+        }
+        int rowNum = 1; 
+        for(int i=0;i<table.getRowCount();i++) {
+            Row row = sheet.createRow(rowNum++);
+            for(int j=0;j<table.getColumnCount();j++) {
+                row.createCell(j).setCellValue(String.valueOf(table.getValueAt(i, j)));
+            }
+//            row.createCell(0).setCellValue(String.valueOf(table.getValueAt(i, 0)));
+//            row.createCell(1).setCellValue(String.valueOf(table.getValueAt(i, 1)));
+//            row.createCell(2).setCellValue(String.valueOf(table.getValueAt(i, 2)));
+//            row.createCell(3).setCellValue(String.valueOf(table.getValueAt(i, 3)));
+//            row.createCell(4).setCellValue(String.valueOf(table.getValueAt(i, 4)));
+//            row.createCell(5).setCellValue(String.valueOf(table.getValueAt(i, 5)));
+//            row.createCell(6).setCellValue(String.valueOf(table.getValueAt(i, 6)));
+//            row.createCell(7).setCellValue(String.valueOf(table.getValueAt(i, 7)));
+//            row.createCell(8).setCellValue(String.valueOf(table.getValueAt(i, 8)));
+//            row.createCell(9).setCellValue(String.valueOf(table.getValueAt(i, 9)));
+        }
+        for(int i=0;i<table.getColumnCount();i++) {
+            sheet.autoSizeColumn(i);
+        }
+//        FileOutputStream fileOut = new FileOutputStream("src\\main\\resources\\Data\\EduSys.xlsx");
+//        MsgBox.alert(this, "Export Successfully");
+//        workbook.write(fileOut);
+//        fileOut.close();
+//        workbook.close();
+        JFileChooser saveFile = new JFileChooser();
+        saveFile.setDialogTitle("Lưu File");
+        saveFile.setSelectedFile(new File(titleFile));
+        if(saveFile.showOpenDialog(null)==JFileChooser.APPROVE_OPTION) {
+            File output = saveFile.getSelectedFile();
+            try(FileOutputStream out = new FileOutputStream(output)) {
+                workbook.write(out);
+                out.close();
+                MsgBox.alert(this, "Xuất file excel thành công !");
+                Desktop.getDesktop().open(output);
+            }
+            catch(Exception ex) {
+                MsgBox.alert(this, "Error");
+            }
+        }
+    }
+    
 }

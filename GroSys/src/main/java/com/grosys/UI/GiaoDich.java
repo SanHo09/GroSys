@@ -1703,15 +1703,23 @@ public class GiaoDich extends javax.swing.JFrame {
                         String tenSP = String.valueOf(tblGiohang.getValueAt(i, 1));
                         int soLuong = Integer.parseInt(String.valueOf(tblGiohang.getValueAt(i, 3)));
                         double gia = Double.parseDouble(String.valueOf(tblGiohang.getValueAt(i, 2)));
-                        int chuoi = 12;
-                        int khoangCach = 15;
-                        int chuoiLonHon = tenSP.length() - chuoi;
-                        khoangCach = khoangCach - chuoiLonHon;
-                        String space = "";
-                        for (int j = 0; j < khoangCach; j++) {
-                            space += " ";
+                        int doDaiTenSP = 12;
+                        int khoangCachTuTenSP = 15;
+                        int doDaiThuc = tenSP.length() - doDaiTenSP;
+                        khoangCachTuTenSP = khoangCachTuTenSP - doDaiThuc;
+                        String space1 = "";
+                        String space2 = "           ";
+                        for (int j = 0; j < khoangCachTuTenSP; j++) {
+                            space1 += " ";
                         }
-                        String draw = String.format(" " + "%s" + space + "x%d" + "         " + "%.2f", tenSP, soLuong, gia);
+                        if(soLuong<10) 
+                            space2 = "          ";
+                        else if(soLuong<100)
+                            space2 = "         ";
+                        else 
+                            space2 = "        ";
+                        
+                        String draw = String.format(" " + "%s" + space1 + "x%d" + space2 + "%.2f", tenSP, soLuong, gia*soLuong);
 
                         g2d.drawString(draw, 37, y);
                         y += yShift;

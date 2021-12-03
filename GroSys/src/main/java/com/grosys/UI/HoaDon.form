@@ -84,6 +84,9 @@
           <Color id="Hand Cursor"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnXuatHoaDOnMouseClicked"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="320" y="540" width="120" height="30"/>
@@ -130,6 +133,9 @@
           <Color blue="ff" green="a4" red="49" type="rgb"/>
         </Property>
       </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnXuatFileExcelMouseClicked"/>
+      </Events>
       <Constraints>
         <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
           <AbsoluteConstraints x="560" y="540" width="140" height="30"/>
@@ -329,7 +335,7 @@
                 <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                   <Table columnCount="4" rowCount="4">
                     <Column editable="false" title="MaSP" type="java.lang.Object"/>
-                    <Column editable="true" title="TenSP" type="java.lang.Object"/>
+                    <Column editable="false" title="TenSP" type="java.lang.Object"/>
                     <Column editable="false" title="SoLuong" type="java.lang.Object"/>
                     <Column editable="false" title="GiaBan" type="java.lang.Object"/>
                   </Table>
