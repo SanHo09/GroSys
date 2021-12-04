@@ -7,6 +7,7 @@ import com.grosys.untity.Nhanvien;
 import java.util.List;
 import com.grosys.untity.HoaDon;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import utils.Xjdbc;
 /**
@@ -92,5 +93,16 @@ public class NhanvienDao extends GrosysDAO<Nhanvien, String> {
         return list;
     }
     
+    public int maNVCuoi() throws SQLException {
+        String sql = "SELECT TOP 1 * FROM HoiVien ORDER BY MaHV DESC";
+        int SoNV = 0;
+        String maNV = "";
+        ResultSet rs = Xjdbc.query(sql);
+        while(rs.next()) {
+             maNV = rs.getString(1);
+        }
+        SoNV = Integer.parseInt(maNV.substring(2));
+        return SoNV;
+    }
     
 }

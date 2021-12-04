@@ -112,6 +112,7 @@ public class MainFrame extends javax.swing.JFrame {
         hopTac1 = new com.grosys.UI.HopTac();
         hoaDon1 = new com.grosys.UI.HoaDon();
         taiKhoan1 = new com.grosys.UI.TaiKhoan();
+        khuyenMai1 = new com.grosys.UI.khuyenMai();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -324,6 +325,9 @@ public class MainFrame extends javax.swing.JFrame {
         pnlKhuyenMai.setForeground(new java.awt.Color(250, 197, 118));
         pnlKhuyenMai.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlKhuyenMai.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlKhuyenMaiMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 pnlKhuyenMaiMouseEntered(evt);
             }
@@ -742,6 +746,7 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1.add(hopTac1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 720, 590));
         jPanel1.add(hoaDon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, -1, 590));
         jPanel1.add(taiKhoan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, -1, 590));
+        jPanel1.add(khuyenMai1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, -1, 590));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -964,6 +969,11 @@ public class MainFrame extends javax.swing.JFrame {
         setForm(hoaDon1);
     }//GEN-LAST:event_pnlHoaDonMouseClicked
 
+    private void pnlKhuyenMaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlKhuyenMaiMouseClicked
+        // TODO add your handling code here:
+        setForm(khuyenMai1);
+    }//GEN-LAST:event_pnlKhuyenMaiMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1029,6 +1039,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
     private com.grosys.UI.Kho kho1;
+    private com.grosys.UI.khuyenMai khuyenMai1;
     private javax.swing.JLabel lbTrangchu;
     private javax.swing.JLabel lblClock;
     private javax.swing.JLabel lblGioiThieu;
@@ -1096,7 +1107,7 @@ public class MainFrame extends javax.swing.JFrame {
         label.setIcon(new ImageIcon(path));
     }
     private void setForm(JPanel pnlSelect) {
-        JPanel[] arr = {pnlMain, kho1, nhanVien1, taiKhoan1, hopTac1, hoaDon1};
+        JPanel[] arr = {pnlMain, kho1, nhanVien1, taiKhoan1, hopTac1, hoaDon1, khuyenMai1};
         for(int i=0;i<arr.length;i++) {
             arr[i].setVisible(false);
             if(arr[i]==pnlSelect)

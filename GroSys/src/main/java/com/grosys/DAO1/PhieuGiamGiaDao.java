@@ -45,15 +45,22 @@ public class PhieuGiamGiaDao extends GrosysDAO<PhieuGiamGia, String> {
 
     @Override
     public List<PhieuGiamGia> selectAll() {
-         String sql="SELECT*FROM PhieuGiamGia";
-        return this.selectBySql(sql);
+        String sql = "SELECT hv.MaHV, hv.TenHV,sp.MaSP ,sp.TenSP, pgg.GiaTri, pgg.HanSD, nv.MaNV, nv.Ten AS 'TenNV'\n"
+                + "	FROM PhieuGiamGia pgg JOIN SanPham sp ON pgg.MaSP = sp.MaSP\n"
+                + "						  JOIN HoiVien hv ON pgg.MaHV = hv.MaHV\n"
+                + "						  JOIN NhanVien nv ON pgg.MaNV = nv.MaNV\n";
+            return this.selectBySql(sql);
     }
 
     @Override
     public PhieuGiamGia selectById(String id) {
-        String sql="SELECT * FROM HoaDon WHERE MaHD=?";
+        String sql = "SELECT hv.MaHV, hv.TenHV, pgg.MaSP, sp.TenSP, pgg.GiaTri, pgg.HanSD,nv.MaNV, nv.Ten AS 'TenNV'\n" +
+"		FROM PhieuGiamGia pgg JOIN SanPham sp ON pgg.MaSP = sp.MaSP\n" +
+"							  JOIN HoiVien hv ON pgg.MaHV = hv.MaHV\n" +
+"							  JOIN NhanVien nv ON pgg.MaNV = nv.MaNV";
         List<PhieuGiamGia> list = selectBySql(sql, id);
         return list.size() > 0 ? list.get(0) : null;
+        
     }
 
     @Override
@@ -66,6 +73,9 @@ public class PhieuGiamGiaDao extends GrosysDAO<PhieuGiamGia, String> {
                 while(rs.next()){
                     PhieuGiamGia entity =new PhieuGiamGia();
                     entity.setMaHV(rs.getString("MaHV"));
+                    entity.setTenHV(rs.getString("TenHV"));
+                    entity.setTenSP(rs.getString("TenSP"));
+                    entity.setTenNV(rs.getString("TenNV"));
                     entity.setMaSP(rs.getString("MaSP"));
                     entity.setHanSD(rs.getDate("HanSD"));
                     entity.setMaNV(rs.getString("MaNV"));
@@ -86,6 +96,16 @@ public class PhieuGiamGiaDao extends GrosysDAO<PhieuGiamGia, String> {
     public void delete(String id) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
+    public List<PhieuGiamGia> selectByAnyThing(String MaHV, String tenHV, String MaSP, String tenSP, String hanSD, String tenNV, String maNV) {
+        String sql = "SELECT hv.MaHV, hv.TenHV, sp.TenSP, pgg.GiaTri, pgg.HanSD, nv.Ten AS 'TenNV'\n"
+                + "	FROM PhieuGiamGia pgg JOIN SanPham sp ON pgg.MaSP = sp.MaSP\n"
+                + "						  JOIN HoiVien hv ON pgg.MaHV = hv.MaHV\n"
+                + "						  JOIN NhanVien nv ON pgg.MaNV = nv.MaNV\n"
+                + "	WHERE pgg.MaHV = ? OR TenHV=? OR pgg.MaSP = ? OR sp.TenSP = ? OR HanSD = ? OR nv.Ten= ? OR nv.MaNV = ?";
+        return selectBySql(sql, MaHV, tenHV, MaSP, tenSP, hanSD, tenNV, maNV);
+    }
+   
     
     
 }

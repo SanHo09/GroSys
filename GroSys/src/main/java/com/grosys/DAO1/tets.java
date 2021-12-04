@@ -22,8 +22,8 @@ import utils.Xjdbc;
 public class tets {
     
     public static void main(String[] args) throws SQLException {
-        PhieuGiamGiaDao dao = new PhieuGiamGiaDao();
-        dao.deleteByIdMaSP("", "");
+       HoivienDao dao = new HoivienDao();
+        System.out.println(dao.TaoMaNV());
        
     }
 }

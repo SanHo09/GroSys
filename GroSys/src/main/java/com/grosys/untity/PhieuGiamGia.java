@@ -17,6 +17,10 @@ public class PhieuGiamGia {
     private Date HanSD;
     private String MaNV;
     private double giaTri;
+    private String tenHV;
+    private String tenSP;
+    private String tenNV;
+    
 
     public PhieuGiamGia() {
     }
@@ -67,6 +71,30 @@ public class PhieuGiamGia {
 
     public void setGiaTri(double giaTri) {
         this.giaTri = giaTri;
+    }
+
+    public String getTenHV() {
+        return tenHV;
+    }
+
+    public String getTenSP() {
+        return tenSP;
+    }
+
+    public String getTenNV() {
+        return tenNV;
+    }
+
+    public void setTenHV(String tenHV) {
+        this.tenHV = tenHV;
+    }
+
+    public void setTenSP(String tenSP) {
+        this.tenSP = tenSP;
+    }
+
+    public void setTenNV(String tenNV) {
+        this.tenNV = tenNV;
     }
     
     

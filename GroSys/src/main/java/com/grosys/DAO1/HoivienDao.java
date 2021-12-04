@@ -7,6 +7,7 @@ package com.grosys.DAO1;
 import com.grosys.untity.Hoivien;
 import com.grosys.untity.HoaDon;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import utils.Xjdbc;
@@ -19,7 +20,7 @@ public class HoivienDao extends GrosysDAO<Hoivien, String> {
     
     @Override
     public void insert(Hoivien model) {
-        String sql ="INSERT INTO HoaDon(MaHV, TenHV, Email, SDT)VALUES(?,?,?,?)";
+        String sql ="INSERT INTO HoiVien(MaHV, TenHV, Email, SDT)VALUES(?,?,?,?)";
        Xjdbc.update(sql,
                model.getMaHV(),
                model.getTenHV(),
@@ -82,5 +83,16 @@ public class HoivienDao extends GrosysDAO<Hoivien, String> {
         return list;   
     }
     
+    public String TaoMaNV() throws SQLException {
+        String sql = "SELECT TOP 1 * FROM HoiVien ORDER BY MaHV DESC";
+        int SoNV = 0;
+        String maNV = "";
+        ResultSet rs = Xjdbc.query(sql);
+        while(rs.next()) {
+             maNV = rs.getString(1);
+        }
+        SoNV = Integer.parseInt(maNV.substring(2));
+        return "HV"+(SoNV+1);
+    }
     
 }
