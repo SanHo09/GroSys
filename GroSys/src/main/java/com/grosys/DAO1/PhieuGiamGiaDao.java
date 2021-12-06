@@ -34,15 +34,21 @@ public class PhieuGiamGiaDao extends GrosysDAO<PhieuGiamGia, String> {
         Xjdbc.update(sql,
                model.getHanSD(),
                model.getMaNV(),
-               model.getMaHV());
-               model.getMaSP();
+               model.getGiaTri(),
+               model.getMaHV(),
+               model.getMaSP());
     }
 
     public void deleteByIdMaSP(String MaHV, String MaSP) {
         String sql="DELETE PhieuGiamGia WHERE MaHV=? AND MaSP=?";
         Xjdbc.update(sql, MaHV, MaSP);
     }
-
+    public void deleteByTenSP(String MaHV, String TenSP) {
+        String sql = "DELETE PhieuGiamGia \n"
+                + "WHERE MaSP IN 						\n"
+                + "(SELECT pgg.MaSP FROM PhieuGiamGia pgg JOIN SanPham sp ON pgg.MaSP = sp.MaSP WHERE sp.TenSP = ?) AND MaHV = ?";
+        Xjdbc.update(sql, MaHV, TenSP);
+    }
     @Override
     public List<PhieuGiamGia> selectAll() {
         String sql = "SELECT hv.MaHV, hv.TenHV,sp.MaSP ,sp.TenSP, pgg.GiaTri, pgg.HanSD, nv.MaNV, nv.Ten AS 'TenNV'\n"
@@ -94,7 +100,7 @@ public class PhieuGiamGiaDao extends GrosysDAO<PhieuGiamGia, String> {
 
     @Override
     public void delete(String id) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        
     }
     
     public List<PhieuGiamGia> selectByAnyThing(String MaHV, String tenHV, String MaSP, String tenSP, String hanSD, String tenNV, String maNV) {

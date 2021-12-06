@@ -14,7 +14,10 @@ import com.grosys.untity.NhaSanXuat;
 import com.grosys.untity.NhaPhanPhoi;
 import com.grosys.untity.SanPham;
 import java.io.File;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -505,6 +508,11 @@ public class Kho extends javax.swing.JPanel {
         ClearForm();
         this.row =-1;
         updateStatus();
+        try {
+            txtMaSanPham.setText(dao.TaoMaSP()+"");
+        } catch (SQLException ex) {
+            Logger.getLogger(Kho.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnMoiActionPerformed
 
     private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed

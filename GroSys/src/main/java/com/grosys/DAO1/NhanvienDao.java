@@ -105,4 +105,16 @@ public class NhanvienDao extends GrosysDAO<Nhanvien, String> {
         return SoNV;
     }
     
+    public String TaoMaNV() throws SQLException {
+        String sql = "SELECT TOP 1 * FROM NhanVien ORDER BY MaNV DESC";
+        int SoNV = 0;
+        String maNV = "";
+        ResultSet rs = Xjdbc.query(sql);
+        while(rs.next()) {
+             maNV = rs.getString(1);
+        }
+        SoNV = Integer.parseInt(maNV.substring(2));
+        return "NV"+(SoNV+1);
+    }
+    
 }

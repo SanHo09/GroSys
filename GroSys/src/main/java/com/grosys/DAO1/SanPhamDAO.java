@@ -154,4 +154,16 @@ public void update(SanPham model) {
         return this.selectBySql(sql, MaLSP);
     }
     
+    public String TaoMaSP() throws SQLException {
+        String sql = "SELECT TOP 1 * FROM SanPham ORDER BY MaSP DESC";
+        int SoNV = 0;
+        String maNV = "";
+        ResultSet rs = Xjdbc.query(sql);
+        while(rs.next()) {
+             maNV = rs.getString(1);
+        }
+        SoNV = Integer.parseInt(maNV.substring(2));
+        return "SP"+(SoNV+1);
+    }
+    
 }

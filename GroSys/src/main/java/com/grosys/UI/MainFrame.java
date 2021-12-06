@@ -113,6 +113,12 @@ public class MainFrame extends javax.swing.JFrame {
         hoaDon1 = new com.grosys.UI.HoaDon();
         taiKhoan1 = new com.grosys.UI.TaiKhoan();
         khuyenMai1 = new com.grosys.UI.khuyenMai();
+        try {
+            thongKe1 = new com.grosys.UI.ThongKe();
+        } catch (java.sql.SQLException e1) {
+            e1.printStackTrace();
+        }
+        thongBao1 = new com.grosys.UI.ThongBao();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(255, 255, 255));
@@ -150,6 +156,9 @@ public class MainFrame extends javax.swing.JFrame {
         lblTinNhan.setText("Tin nhắn");
         lblTinNhan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblTinNhan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblTinNhanMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblTinNhanMouseEntered(evt);
             }
@@ -165,6 +174,9 @@ public class MainFrame extends javax.swing.JFrame {
         lblThongBao.setText("Thông báo");
         lblThongBao.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblThongBao.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblThongBaoMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblThongBaoMouseEntered(evt);
             }
@@ -203,6 +215,9 @@ public class MainFrame extends javax.swing.JFrame {
         lblHuongDan.setText("Hướng dẫn");
         lblHuongDan.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblHuongDan.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblHuongDanMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblHuongDanMouseEntered(evt);
             }
@@ -218,6 +233,9 @@ public class MainFrame extends javax.swing.JFrame {
         lblGioiThieu.setText("Giới thiệu");
         lblGioiThieu.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         lblGioiThieu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblGioiThieuMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 lblGioiThieuMouseEntered(evt);
             }
@@ -547,6 +565,9 @@ public class MainFrame extends javax.swing.JFrame {
         pnlThongKe.setForeground(new java.awt.Color(250, 197, 118));
         pnlThongKe.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         pnlThongKe.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlThongKeMouseClicked(evt);
+            }
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 pnlThongKeMouseEntered(evt);
             }
@@ -747,6 +768,8 @@ public class MainFrame extends javax.swing.JFrame {
         jPanel1.add(hoaDon1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, -1, 590));
         jPanel1.add(taiKhoan1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, -1, 590));
         jPanel1.add(khuyenMai1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, -1, 590));
+        jPanel1.add(thongKe1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, -1, 590));
+        jPanel1.add(thongBao1, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, -1, 590));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -807,16 +830,6 @@ public class MainFrame extends javax.swing.JFrame {
         // TODO add your handling code here:
         labelfocusLost(lblTinNhan, "src\\main\\resources\\Icons\\icons8_facebook_messenger_25px.png");
     }//GEN-LAST:event_lblTinNhanMouseExited
-
-    private void lblThongBaoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblThongBaoMouseEntered
-        // TODO add your handling code here:
-        LabelfocusGain(lblThongBao, "src\\main\\resources\\Icons\\icons8_google_alerts_25px_1.png");
-    }//GEN-LAST:event_lblThongBaoMouseEntered
-
-    private void lblThongBaoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblThongBaoMouseExited
-        // TODO add your handling code here:
-        labelfocusLost(lblThongBao, "src\\main\\resources\\Icons\\icons8_google_alerts_25px.png");
-    }//GEN-LAST:event_lblThongBaoMouseExited
 
     private void lblHuongDanMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHuongDanMouseEntered
         // TODO add your handling code here:
@@ -974,6 +987,42 @@ public class MainFrame extends javax.swing.JFrame {
         setForm(khuyenMai1);
     }//GEN-LAST:event_pnlKhuyenMaiMouseClicked
 
+    private void pnlThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlThongKeMouseClicked
+        // TODO add your handling code here:
+        setForm(thongKe1);
+    }//GEN-LAST:event_pnlThongKeMouseClicked
+
+    private void lblTinNhanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTinNhanMouseClicked
+        // TODO add your handling code here:
+        new main.Login().setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_lblTinNhanMouseClicked
+
+    private void lblThongBaoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblThongBaoMouseExited
+        // TODO add your handling code here:
+        labelfocusLost(lblThongBao, "src\\main\\resources\\Icons\\icons8_google_alerts_25px.png");
+    }//GEN-LAST:event_lblThongBaoMouseExited
+
+    private void lblThongBaoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblThongBaoMouseEntered
+        // TODO add your handling code here:
+        LabelfocusGain(lblThongBao, "src\\main\\resources\\Icons\\icons8_google_alerts_25px_1.png");
+    }//GEN-LAST:event_lblThongBaoMouseEntered
+
+    private void lblHuongDanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHuongDanMouseClicked
+        // TODO add your handling code here:
+        huongDan
+    }//GEN-LAST:event_lblHuongDanMouseClicked
+
+    private void lblGioiThieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGioiThieuMouseClicked
+        // TODO add your handling code here:
+        gioiThieu
+    }//GEN-LAST:event_lblGioiThieuMouseClicked
+
+    private void lblThongBaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblThongBaoMouseClicked
+        // TODO add your handling code here:
+        setForm(thongBao1);
+    }//GEN-LAST:event_lblThongBaoMouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -1064,6 +1113,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel pnlStaffImage;
     private javax.swing.JPanel pnlThongKe;
     private com.grosys.UI.TaiKhoan taiKhoan1;
+    private com.grosys.UI.ThongBao thongBao1;
+    private com.grosys.UI.ThongKe thongKe1;
     // End of variables declaration//GEN-END:variables
 
     private void prepareUI() {
@@ -1107,7 +1158,7 @@ public class MainFrame extends javax.swing.JFrame {
         label.setIcon(new ImageIcon(path));
     }
     private void setForm(JPanel pnlSelect) {
-        JPanel[] arr = {pnlMain, kho1, nhanVien1, taiKhoan1, hopTac1, hoaDon1, khuyenMai1};
+        JPanel[] arr = {pnlMain, kho1, nhanVien1, taiKhoan1, hopTac1, hoaDon1, khuyenMai1, thongKe1, thongBao1};
         for(int i=0;i<arr.length;i++) {
             arr[i].setVisible(false);
             if(arr[i]==pnlSelect)

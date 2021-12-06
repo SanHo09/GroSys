@@ -12,6 +12,7 @@ package com.grosys.DAO1;
 import com.grosys.untity.NhaPhanPhoi;
 import com.grosys.untity.NhaSanXuat;
 import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import utils.Xjdbc;
@@ -82,6 +83,17 @@ public class NhaPhanPhoiDAO extends GrosysDAO<NhaPhanPhoi, String> {
         }
         return list;
     }
-
     
+    public String TaoMaNPP() throws SQLException {
+        String sql = "SELECT TOP 1 * FROM NhaPhanPhoi ORDER BY MaNPP DESC";
+        int SoNV = 0;
+        String maNV = "";
+        ResultSet rs = Xjdbc.query(sql);
+        while(rs.next()) {
+             maNV = rs.getString(1);
+        }
+        SoNV = Integer.parseInt(maNV.substring(3));
+        return "NPP"+(SoNV+1);
     }
+    
+}

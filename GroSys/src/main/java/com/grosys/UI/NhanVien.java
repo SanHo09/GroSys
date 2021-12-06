@@ -8,7 +8,10 @@ package com.grosys.UI;
 import com.grosys.DAO1.NhanvienDao;
 import com.grosys.untity.Nhanvien;
 import java.io.File;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
@@ -342,6 +345,11 @@ public class NhanVien extends javax.swing.JPanel {
         // TODO add your handling code here:
         
         this.clearFrom();
+        try {
+            txtMaNV.setText(dao.TaoMaNV()+"");
+        } catch (SQLException ex) {
+            Logger.getLogger(NhanVien.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnMoiActionPerformed
 
     private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed

@@ -815,6 +815,12 @@ public class Login extends javax.swing.JFrame {
             };
             t.start();
     }
+    public void quenMK() {
+        String maNV = txtMaNV.getText();
+        Nhanvien nv = dao.selectById(maNV);
+        Xmail x = new Xmail();
+        x.sendMail(nv.getEmail(), "Tieu De", "MK cua ban: "+nv.getMatkhau());
+    }
     
     private boolean validateForm() {
         String MaNV = txtMaNV.getText();

@@ -5,7 +5,10 @@
  */
 package com.grosys.UI;
 
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -21,8 +24,9 @@ public class xuLyChuoi {
         return false;
     }
     public static void main(String[] args) {
-        int[] a = {15,9,3};
-        int[] b = {4,4,4};
-        System.out.println(boxInBox(a, b));
+        Date date = new Date();
+        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+        int month = localDate.getMonthValue();
+        System.out.println(month);
     }
 }

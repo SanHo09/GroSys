@@ -22,4 +22,8 @@ public class Auth {
     public static boolean isManager() {
         return Auth.islogin() && user.isVaitro();
     }
+
+    
+    
+    
 }

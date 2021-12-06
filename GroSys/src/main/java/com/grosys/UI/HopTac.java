@@ -10,7 +10,10 @@ import com.grosys.DAO1.NhaSanXuatDAO;
 import com.grosys.untity.NhaPhanPhoi;
 import com.grosys.untity.NhaSanXuat;
 import java.awt.Color;
+import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
@@ -520,11 +523,21 @@ public class HopTac extends javax.swing.JPanel {
     private void btnMoiNSXMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMoiNSXMouseClicked
         // TODO add your handling code here:
         clearFormNSX();
+        try {
+            txtMaNSX.setText(nsxDao.TaoMaNSX()+"");
+        } catch (SQLException ex) {
+            Logger.getLogger(HopTac.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnMoiNSXMouseClicked
 
     private void btnMoiNPPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMoiNPPMouseClicked
         // TODO add your handling code here:
         clearFormNPP();
+        try {
+            txtMaNPP.setText(nppDao.TaoMaNPP()+"");
+        } catch (SQLException ex) {
+            Logger.getLogger(HopTac.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnMoiNPPMouseClicked
 
     private void btnThemNPPMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemNPPMouseClicked

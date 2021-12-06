@@ -102,7 +102,10 @@ public class khuyenMai extends javax.swing.JPanel {
         jLabel21 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         txtTimKiem = new javax.swing.JTextField();
+        btnXoa = new javax.swing.JPanel();
+        jLabel26 = new javax.swing.JLabel();
 
+        setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         pnlChiTiet.setBackground(new java.awt.Color(255, 255, 255));
@@ -558,7 +561,7 @@ public class khuyenMai extends javax.swing.JPanel {
         jLabel21.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
         jLabel21.setForeground(new java.awt.Color(255, 255, 255));
         jLabel21.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel21.setText("Cập Nhật");
+        jLabel21.setText("Thêm ");
 
         javax.swing.GroupLayout btnCapNhatLayout = new javax.swing.GroupLayout(btnCapNhat);
         btnCapNhat.setLayout(btnCapNhatLayout);
@@ -566,30 +569,65 @@ public class khuyenMai extends javax.swing.JPanel {
             btnCapNhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(btnCapNhatLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
-                .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 89, Short.MAX_VALUE)
+                .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
                 .addGap(14, 14, 14))
         );
         btnCapNhatLayout.setVerticalGroup(
             btnCapNhatLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 36, Short.MAX_VALUE)
+            .addComponent(jLabel21, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
         );
 
         jLabel7.setText("Tìm Kiếm:");
+
+        txtTimKiem.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtTimKiemKeyReleased(evt);
+            }
+        });
+
+        btnXoa.setBackground(new java.awt.Color(73, 164, 255));
+        btnXoa.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnXoa.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnXoaMouseClicked(evt);
+            }
+        });
+
+        jLabel26.setFont(new java.awt.Font("Tahoma", 1, 15)); // NOI18N
+        jLabel26.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel26.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel26.setText("Xóa");
+
+        javax.swing.GroupLayout btnXoaLayout = new javax.swing.GroupLayout(btnXoa);
+        btnXoa.setLayout(btnXoaLayout);
+        btnXoaLayout.setHorizontalGroup(
+            btnXoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(btnXoaLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 71, Short.MAX_VALUE)
+                .addGap(14, 14, 14))
+        );
+        btnXoaLayout.setVerticalGroup(
+            btnXoaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jLabel26, javax.swing.GroupLayout.DEFAULT_SIZE, 27, Short.MAX_VALUE)
+        );
 
         javax.swing.GroupLayout pnlDanhSachLayout = new javax.swing.GroupLayout(pnlDanhSach);
         pnlDanhSach.setLayout(pnlDanhSachLayout);
         pnlDanhSachLayout.setHorizontalGroup(
             pnlDanhSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane3)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlDanhSachLayout.createSequentialGroup()
-                .addContainerGap(211, Short.MAX_VALUE)
+            .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
+            .addGroup(pnlDanhSachLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel7)
                 .addGap(18, 18, 18)
                 .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, 255, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(179, 179, 179))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(132, 132, 132))
             .addGroup(pnlDanhSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnlDanhSachLayout.createSequentialGroup()
-                    .addGap(586, 586, 586)
+                    .addGap(604, 604, 604)
                     .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addContainerGap(17, Short.MAX_VALUE)))
         );
@@ -597,16 +635,18 @@ public class khuyenMai extends javax.swing.JPanel {
             pnlDanhSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDanhSachLayout.createSequentialGroup()
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addGroup(pnlDanhSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7))
-                .addGap(0, 33, Short.MAX_VALUE))
+                .addGap(26, 26, 26)
+                .addGroup(pnlDanhSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlDanhSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(txtTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel7))
+                    .addComponent(btnXoa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 32, Short.MAX_VALUE))
             .addGroup(pnlDanhSachLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnlDanhSachLayout.createSequentialGroup()
                     .addGap(511, 511, 511)
                     .addComponent(btnCapNhat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(23, Short.MAX_VALUE)))
+                    .addContainerGap(32, Short.MAX_VALUE)))
         );
 
         add(pnlDanhSach, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 720, 570));
@@ -615,6 +655,7 @@ public class khuyenMai extends javax.swing.JPanel {
     private void btnQuayLaiMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnQuayLaiMouseClicked
         // TODO add your handling code here:
         setForm(pnlDanhSach);
+        btnCapNhatPGG.setVisible(false);
     }//GEN-LAST:event_btnQuayLaiMouseClicked
 
     private void btnThemMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnThemMouseClicked
@@ -670,39 +711,52 @@ public class khuyenMai extends javax.swing.JPanel {
 
     private void btnCapNhatPGGMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCapNhatPGGMouseClicked
         // TODO add your handling code here:
+        if(checkPgg()) 
+            capNhatPGG();
     }//GEN-LAST:event_btnCapNhatPGGMouseClicked
 
     private void tblDanhSachPGGMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDanhSachPGGMouseClicked
         // TODO add your handling code here:
         if (evt.getClickCount() == 2) {
-            int row = tblDanhSachPGG.getSelectedRow();
-            String maHV = (String) tblDanhSachPGG.getValueAt(row, 0);
-            String tenHV = (String) tblDanhSachPGG.getValueAt(row, 1);
-            String TenSP = (String) tblDanhSachPGG.getValueAt(row, 2);
-            double giaTri = Double.parseDouble(String.valueOf(tblDanhSachPGG.getValueAt(row, 3)));
-            String hanSuDung = (String) tblDanhSachPGG.getValueAt(row, 4);
-            setForm(pnlChiTiet);
-            for (int i = 0; i < tblHV.getRowCount(); i++) {
-                String maHVOntable = (String) tblHV.getValueAt(i, 0);
-                if (maHVOntable.equals(maHV)) {
-                    tblHV.setRowSelectionInterval(i, i);
-                    break;
-                }
-            }
-            for (int i = 0; i < tblSP.getRowCount(); i++) {
-                String tenSPOnTable = (String) tblSP.getValueAt(i, 1);
-                if (tenSPOnTable.equals(TenSP)) {
-                    tblSP.setRowSelectionInterval(i, i);
-                    break;
-                }
-            }
-            txtTenHV.setText(tenHV);
-            txtTenSP.setText(TenSP);
-            txtGiaTri.setText(giaTri+"");
-            txtHanSuDung.setText(hanSuDung);
-            
+            setPGG();
+            btnCapNhatPGG.setVisible(true);
         }
     }//GEN-LAST:event_tblDanhSachPGGMouseClicked
+
+    private void txtTimKiemKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTimKiemKeyReleased
+        // TODO add your handling code here:
+        String search = txtTimKiem.getText();
+        DefaultTableModel model = (DefaultTableModel)tblDanhSachPGG.getModel();
+        model.setRowCount(0);
+        List<PhieuGiamGia> list = pggDao.selectAll();
+        for (PhieuGiamGia i : list) {
+            if (i.getMaSP().contains(search) || i.getTenSP().contains(search)
+                    || i.getTenHV().contains(search) || i.getMaHV().contains(search)
+                    || String.valueOf(i.getHanSD()).contains(search) || String.valueOf(i.getGiaTri()).contains(search)
+                    || i.getMaNV().contains(search)||i.getTenNV().contains(search)) {
+                Object[] row = {
+                    i.getMaHV(),
+                    i.getTenHV(),
+                    i.getTenSP(),
+                    i.getGiaTri(),
+                    XDate.toString(i.getHanSD(), "dd-MM-yyyy"),
+                    i.getTenNV()
+                };
+                model.addRow(row);
+            }
+
+        }
+    }//GEN-LAST:event_txtTimKiemKeyReleased
+
+    private void btnXoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnXoaMouseClicked
+        // TODO add your handling code here:
+        if(tblDanhSachPGG.getSelectedRow()<0) {
+            MsgBox.alert(this, "Vui lòng chọn Phiếu giảm giá cần xóa");
+        }
+        else if(MsgBox.confirm(this, "Bạn Có chắc muốn xóa phiếu giảm giá này ?")) {
+            xoaPGG();
+        }
+    }//GEN-LAST:event_btnXoaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -714,22 +768,20 @@ public class khuyenMai extends javax.swing.JPanel {
     private javax.swing.JPanel btnQuayLai;
     private javax.swing.JPanel btnQuayLaiThemPGG;
     private javax.swing.JPanel btnThem;
-    private javax.swing.JPanel btnThem1;
-    private javax.swing.JPanel btnThem2;
     private javax.swing.JPanel btnThemHV;
+    private javax.swing.JPanel btnXoa;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
     private javax.swing.JLabel jLabel18;
-    private javax.swing.JLabel jLabel19;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel20;
     private javax.swing.JLabel jLabel21;
     private javax.swing.JLabel jLabel22;
     private javax.swing.JLabel jLabel23;
     private javax.swing.JLabel jLabel24;
     private javax.swing.JLabel jLabel25;
+    private javax.swing.JLabel jLabel26;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -769,6 +821,7 @@ public class khuyenMai extends javax.swing.JPanel {
         modelHV.getColumn(1).setPreferredWidth(120);
         
         modelSP.getColumn(1).setPreferredWidth(120);
+        btnCapNhatPGG.setVisible(false);
     }
     
     private void setFormDangKy(JPanel pnlSelect) {
@@ -928,5 +981,65 @@ public class khuyenMai extends javax.swing.JPanel {
         txtTenHVDK.setText("");
         txtEmail.setText("");
         txtSDT.setText("");
+    }
+
+    private void setPGG() {
+        int row = tblDanhSachPGG.getSelectedRow();
+            String maHV = (String) tblDanhSachPGG.getValueAt(row, 0);
+            String tenHV = (String) tblDanhSachPGG.getValueAt(row, 1);
+            String TenSP = (String) tblDanhSachPGG.getValueAt(row, 2);
+            double giaTri = Double.parseDouble(String.valueOf(tblDanhSachPGG.getValueAt(row, 3)));
+            String hanSuDung = (String) tblDanhSachPGG.getValueAt(row, 4);
+            setForm(pnlChiTiet);
+            for (int i = 0; i < tblHV.getRowCount(); i++) {
+                String maHVOntable = (String) tblHV.getValueAt(i, 0);
+                if (maHVOntable.equals(maHV)) {
+                    tblHV.setRowSelectionInterval(i, i);
+                    break;
+                }
+            }
+            for (int i = 0; i < tblSP.getRowCount(); i++) {
+                String tenSPOnTable = (String) tblSP.getValueAt(i, 1);
+                if (tenSPOnTable.equals(TenSP)) {
+                    tblSP.setRowSelectionInterval(i, i);
+                    break;
+                }
+            }
+            txtTenHV.setText(tenHV);
+            txtTenSP.setText(TenSP);
+            txtGiaTri.setText(giaTri+"");
+            txtHanSuDung.setText(hanSuDung);
+    }
+
+    private void capNhatPGG() {
+        int i = tblHV.getSelectedRow();
+        int j = tblSP.getSelectedRow();
+        String maHV = (String) tblHV.getValueAt(i, 0);
+        String maSP = (String) tblSP.getValueAt(j, 0);
+        Double giaTri = Double.parseDouble(txtGiaTri.getText());
+        Date hsd = XDate.toDate(txtHanSuDung.getText(), "MM-dd-yyyy");
+        PhieuGiamGia pgg = new PhieuGiamGia(maHV, maSP, hsd, Auth.user.getMaNV(), giaTri);
+        pggDao.update(pgg);
+        MsgBox.alert(this, "Cập Nhật Thành Công !");
+        fillToTablePGG();
+        setForm(pnlDanhSach);
+    }
+
+    private void xoaPGG() {
+        int row = tblDanhSachPGG.getSelectedRow();
+        String maHV = (String)tblDanhSachPGG.getValueAt(row, 0);
+        String tenSP = (String)tblDanhSachPGG.getValueAt(row, 2);
+        String maSP = "";
+        for(int i=0;i<tblSP.getRowCount();i++) {
+            String tenSPOnTable = (String) tblSP.getValueAt(i, 1);
+            String maSPOnTable = (String) tblSP.getValueAt(i, 0);
+            if(tenSP.equals(tenSPOnTable)) {
+                maSP = maSPOnTable;
+                break;
+            }
+        }
+        pggDao.deleteByIdMaSP(maHV, maSP);
+        MsgBox.alert(this, "Xóa Thành công !");
+        fillToTablePGG();
     }
 }

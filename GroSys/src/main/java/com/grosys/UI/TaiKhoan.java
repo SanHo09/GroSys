@@ -5,11 +5,15 @@
  */
 package com.grosys.UI;
 
+import com.grosys.DAO1.NhanvienDao;
+import com.grosys.untity.Nhanvien;
 import java.io.File;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JTextField;
 import utils.Auth;
+import utils.MsgBox;
 import utils.RoundedPanel;
 import utils.XImage;
 
@@ -24,7 +28,8 @@ public class TaiKhoan extends javax.swing.JPanel {
      */
     public TaiKhoan() {
         initComponents();
-        
+        setEdit(null);
+        setFormTaiKhoan();
     }
 
     /**
@@ -88,6 +93,7 @@ public class TaiKhoan extends javax.swing.JPanel {
 
         pnlAnh.setOpaque(false);
 
+        lblAnh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         lblAnh.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblAnhMouseClicked(evt);
@@ -98,11 +104,11 @@ public class TaiKhoan extends javax.swing.JPanel {
         pnlAnh.setLayout(pnlAnhLayout);
         pnlAnhLayout.setHorizontalGroup(
             pnlAnhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblAnh, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+            .addComponent(lblAnh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         pnlAnhLayout.setVerticalGroup(
             pnlAnhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblAnh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
+            .addComponent(lblAnh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pnlITomTat.add(pnlAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 30, 130, 130));
@@ -130,16 +136,16 @@ public class TaiKhoan extends javax.swing.JPanel {
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(10, 102, 194));
         jLabel3.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel3.setText("Nhắn Tin");
+        jLabel3.setText("Đăng Xuất");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGap(14, 14, 14))
+                .addContainerGap()
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, 66, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -150,6 +156,11 @@ public class TaiKhoan extends javax.swing.JPanel {
 
         jPanel3.setBackground(new java.awt.Color(10, 102, 194));
         jPanel3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel3MouseClicked(evt);
+            }
+        });
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel5.setForeground(new java.awt.Color(255, 255, 255));
@@ -230,14 +241,29 @@ public class TaiKhoan extends javax.swing.JPanel {
 
         lblSuaSDT.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8_edit_20px.png"))); // NOI18N
         lblSuaSDT.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblSuaSDT.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblSuaSDTMouseClicked(evt);
+            }
+        });
         jPanel2.add(lblSuaSDT, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 250, -1, -1));
 
         lblSuaHoTen.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8_edit_20px.png"))); // NOI18N
         lblSuaHoTen.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblSuaHoTen.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblSuaHoTenMouseClicked(evt);
+            }
+        });
         jPanel2.add(lblSuaHoTen, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 110, -1, -1));
 
         lblSuaEmail.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8_edit_20px.png"))); // NOI18N
         lblSuaEmail.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblSuaEmail.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblSuaEmailMouseClicked(evt);
+            }
+        });
         jPanel2.add(lblSuaEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 180, -1, -1));
 
         jSeparator4.setBackground(new java.awt.Color(237, 237, 237));
@@ -251,6 +277,11 @@ public class TaiKhoan extends javax.swing.JPanel {
 
         lblSuaMatKhau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8_edit_20px.png"))); // NOI18N
         lblSuaMatKhau.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblSuaMatKhau.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblSuaMatKhauMouseClicked(evt);
+            }
+        });
         jPanel2.add(lblSuaMatKhau, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 320, -1, -1));
 
         txtMatKhau.setForeground(new java.awt.Color(153, 153, 153));
@@ -421,8 +452,42 @@ public class TaiKhoan extends javax.swing.JPanel {
 
     private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
         // TODO add your handling code here:
-        chooseImage(lblAnh);
+        
     }//GEN-LAST:event_lblAnhMouseClicked
+
+    private void lblSuaHoTenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuaHoTenMouseClicked
+        // TODO add your handling code here:
+        setEdit(txtHoTen);
+    }//GEN-LAST:event_lblSuaHoTenMouseClicked
+
+    private void lblSuaEmailMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuaEmailMouseClicked
+        // TODO add your handling code here:
+         setEdit(txtEmail);
+    }//GEN-LAST:event_lblSuaEmailMouseClicked
+
+    private void lblSuaSDTMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuaSDTMouseClicked
+        // TODO add your handling code here:
+        setEdit(txtSoDienThoai);
+    }//GEN-LAST:event_lblSuaSDTMouseClicked
+
+    private void lblSuaMatKhauMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuaMatKhauMouseClicked
+        // TODO add your handling code here:
+        setEdit(txtMatKhau);
+    }//GEN-LAST:event_lblSuaMatKhauMouseClicked
+
+    private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
+        // TODO add your handling code here:
+        NhanvienDao dao = new NhanvienDao();
+        Nhanvien nv = new Nhanvien();
+        nv.setMaNV(txtMaNV.getText());
+        nv.setHoten(txtHoTen.getText());
+        nv.setEmail(txtEmail.getText());
+        nv.setSDT(txtSoDienThoai.getText());
+        nv.setMatkhau(txtMatKhau.getText());
+        nv.setAnh(Auth.user.getAnh());
+        dao.update(nv);
+        MsgBox.alert(this, "Cập Nhật thành công !");
+    }//GEN-LAST:event_jPanel3MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -489,5 +554,15 @@ public class TaiKhoan extends javax.swing.JPanel {
         txtEmail.setText(Auth.user.getEmail());
         txtMatKhau.setText(Auth.user.getMatkhau());
         
+    }
+    
+    private void setEdit(JTextField txtSelect) {
+        JTextField[] arr = {txtMaNV,txtEmail, txtHoTen, txtMatKhau, txtSoDienThoai};
+        for(int i=0;i<arr.length;i++) {
+            arr[i].setEditable(false);
+            if(arr[i]==txtSelect) {
+                arr[i].setEditable(true);
+            }
+        }
     }
 }
