@@ -7,7 +7,9 @@ package com.grosys.UI;
 
 import com.grosys.DAO1.NhanvienDao;
 import com.grosys.untity.Nhanvien;
+import java.awt.Desktop;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
@@ -21,6 +23,14 @@ import utils.HeaderColor;
 import utils.MsgBox;
 import utils.XImage;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 /**
  *
@@ -280,6 +290,12 @@ public class NhanVien extends javax.swing.JPanel {
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8_send_file_20px_1.png"))); // NOI18N
         jLabel4.setText("Xuất File Excel");
+        jLabel4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout btnXuatFileExcel1Layout = new javax.swing.GroupLayout(btnXuatFileExcel1);
         btnXuatFileExcel1.setLayout(btnXuatFileExcel1Layout);
@@ -367,7 +383,71 @@ public class NhanVien extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_chkHienMatKhauActionPerformed
 
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        // TODO add your handling code here:
+        exportToXls(tblNhanVien);
+    }//GEN-LAST:event_jLabel4MouseClicked
 
+    private void exportToXls(JTable table) {
+        Workbook workbook = new XSSFWorkbook();
+        String titleSheet = "Nhân Viên" ;
+        String titleFile = "NhanVien.xlsx";
+        Sheet sheet = workbook.createSheet(titleSheet);
+        org.apache.poi.ss.usermodel.Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerFont.setFontHeightInPoints((short)17);
+        headerFont.setColor(IndexedColors.RED.getIndex());
+        
+        CellStyle headerCellStyle = workbook.createCellStyle();
+        headerCellStyle.setFont(headerFont);
+        
+        Row headerRow = sheet.createRow(0);
+        for(int i=0;i<table.getColumnCount();i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(table.getModel().getColumnName(i));
+            cell.setCellStyle(headerCellStyle);
+        }
+        int rowNum = 1; 
+        for(int i=0;i<table.getRowCount();i++) {
+            Row row = sheet.createRow(rowNum++);
+            for(int j=0;j<table.getColumnCount();j++) {
+                row.createCell(j).setCellValue(String.valueOf(table.getValueAt(i, j)));
+            }
+//            row.createCell(0).setCellValue(String.valueOf(table.getValueAt(i, 0)));
+//            row.createCell(1).setCellValue(String.valueOf(table.getValueAt(i, 1)));
+//            row.createCell(2).setCellValue(String.valueOf(table.getValueAt(i, 2)));
+//            row.createCell(3).setCellValue(String.valueOf(table.getValueAt(i, 3)));
+//            row.createCell(4).setCellValue(String.valueOf(table.getValueAt(i, 4)));
+//            row.createCell(5).setCellValue(String.valueOf(table.getValueAt(i, 5)));
+//            row.createCell(6).setCellValue(String.valueOf(table.getValueAt(i, 6)));
+//            row.createCell(7).setCellValue(String.valueOf(table.getValueAt(i, 7)));
+//            row.createCell(8).setCellValue(String.valueOf(table.getValueAt(i, 8)));
+//            row.createCell(9).setCellValue(String.valueOf(table.getValueAt(i, 9)));
+        }
+        for(int i=0;i<table.getColumnCount();i++) {
+            sheet.autoSizeColumn(i);
+        }
+//        FileOutputStream fileOut = new FileOutputStream("src\\main\\resources\\Data\\EduSys.xlsx");
+//        MsgBox.alert(this, "Export Successfully");
+//        workbook.write(fileOut);
+//        fileOut.close();
+//        workbook.close();
+        JFileChooser saveFile = new JFileChooser();
+        saveFile.setDialogTitle("Lưu File");
+        saveFile.setSelectedFile(new File(titleFile));
+        if(saveFile.showOpenDialog(null)==JFileChooser.APPROVE_OPTION) {
+            File output = saveFile.getSelectedFile();
+            try(FileOutputStream out = new FileOutputStream(output)) {
+                workbook.write(out);
+                out.close();
+                MsgBox.alert(this, "Xuất file excel thành công !");
+                Desktop.getDesktop().open(output);
+            }
+            catch(Exception ex) {
+                MsgBox.alert(this, "Error");
+            }
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup VaiTroGroup;
     private javax.swing.JButton btnMoi;
@@ -557,6 +637,11 @@ public class NhanVien extends javax.swing.JPanel {
         if (txtMatKhau.getText().matches("")) {
             MsgBox.alert(this, "Mật khẩu không được để trống");
             txtMatKhau.requestFocus();
+            return false;
+        }
+        if(!txtEmail.getText().matches("\\w+@\\w+(\\.\\w+){1,2}")) {
+            MsgBox.alert(this, "Email không hợp lệ !");
+            txtEmail.requestFocus();
             return false;
         }
         if(!txtMatKhau.getText().equals(txtXacNhan.getText())) {

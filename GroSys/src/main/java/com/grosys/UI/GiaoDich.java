@@ -5,6 +5,16 @@
  */
 package com.grosys.UI;
 
+import com.github.sarxos.webcam.Webcam;
+import com.github.sarxos.webcam.WebcamPanel;
+import com.github.sarxos.webcam.WebcamResolution;
+import com.google.zxing.BinaryBitmap;
+import com.google.zxing.LuminanceSource;
+import com.google.zxing.MultiFormatReader;
+import com.google.zxing.NotFoundException;
+import com.google.zxing.Result;
+import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
+import com.google.zxing.common.HybridBinarizer;
 import com.grosys.DAO1.HDCTDAO;
 import com.grosys.DAO1.HoaDonDAO;
 import com.grosys.DAO1.HoivienDao;
@@ -22,13 +32,16 @@ import com.grosys.untity.SanPham;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Cursor;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.FontMetrics;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.awt.print.PageFormat;
 import java.awt.print.Paper;
 import java.awt.print.Printable;
@@ -41,6 +54,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultCellEditor;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
@@ -56,7 +70,10 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import javax.swing.UIManager;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
+import my_swing.Panel;
 import utils.Auth;
 
 import utils.HeaderColorGiaoDich;
@@ -84,7 +101,9 @@ public class GiaoDich extends javax.swing.JFrame {
     HoaDonDAO hdDao = new HoaDonDAO();
     HDCTDAO hdctDao = new HDCTDAO();
     String maHD = "";
-    
+    boolean flag = true;
+    boolean cameraSwitch = true;
+    Webcam webcam=null;
     public GiaoDich() {
         initComponents();
         prepareUI();
@@ -92,6 +111,7 @@ public class GiaoDich extends javax.swing.JFrame {
         fillToComboboxLSP();
         fillToComboboxNSX();
         fillToComboboxHV();
+        openCamera(cameraSwitch);
         
     }
 
@@ -115,6 +135,8 @@ public class GiaoDich extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         pnlHangHoaItem2 = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
+        lblMau = new javax.swing.JLabel();
+        lblCameraSwitch = new javax.swing.JLabel();
         pnlTitleTonKho = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         pnlTitleHetHan = new javax.swing.JPanel();
@@ -143,10 +165,10 @@ public class GiaoDich extends javax.swing.JFrame {
         lblSoTien = new javax.swing.JLabel();
         lblGiaTien = new javax.swing.JLabel();
         btnXacNhan = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton6 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
-        jButton5 = new javax.swing.JButton();
+        btnFirst = new javax.swing.JButton();
+        btnPrev = new javax.swing.JButton();
+        btnNext = new javax.swing.JButton();
+        btnLast = new javax.swing.JButton();
         btnThanhToan = new javax.swing.JButton();
         txtSoTien = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
@@ -170,6 +192,7 @@ public class GiaoDich extends javax.swing.JFrame {
         jLabel23 = new javax.swing.JLabel();
         cbbHoiVien = new javax.swing.JComboBox<>();
         jLabel12 = new javax.swing.JLabel();
+        pnlCamera = new javax.swing.JPanel();
 
         jButton3.setText(">>");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
@@ -312,6 +335,12 @@ public class GiaoDich extends javax.swing.JFrame {
                     .addContainerGap()))
         );
 
+        lblCameraSwitch.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCameraSwitchMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlHeaderLayout = new javax.swing.GroupLayout(pnlHeader);
         pnlHeader.setLayout(pnlHeaderLayout);
         pnlHeaderLayout.setHorizontalGroup(
@@ -320,23 +349,33 @@ public class GiaoDich extends javax.swing.JFrame {
                 .addComponent(pnlHangHoaItem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlHangHoaItem1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 644, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(lblCameraSwitch)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 580, Short.MAX_VALUE)
+                .addComponent(lblMau, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(204, 204, 204))
             .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnlHeaderLayout.createSequentialGroup()
                     .addGap(411, 411, 411)
                     .addComponent(jLabel9)
                     .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                     .addComponent(jLabel10)
-                    .addContainerGap(411, Short.MAX_VALUE)))
+                    .addContainerGap(611, Short.MAX_VALUE)))
             .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlHeaderLayout.createSequentialGroup()
-                    .addGap(0, 787, Short.MAX_VALUE)
+                    .addGap(0, 987, Short.MAX_VALUE)
                     .addComponent(pnlHangHoaItem2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         pnlHeaderLayout.setVerticalGroup(
             pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(pnlHangHoaItem, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(pnlHangHoaItem1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(pnlHeaderLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblCameraSwitch)
+                    .addComponent(lblMau, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(pnlHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(pnlHeaderLayout.createSequentialGroup()
                     .addGap(8, 8, 8)
@@ -348,7 +387,7 @@ public class GiaoDich extends javax.swing.JFrame {
                 .addComponent(pnlHangHoaItem2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        getContentPane().add(pnlHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 900, 50));
+        getContentPane().add(pnlHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1100, 50));
 
         pnlTitleTonKho.setBackground(new java.awt.Color(39, 174, 97));
         pnlTitleTonKho.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -531,7 +570,7 @@ public class GiaoDich extends javax.swing.JFrame {
         pnlTable.setLayout(pnlTableLayout);
         pnlTableLayout.setHorizontalGroup(
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 680, Short.MAX_VALUE)
+            .addComponent(jScrollPane11, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE)
         );
         pnlTableLayout.setVerticalGroup(
             pnlTableLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -540,7 +579,7 @@ public class GiaoDich extends javax.swing.JFrame {
                 .addContainerGap())
         );
 
-        pnlMain.add(pnlTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 680, 350));
+        pnlMain.add(pnlTable, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 880, 350));
 
         pnlGioHang.setBackground(new java.awt.Color(255, 255, 255));
         pnlGioHang.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -610,25 +649,45 @@ public class GiaoDich extends javax.swing.JFrame {
         });
         pnlGioHang.add(btnXacNhan, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 140, 120, -1));
 
-        jButton2.setBackground(new java.awt.Color(39, 174, 97));
-        jButton2.setForeground(new java.awt.Color(255, 255, 255));
-        jButton2.setText("<|");
-        pnlGioHang.add(jButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, 26));
+        btnFirst.setBackground(new java.awt.Color(39, 174, 97));
+        btnFirst.setForeground(new java.awt.Color(255, 255, 255));
+        btnFirst.setText("<|");
+        btnFirst.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFirstActionPerformed(evt);
+            }
+        });
+        pnlGioHang.add(btnFirst, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, 26));
 
-        jButton6.setBackground(new java.awt.Color(39, 174, 97));
-        jButton6.setForeground(new java.awt.Color(255, 255, 255));
-        jButton6.setText("<<");
-        pnlGioHang.add(jButton6, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, 26));
+        btnPrev.setBackground(new java.awt.Color(39, 174, 97));
+        btnPrev.setForeground(new java.awt.Color(255, 255, 255));
+        btnPrev.setText("<<");
+        btnPrev.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPrevActionPerformed(evt);
+            }
+        });
+        pnlGioHang.add(btnPrev, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 140, -1, 26));
 
-        jButton4.setBackground(new java.awt.Color(39, 174, 97));
-        jButton4.setForeground(new java.awt.Color(255, 255, 255));
-        jButton4.setText(">>");
-        pnlGioHang.add(jButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, -1, 26));
+        btnNext.setBackground(new java.awt.Color(39, 174, 97));
+        btnNext.setForeground(new java.awt.Color(255, 255, 255));
+        btnNext.setText(">>");
+        btnNext.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNextActionPerformed(evt);
+            }
+        });
+        pnlGioHang.add(btnNext, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 140, -1, 26));
 
-        jButton5.setBackground(new java.awt.Color(39, 174, 97));
-        jButton5.setForeground(new java.awt.Color(255, 255, 255));
-        jButton5.setText("|>");
-        pnlGioHang.add(jButton5, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, -1, 26));
+        btnLast.setBackground(new java.awt.Color(39, 174, 97));
+        btnLast.setForeground(new java.awt.Color(255, 255, 255));
+        btnLast.setText("|>");
+        btnLast.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLastActionPerformed(evt);
+            }
+        });
+        pnlGioHang.add(btnLast, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 140, -1, 26));
 
         btnThanhToan.setBackground(new java.awt.Color(39, 174, 97));
         btnThanhToan.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
@@ -703,6 +762,12 @@ public class GiaoDich extends javax.swing.JFrame {
 
         jLabel22.setText("Loại Sản Phẩm");
 
+        txtHanSuDung.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHanSuDungActionPerformed(evt);
+            }
+        });
+
         jLabel23.setText("Đơn Vị:");
 
         cbbHoiVien.addActionListener(new java.awt.event.ActionListener() {
@@ -718,9 +783,24 @@ public class GiaoDich extends javax.swing.JFrame {
         pnlChiTietLayout.setHorizontalGroup(
             pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlChiTietLayout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(lblAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(57, 57, 57)
+                .addContainerGap()
+                .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlChiTietLayout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(lblAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 176, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlChiTietLayout.createSequentialGroup()
+                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(12, 12, 12)
+                        .addComponent(txtLoaiSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlChiTietLayout.createSequentialGroup()
+                        .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(13, 13, 13)
+                        .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(cbbHoiVien, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtSoLuong, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))))
+                .addGap(109, 109, 109)
                 .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(pnlChiTietLayout.createSequentialGroup()
@@ -736,41 +816,29 @@ public class GiaoDich extends javax.swing.JFrame {
                                 .addComponent(txtTenSP, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(txtGiaBan, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(pnlChiTietLayout.createSequentialGroup()
-                        .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(61, 61, 61)
-                        .addComponent(txtDonVi, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(pnlChiTietLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlChiTietLayout.createSequentialGroup()
-                        .addComponent(jLabel22, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(12, 12, 12)
-                        .addComponent(txtLoaiSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtHanSuDung, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(pnlChiTietLayout.createSequentialGroup()
                         .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel21, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel12, javax.swing.GroupLayout.PREFERRED_SIZE, 78, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(13, 13, 13)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlChiTietLayout.createSequentialGroup()
+                                .addComponent(jLabel23, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(61, 61, 61))
+                            .addGroup(pnlChiTietLayout.createSequentialGroup()
+                                .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel20, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(pnlChiTietLayout.createSequentialGroup()
+                                        .addGap(1, 1, 1)
+                                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                         .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cbbHoiVien, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtSoLuong, javax.swing.GroupLayout.DEFAULT_SIZE, 222, Short.MAX_VALUE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel18, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtNhaSanXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(14, Short.MAX_VALUE))
+                            .addComponent(txtHanSuDung)
+                            .addComponent(txtDonVi)
+                            .addComponent(txtNhaSanXuat, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(31, 31, 31))
         );
         pnlChiTietLayout.setVerticalGroup(
             pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlChiTietLayout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlChiTietLayout.createSequentialGroup()
+                .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(pnlChiTietLayout.createSequentialGroup()
                         .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtMaSP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel16))
@@ -785,38 +853,43 @@ public class GiaoDich extends javax.swing.JFrame {
                         .addGap(22, 22, 22)
                         .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(txtDonVi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel23)))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlChiTietLayout.createSequentialGroup()
+                            .addComponent(jLabel23))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel20)
+                            .addComponent(txtHanSuDung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel18)
+                            .addComponent(txtNhaSanXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(pnlChiTietLayout.createSequentialGroup()
                         .addComponent(lblAnh, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(9, 9, 9)))
-                .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtHanSuDung, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel20)
-                    .addComponent(txtLoaiSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel22))
-                .addGap(18, 18, 18)
-                .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNhaSanXuat, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel18)
-                    .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel21))
-                .addGap(20, 20, 20)
-                .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cbbHoiVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel12))
+                        .addGap(9, 9, 9)
+                        .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtLoaiSanPham, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel22))
+                        .addGap(18, 18, 18)
+                        .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel21))
+                        .addGap(20, 20, 20)
+                        .addGroup(pnlChiTietLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(cbbHoiVien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12))))
                 .addContainerGap(214, Short.MAX_VALUE))
         );
 
-        pnlMain.add(pnlChiTiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 680, 530));
+        pnlMain.add(pnlChiTiet, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 20, 880, 530));
+        pnlMain.add(pnlCamera, new org.netbeans.lib.awtextra.AbsoluteConstraints(900, 370, 200, 180));
 
-        getContentPane().add(pnlMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 900, 550));
+        getContentPane().add(pnlMain, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 1100, 550));
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void txtTimKiemMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTimKiemMouseReleased
-
+        
     }//GEN-LAST:event_txtTimKiemMouseReleased
 
     private void txtTimKiemMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTimKiemMousePressed
@@ -884,6 +957,7 @@ public class GiaoDich extends javax.swing.JFrame {
     private void pnlHangHoaItem2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlHangHoaItem2MouseClicked
         // TODO add your handling code here:
         if(MsgBox.confirm(this, "bạn Có chắc muốn thoát chức năng ?")) {
+            webcam.close();
             this.dispose();
             new MainFrame().setVisible(true);
         }
@@ -892,6 +966,7 @@ public class GiaoDich extends javax.swing.JFrame {
     private void tblDanhSachSanPhamMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDanhSachSanPhamMouseClicked
         // TODO add your handling code here:
         // checkpoint
+        this.flag=true;
         if(tblDanhSachSanPham.getSelectedColumn()==6) {
             addToCard();
         } 
@@ -925,6 +1000,7 @@ public class GiaoDich extends javax.swing.JFrame {
 
     private void tblGiohangMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblGiohangMouseClicked
         // TODO add your handling code here:
+        this.flag=false;
         if(tblGiohang.getSelectedColumn()==5) {
             removeFromCard();
         } else if(evt.getClickCount()==2) {
@@ -1094,6 +1170,76 @@ public class GiaoDich extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_txtTimKiemKeyReleased
 
+    private void btnFirstActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFirstActionPerformed
+        // TODO add your handling code here:
+        int row = 0;
+        if(this.flag==true)
+            tblDanhSachSanPham.setRowSelectionInterval(row, row);
+        else {
+            tblGiohang.setRowSelectionInterval(row, row);
+            setFormChiTiet(row);
+        }
+    }//GEN-LAST:event_btnFirstActionPerformed
+
+    private void btnPrevActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPrevActionPerformed
+        // TODO add your handling code here:
+        if(this.flag==true) {
+            int row = tblDanhSachSanPham.getSelectedRow()-1;
+            if(row < 0) 
+                row = tblDanhSachSanPham.getRowCount()-1;
+            tblDanhSachSanPham.setRowSelectionInterval(row, row);
+        } else {
+            int row = tblGiohang.getSelectedRow()-1;
+            if(row < 0) 
+                row = tblGiohang.getRowCount()-1;
+            tblGiohang.setRowSelectionInterval(row, row);
+            setFormChiTiet(row);
+        }
+    }//GEN-LAST:event_btnPrevActionPerformed
+
+    private void btnNextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNextActionPerformed
+        // TODO add your handling code here:
+        if(this.flag==true) {
+            int row = tblDanhSachSanPham.getSelectedRow() + 1;
+            if (row > tblDanhSachSanPham.getRowCount() - 1) {
+                row = 0;
+            }
+            tblDanhSachSanPham.setRowSelectionInterval(row, row);
+        } else {
+            int row = tblGiohang.getSelectedRow() + 1;
+            if (row > tblGiohang.getRowCount() - 1) {
+                row = 0;
+            }
+            tblGiohang.setRowSelectionInterval(row, row);
+            setFormChiTiet(row);
+        }
+    }//GEN-LAST:event_btnNextActionPerformed
+
+    private void btnLastActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLastActionPerformed
+        // TODO add your handling code here:
+        if(this.flag==true) {
+            int row = tblDanhSachSanPham.getRowCount() - 1;
+            tblDanhSachSanPham.setRowSelectionInterval(row, row);
+        } else {
+            int row = tblGiohang.getRowCount() - 1;
+            tblGiohang.setRowSelectionInterval(row, row);
+            setFormChiTiet(row);
+        }
+    }//GEN-LAST:event_btnLastActionPerformed
+
+    private void lblCameraSwitchMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCameraSwitchMouseClicked
+        // TODO add your handling code here:
+        if(cameraSwitch==true)
+        this.cameraSwitch = false;
+        else
+        this.cameraSwitch = true;
+        openCamera(cameraSwitch);
+    }//GEN-LAST:event_lblCameraSwitchMouseClicked
+
+    private void txtHanSuDungActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHanSuDungActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtHanSuDungActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -1131,16 +1277,16 @@ public class GiaoDich extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.ButtonGroup TonKhoGroup;
+    private javax.swing.JButton btnFirst;
+    private javax.swing.JButton btnLast;
+    private javax.swing.JButton btnNext;
+    private javax.swing.JButton btnPrev;
     private javax.swing.JButton btnThanhToan;
     private javax.swing.JButton btnXacNhan;
     private javax.swing.JComboBox<String> cbbHoiVien;
     private javax.swing.JComboBox<String> cbbLoaiSanPham;
     private javax.swing.JComboBox<String> cbbNhaSanXuat;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1166,8 +1312,11 @@ public class GiaoDich extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JScrollPane jScrollPane14;
     private javax.swing.JLabel lblAnh;
+    private javax.swing.JLabel lblCameraSwitch;
     private javax.swing.JLabel lblGiaTien;
+    private javax.swing.JLabel lblMau;
     private javax.swing.JLabel lblSoTien;
+    private javax.swing.JPanel pnlCamera;
     private javax.swing.JPanel pnlChiTiet;
     private javax.swing.JPanel pnlControl;
     private javax.swing.JPanel pnlGioHang;
@@ -1200,9 +1349,11 @@ public class GiaoDich extends javax.swing.JFrame {
 
     private void prepareUI() {
         lblAnh.setIcon(XImage.read("No_image.jpg", lblAnh));
-        
         setForm(pnlTable);
-       
+        // Load Anh len table bang cach them label vao clumnn bang cacsh them label
+        tblDanhSachSanPham.getColumn("Anh").setCellRenderer(new tableRendererDanhSach());
+        tblGiohang.getColumn("Anh").setCellRenderer(new tableRendererGioHang());
+        tblGiohang.setRowHeight(60);
         // San Pham
         lblThem.setIcon(new ImageIcon("src\\main\\resources\\Icons\\icons8_add_20px.png"));
         lblThem.setHorizontalAlignment(JLabel.CENTER);
@@ -1213,7 +1364,7 @@ public class GiaoDich extends javax.swing.JFrame {
         model.getColumn(2).setPreferredWidth(100);
         model.getColumn(3).setPreferredWidth(80);
         model.getColumn(4).setPreferredWidth(180);
-        model.getColumn(5).setPreferredWidth(90);
+        
 //        tblDanhSachSanPham.getColumn("Them").setCellRenderer(new ButtonRenderer());
         tblDanhSachSanPham.setDefaultRenderer(Object.class, new Render());
         
@@ -1225,8 +1376,7 @@ public class GiaoDich extends javax.swing.JFrame {
         model1.getColumn(1).setPreferredWidth(150);
         model1.getColumn(2).setPreferredWidth(80);
         model1.getColumn(3).setPreferredWidth(80);
-        model1.getColumn(4).setPreferredWidth(100);
-        model1.getColumn(5).setPreferredWidth(90);
+        
         tblGiohang.getTableHeader().setDefaultRenderer(new HeaderColorGiaoDich());       
         tblGiohang.setDefaultRenderer(Object.class, new Render());
         
@@ -1281,17 +1431,25 @@ public class GiaoDich extends javax.swing.JFrame {
         model.setRowCount(0);
         List<SanPham> list = spDao.selectAll();
         for(SanPham i: list) {
+            JLabel ImageLabel = new JLabel();
+            Border blackline = BorderFactory.createLineBorder(Color.LIGHT_GRAY);
+            ImageLabel.setBorder(blackline);
+            ImageIcon icon = XImage.readNoResize(i.getAnh());
+            Image imageIc = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+            ImageLabel.setIcon(new ImageIcon(imageIc));
+            
             Object[] obj = {
                 i.getMaSP(),
                 i.getTenSP(),
                 i.getGiaBan(),
                 i.getSoLuong(),
                 i.getTenNSX(),
-                i.getAnh(),
+                ImageLabel,
                 lblThem
             };
             model.addRow(obj);
         }
+        
     }
     
     private void fillToTableTrenDMT(int DMT) {
@@ -1299,6 +1457,12 @@ public class GiaoDich extends javax.swing.JFrame {
         model.setRowCount(0);
         List<SanPham> list = spDao.selectAll();
         for (SanPham i : list) {
+            JLabel ImageLabel = new JLabel();
+            Border blackline = BorderFactory.createLineBorder(Color.LIGHT_GRAY);
+            ImageLabel.setBorder(blackline);
+            ImageIcon icon = XImage.readNoResize(i.getAnh());
+            Image imageIc = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+            ImageLabel.setIcon(new ImageIcon(imageIc));
             if (i.getSoLuong() > DMT) {
                 Object[] obj = {
                     i.getMaSP(),
@@ -1306,7 +1470,7 @@ public class GiaoDich extends javax.swing.JFrame {
                     i.getGiaBan(),
                     i.getSoLuong(),
                     i.getTenNSX(),
-                    i.getAnh(),
+                    ImageLabel,
                     lblThem
                 };
                 model.addRow(obj);
@@ -1319,6 +1483,12 @@ public class GiaoDich extends javax.swing.JFrame {
         model.setRowCount(0);
         List<SanPham> list = spDao.selectAll();
         for (SanPham i : list) {
+            JLabel ImageLabel = new JLabel();
+            Border blackline = BorderFactory.createLineBorder(Color.LIGHT_GRAY);
+            ImageLabel.setBorder(blackline);
+            ImageIcon icon = XImage.readNoResize(i.getAnh());
+            Image imageIc = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+            ImageLabel.setIcon(new ImageIcon(imageIc));
             if (i.getSoLuong() < DMT) {
                 Object[] obj = {
                     i.getMaSP(),
@@ -1326,7 +1496,7 @@ public class GiaoDich extends javax.swing.JFrame {
                     i.getGiaBan(),
                     i.getSoLuong(),
                     i.getTenNSX(),
-                    i.getAnh(),
+                    ImageLabel,
                     lblThem
                 };
                 model.addRow(obj);
@@ -1364,13 +1534,19 @@ public class GiaoDich extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel)tblDanhSachSanPham.getModel();
         model.setRowCount(0);
         for (SanPham i : list) {
+            JLabel ImageLabel = new JLabel();
+            Border blackline = BorderFactory.createLineBorder(Color.LIGHT_GRAY);
+            ImageLabel.setBorder(blackline);
+            ImageIcon icon = XImage.readNoResize(i.getAnh());
+            Image imageIc = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+            ImageLabel.setIcon(new ImageIcon(imageIc));
             Object[] row = {
                 i.getMaSP(),
                 i.getTenSP(),
                 i.getGiaBan(),
                 i.getSoLuong(),
                 i.getTenNSX(),
-                i.getAnh(),
+                ImageLabel,
                 lblThem
             };
             model.addRow(row);
@@ -1384,13 +1560,19 @@ public class GiaoDich extends javax.swing.JFrame {
         DefaultTableModel model = (DefaultTableModel)tblDanhSachSanPham.getModel();
         model.setRowCount(0);
         for (SanPham i : list) {
+            JLabel ImageLabel = new JLabel();
+            Border blackline = BorderFactory.createLineBorder(Color.LIGHT_GRAY);
+            ImageLabel.setBorder(blackline);
+            ImageIcon icon = XImage.readNoResize(i.getAnh());
+            Image imageIc = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+            ImageLabel.setIcon(new ImageIcon(imageIc));
             Object[] row = {
                 i.getMaSP(),
                 i.getTenSP(),
                 i.getGiaBan(),
                 i.getSoLuong(),
                 i.getTenNSX(),
-                i.getAnh(),
+                ImageLabel,
                 lblThem
             };
             model.addRow(row);
@@ -1435,65 +1617,118 @@ public class GiaoDich extends javax.swing.JFrame {
     }
     
     private void addToCard() {
-        // Thêm vào bảng
+        
+        // check xem sản phẩm còn hàng không
         int selectRow = tblDanhSachSanPham.getSelectedRow();
-        String maSP = String.valueOf(tblDanhSachSanPham.getValueAt(selectRow, 0));
-        String tenSP = String.valueOf(tblDanhSachSanPham.getValueAt(selectRow, 1));
-        String anh = String.valueOf(tblDanhSachSanPham.getValueAt(selectRow, 5));
-        double giaBan = Double.parseDouble(String.valueOf(tblDanhSachSanPham.getValueAt(selectRow, 2)));
-        int soLuong = 1;
-        // xem có tồn tại sản phẩm trong giỏ hàng chưa, nều rồi, tăng số lượng mua 
-        boolean exist = true;
-        for(int i=0;i<tblGiohang.getRowCount();i++) {
-            int soLuongMua = Integer.parseInt(String.valueOf(tblGiohang.getValueAt(i, 3)));
-            if(maSP.equalsIgnoreCase(String.valueOf(tblGiohang.getValueAt(i, 0)))) {
-                exist = false;
-                tblGiohang.setValueAt(soLuongMua+1, i, 3);
-                break;
+        if (Integer.parseInt(String.valueOf(tblDanhSachSanPham.getValueAt(selectRow, 3))) == 0) {
+            MsgBox.alert(this, "hết hàng !");
+        } else { // Thêm vào bảng  
+            String maSP = String.valueOf(tblDanhSachSanPham.getValueAt(selectRow, 0));
+            String tenSP = String.valueOf(tblDanhSachSanPham.getValueAt(selectRow, 1));
+            JLabel anh = (JLabel) tblDanhSachSanPham.getValueAt(selectRow, 5);
+            double giaBan = Double.parseDouble(String.valueOf(tblDanhSachSanPham.getValueAt(selectRow, 2)));
+            int soLuong = 1;
+            // xem có tồn tại sản phẩm trong giỏ hàng chưa, nều rồi, tăng số lượng mua 
+            boolean exist = true;
+            for (int i = 0; i < tblGiohang.getRowCount(); i++) {
+                int soLuongMua = Integer.parseInt(String.valueOf(tblGiohang.getValueAt(i, 3)));
+                if (maSP.equalsIgnoreCase(String.valueOf(tblGiohang.getValueAt(i, 0)))) {
+                    exist = false;
+                    tblGiohang.setValueAt(soLuongMua + 1, i, 3);
+                    break;
+                }
             }
-        }
-        if(exist==true) {
-            DefaultTableModel model = (DefaultTableModel)tblGiohang.getModel();
-            Object[] row = {
-                maSP,
-                tenSP,
-                giaBan,
-                soLuong,
-                anh,
-                lblLoaiBo   
-            };
+            if (exist == true) {
+                DefaultTableModel model = (DefaultTableModel) tblGiohang.getModel();
 
-            model.addRow(row);
+                Object[] row = {
+                    maSP,
+                    tenSP,
+                    giaBan,
+                    soLuong,
+                    anh,
+                    lblLoaiBo
+                };
+
+                model.addRow(row);
+            }
+            // Tính toán giá tiền
+            double giaTien = 0;
+            for (int i = 0; i < tblGiohang.getRowCount(); i++) {
+                int soLuongMua = (Integer) tblGiohang.getValueAt(i, 3);
+                double giaBanGioHang = (Double) tblGiohang.getValueAt(i, 2);
+                giaTien += soLuongMua * giaBanGioHang;
+            }
+            lblGiaTien.setText(giaTien + "");
         }
-        // Tính toán giá tiền
-        double giaTien = 0;
-        for(int i=0;i<tblGiohang.getRowCount();i++) {
-            int soLuongMua = (Integer)tblGiohang.getValueAt(i, 3);
-            double giaBanGioHang = (Double)tblGiohang.getValueAt(i, 2);
-            giaTien += soLuongMua * giaBanGioHang;
-        }
-        lblGiaTien.setText(giaTien+"");
     }
     
+    private void addToCardtheoDong(int rowSelect) {
+        
+        // check xem sản phẩm còn hàng không
+        int selectRow = rowSelect;
+        if (Integer.parseInt(String.valueOf(tblDanhSachSanPham.getValueAt(selectRow, 3))) == 0) {
+            MsgBox.alert(this, "hết hàng !");
+        } else { // Thêm vào bảng  
+            String maSP = String.valueOf(tblDanhSachSanPham.getValueAt(selectRow, 0));
+            String tenSP = String.valueOf(tblDanhSachSanPham.getValueAt(selectRow, 1));
+            JLabel anh = (JLabel) tblDanhSachSanPham.getValueAt(selectRow, 5);
+            double giaBan = Double.parseDouble(String.valueOf(tblDanhSachSanPham.getValueAt(selectRow, 2)));
+            int soLuong = 1;
+            // xem có tồn tại sản phẩm trong giỏ hàng chưa, nều rồi, tăng số lượng mua 
+            boolean exist = true;
+            for (int i = 0; i < tblGiohang.getRowCount(); i++) {
+                int soLuongMua = Integer.parseInt(String.valueOf(tblGiohang.getValueAt(i, 3)));
+                if (maSP.equalsIgnoreCase(String.valueOf(tblGiohang.getValueAt(i, 0)))) {
+                    exist = false;
+                    tblGiohang.setValueAt(soLuongMua + 1, i, 3);
+                    break;
+                }
+            }
+            if (exist == true) {
+                DefaultTableModel model = (DefaultTableModel) tblGiohang.getModel();
+
+                Object[] row = {
+                    maSP,
+                    tenSP,
+                    giaBan,
+                    soLuong,
+                    anh,
+                    lblLoaiBo
+                };
+
+                model.addRow(row);
+            }
+            // Tính toán giá tiền
+            double giaTien = 0;
+            for (int i = 0; i < tblGiohang.getRowCount(); i++) {
+                int soLuongMua = (Integer) tblGiohang.getValueAt(i, 3);
+                double giaBanGioHang = (Double) tblGiohang.getValueAt(i, 2);
+                giaTien += soLuongMua * giaBanGioHang;
+            }
+            lblGiaTien.setText(giaTien + "");
+        }
+    }
+
     private void removeFromCard() {
         int row = tblGiohang.getSelectedRow();
         // Tính toán giá tiền
         double giaTien = Double.parseDouble(lblGiaTien.getText());
-        if(giaTien>0) {
+        if (giaTien > 0) {
             double giaTienSP = Double.parseDouble(String.valueOf(tblGiohang.getValueAt(row, 2)));
             giaTien = giaTien - giaTienSP;
-            lblGiaTien.setText(giaTien+""); 
+            lblGiaTien.setText(giaTien + "");
             // tính toán số lượng mua
             int soLuongMua = Integer.parseInt(String.valueOf(tblGiohang.getValueAt(row, 3)));
-            DefaultTableModel model = (DefaultTableModel)tblGiohang.getModel();
-            if(soLuongMua == 1) {
+            DefaultTableModel model = (DefaultTableModel) tblGiohang.getModel();
+            if (soLuongMua == 1) {
                 model.removeRow(row);
-                
+
             } else {
-                tblGiohang.setValueAt(soLuongMua-1, row, 3);
+                tblGiohang.setValueAt(soLuongMua - 1, row, 3);
             }
         }
-        
+
     }
     
     private void setFormChiTiet(int row) {
@@ -1608,6 +1843,71 @@ public class GiaoDich extends javax.swing.JFrame {
             
         }
 
+    }
+    
+    public void openCamera(boolean flag) {
+        Dimension size = WebcamResolution.QVGA.getSize();
+        webcam = Webcam.getWebcams().get(0);
+        webcam.setViewSize(size);
+        WebcamPanel panel = new WebcamPanel(webcam);
+        panel.setPreferredSize(size);
+        panel.setFPSDisplayed(true);
+        panel.setMirrored(true);
+        pnlCamera.setSize(200, 180);
+        pnlCamera.add(panel, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 200, 180));
+        pnlCamera.setOpaque(true);
+        pnlCamera.revalidate();
+        pnlCamera.repaint();
+        Thread a = new Thread(() -> {
+            do {
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+                Result result = null;
+                BufferedImage image = null;
+
+                if (webcam.isOpen()) {
+                    try {
+                        if ((image = webcam.getImage()) == null) {
+                            continue;
+                        }
+                    } catch (Exception e) {
+                        // Camera error
+                    }
+
+                }
+                
+                LuminanceSource source = new BufferedImageLuminanceSource(image);
+                BinaryBitmap bitmap = new BinaryBitmap(new HybridBinarizer(source));
+                try {
+                    result = new MultiFormatReader().decode(bitmap);
+                } catch (NotFoundException ex) {
+                    Logger.getLogger(GiaoDich.class.getName()).log(Level.SEVERE, null, ex);
+                }
+                
+
+                if (result != null) {
+                   System.out.println(result);
+                   for(int i=0;i<tblDanhSachSanPham.getRowCount();i++) {
+                       String maSP = (String)tblDanhSachSanPham.getValueAt(i, 0);
+                       if(result.toString().trim().equals(maSP)) {
+                           addToCardtheoDong(i);
+                           break;
+                       }
+                   }
+                }
+            } while (true);
+        });
+        if(this.cameraSwitch==true) {
+            webcam.open();
+            a.start();
+        } else {
+            webcam.close();
+            a.stop();
+        }
+        
     }
     
     public PageFormat getPageFormat(PrinterJob pj) {
@@ -1752,6 +2052,32 @@ public class GiaoDich extends javax.swing.JFrame {
             }
             return result;
         }
+    }
+    
+    class tableRendererDanhSach implements TableCellRenderer{
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            TableColumn tc  = tblDanhSachSanPham.getColumn("Anh");
+            tc.setMaxWidth(60);
+            tc.setMinWidth(60);
+            tblDanhSachSanPham.setRowHeight(60);
+            return (Component)value;
+        }
+        
+    }
+    
+    class tableRendererGioHang implements TableCellRenderer{
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            TableColumn tc  = tblDanhSachSanPham.getColumn("Anh");
+            tc.setMaxWidth(60);
+            tc.setMinWidth(60);
+            tblDanhSachSanPham.setRowHeight(60);
+            return (Component)value;
+        }
+        
     }
     
     

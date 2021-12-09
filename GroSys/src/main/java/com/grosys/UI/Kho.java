@@ -5,6 +5,8 @@
  */
 package com.grosys.UI;
 
+import com.google.zxing.WriterException;
+import com.google.zxing.qrcode.encoder.QRCode;
 import com.grosys.DAO1.LoaiSanPhamDAO;
 import com.grosys.DAO1.NhaPhanPhoiDAO;
 import com.grosys.DAO1.NhaSanXuatDAO;
@@ -13,23 +15,41 @@ import com.grosys.untity.LoaiSanPham;
 import com.grosys.untity.NhaSanXuat;
 import com.grosys.untity.NhaPhanPhoi;
 import com.grosys.untity.SanPham;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Desktop;
+import java.awt.Image;
 import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.BorderFactory;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
+import javax.swing.JTable;
+import javax.swing.border.Border;
 import javax.swing.table.DefaultTableColumnModel;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableCellRenderer;
+import javax.swing.table.TableColumn;
 import javax.swing.table.TableColumnModel;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import utils.Auth;
 import utils.HeaderColor;
 import utils.MsgBox;
 import utils.XDate;
 import utils.XImage;
+import utils.XQRCode;
 
 /**
  *
@@ -52,6 +72,7 @@ public class Kho extends javax.swing.JPanel {
         fillComboBoxNPP();
         fillToComboboxLSP();
         this.row=-1;
+        
         
     }
     
@@ -100,6 +121,7 @@ public class Kho extends javax.swing.JPanel {
         btnLast = new javax.swing.JButton();
         lblAnh = new javax.swing.JLabel();
         txtHanSuDung1 = new javax.swing.JTextField();
+        lblQrCode = new javax.swing.JLabel();
         pnlCbbNhaPhanPhoi = new javax.swing.JPanel();
         cbbNhaSanXuat = new javax.swing.JComboBox<>();
         pnlCbbNhaSanXuat1 = new javax.swing.JPanel();
@@ -150,6 +172,12 @@ public class Kho extends javax.swing.JPanel {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8_send_file_20px_1.png"))); // NOI18N
         jLabel1.setText("Xuất File Excel");
+        jLabel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jLabel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel1MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout btnXuatFileExcelLayout = new javax.swing.GroupLayout(btnXuatFileExcel);
         btnXuatFileExcel.setLayout(btnXuatFileExcelLayout);
@@ -249,7 +277,7 @@ public class Kho extends javax.swing.JPanel {
         jLabel20.setText("Hạn Sử Dụng: (Năm - Tháng - Ngày)");
         tabsCapNhatSanPham.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 270, 210, -1));
 
-        cbbDonViTinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "bịch", "chai", "lon", "hộp" }));
+        cbbDonViTinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "bịch", "chai", "lon", "hộp", "Chiếc" }));
         cbbDonViTinh.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cbbDonViTinhMouseClicked(evt);
@@ -359,11 +387,12 @@ public class Kho extends javax.swing.JPanel {
                 lblAnhMouseClicked(evt);
             }
         });
-        tabsCapNhatSanPham.add(lblAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 20, 200, 120));
+        tabsCapNhatSanPham.add(lblAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 140, 120));
 
         txtHanSuDung1.setFont(new java.awt.Font("Dialog", 1, 12)); // NOI18N
         txtHanSuDung1.setForeground(new java.awt.Color(51, 102, 255));
         tabsCapNhatSanPham.add(txtHanSuDung1, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 300, 288, -1));
+        tabsCapNhatSanPham.add(lblQrCode, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 20, 140, 120));
 
         tabsanpham.addTab("Cập nhật sản phẩm", tabsCapNhatSanPham);
 
@@ -535,6 +564,11 @@ public class Kho extends javax.swing.JPanel {
         last();
     }//GEN-LAST:event_btnLastActionPerformed
 
+    private void jLabel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel1MouseClicked
+        // TODO add your handling code here:
+        exportToXls(tblDanhSachSanPham);
+    }//GEN-LAST:event_jLabel1MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFirst;
@@ -563,6 +597,7 @@ public class Kho extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel21;
     private javax.swing.JScrollPane jScrollPane11;
     private javax.swing.JLabel lblAnh;
+    private javax.swing.JLabel lblQrCode;
     private javax.swing.JPanel pnlCbbNhaPhanPhoi;
     private javax.swing.JPanel pnlCbbNhaSanXuat1;
     private javax.swing.JPanel tabsCapNhatSanPham;
@@ -582,6 +617,8 @@ public class Kho extends javax.swing.JPanel {
         lblAnh.setIcon(XImage.read("No_image.jpg", lblAnh));
         tblDanhSachSanPham.getTableHeader().setDefaultRenderer(new HeaderColor());
         TableColumnModel model = tblDanhSachSanPham.getColumnModel();
+        tblDanhSachSanPham.setRowHeight(60);
+        tblDanhSachSanPham.getColumn("Anh").setCellRenderer(new tableRendererDanhSach());
         model.getColumn(0).setPreferredWidth(60);
         model.getColumn(1).setPreferredWidth(120);
         model.getColumn(2).setPreferredWidth(120);
@@ -589,7 +626,7 @@ public class Kho extends javax.swing.JPanel {
         model.getColumn(4).setPreferredWidth(90);
         model.getColumn(5).setPreferredWidth(80);
         model.getColumn(6).setPreferredWidth(80);
-        model.getColumn(7).setPreferredWidth(140);
+    
     }
     
     private void chooseImage(JLabel lblIcon) {
@@ -654,9 +691,15 @@ public class Kho extends javax.swing.JPanel {
             try {
                 List<SanPham> list = dao.selectbyNhaSanXuat(nsx.getMaNSX());
                 for (SanPham sp : list) {
+                    JLabel ImageLabel = new JLabel();
+                    Border blackline = BorderFactory.createLineBorder(Color.LIGHT_GRAY);
+                    ImageLabel.setBorder(blackline);
+                    ImageIcon icon = XImage.readNoResize(sp.getAnh());
+                    Image imageIc = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
+                    ImageLabel.setIcon(new ImageIcon(imageIc));
                     Object[] row = {sp.getMaSP(), sp.getTenSP(), sp.getTenLSP(),
                         sp.getGiaBan(), sp.getHanSuDung(),
-                         sp.getDonViTinh(), sp.getSoLuong(), sp.getTenNSX(), sp.getAnh()};
+                         sp.getDonViTinh(), sp.getSoLuong(), sp.getTenNSX(), ImageLabel};
                     model.addRow(row);
                 }
             } catch (Exception e) {
@@ -700,7 +743,11 @@ public class Kho extends javax.swing.JPanel {
         txtHanSuDung1.setText(String.valueOf(sp.getHanSuDung()));
         txtSoLuong.setText(String.valueOf(sp.getSoLuong()));
         txtTenSanPham.setText(sp.getTenSP());
-        
+        try {
+            lblQrCode.setIcon(new ImageIcon(XQRCode.createQRCode("SP01", lblQrCode.getWidth(), lblQrCode.getHeight())));
+        } catch (WriterException ex) {
+            Logger.getLogger(Kho.class.getName()).log(Level.SEVERE, null, ex);
+        }
         if (sp.getAnh()!=null) {
             lblAnh.setToolTipText(sp.getAnh());
             lblAnh.setIcon(XImage.read(sp.getAnh(),lblAnh));
@@ -749,13 +796,14 @@ public class Kho extends javax.swing.JPanel {
         SanPham sp = getForm();
         
         try {
-            MsgBox.alert(this, "Thêm Thành CÔng!");
+            dao.insert(sp);
+            MsgBox.alert(this, "Thêm Thành Công!");
             this.ClearForm();
             this.fillTable();
-            dao.insert(sp);
 
         } catch (Exception e) {
             this.fillTable();
+            e.printStackTrace();
         }
         
         
@@ -765,7 +813,7 @@ public class Kho extends javax.swing.JPanel {
        
         SanPham sp = getForm();
         try {
-            MsgBox.alert(this, "Sửa Thành CÔng!");
+            MsgBox.alert(this, "Sửa Thành Công!");
             this.fillTable();
             this.ClearForm();
             dao.update(sp);
@@ -846,11 +894,72 @@ public class Kho extends javax.swing.JPanel {
             MsgBox.alert(this,"Bạn chưa nhập Giá nhập");
             return false;
         }
-        if (txtTenSanPham.getText().equals("")) {
-            MsgBox.alert(this,"Bạn chưa nhập tên sản phẩm");
+        if (txtTenSanPham.getText().length()<3) {
+            MsgBox.alert(this,"Vui lòng nhập tên đúng định dạng !");
             return false;
         }
         
         return true;
+    }
+    
+    private void exportToXls(JTable table) {
+        Workbook workbook = new XSSFWorkbook();
+        String titleSheet = "Sản Phẩm";
+        String titleFile = "SanPham.xlsx";
+        Sheet sheet = workbook.createSheet(titleSheet);
+        org.apache.poi.ss.usermodel.Font headerFont = workbook.createFont();
+        headerFont.setBold(true);
+        headerFont.setFontHeightInPoints((short)17);
+        headerFont.setColor(IndexedColors.RED.getIndex());
+        
+        CellStyle headerCellStyle = workbook.createCellStyle();
+        headerCellStyle.setFont(headerFont);
+        
+        Row headerRow = sheet.createRow(0);
+        for(int i=0;i<table.getColumnCount();i++) {
+            Cell cell = headerRow.createCell(i);
+            cell.setCellValue(table.getModel().getColumnName(i));
+            cell.setCellStyle(headerCellStyle);
+        }
+        int rowNum = 1; 
+        for(int i=0;i<table.getRowCount();i++) {
+            Row row = sheet.createRow(rowNum++);
+            for(int j=0;j<table.getColumnCount();j++) {
+                row.createCell(j).setCellValue(String.valueOf(table.getValueAt(i, j)));
+            }
+
+        }
+        for(int i=0;i<table.getColumnCount();i++) {
+            sheet.autoSizeColumn(i);
+        }
+
+        JFileChooser saveFile = new JFileChooser();
+        saveFile.setDialogTitle("Lưu File");
+        saveFile.setSelectedFile(new File(titleFile));
+        if(saveFile.showOpenDialog(null)==JFileChooser.APPROVE_OPTION) {
+            File output = saveFile.getSelectedFile();
+            try(FileOutputStream out = new FileOutputStream(output)) {
+                workbook.write(out);
+                out.close();
+                MsgBox.alert(this, "Xuất file excel thành công !");
+                Desktop.getDesktop().open(output);
+            }
+            catch(Exception ex) {
+                MsgBox.alert(this, "Error");
+            }
+        }
+    }
+    
+    class tableRendererDanhSach implements TableCellRenderer{
+
+        @Override
+        public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+            TableColumn tc  = tblDanhSachSanPham.getColumn("Anh");
+            tc.setMaxWidth(60);
+            tc.setMinWidth(60);
+            tblDanhSachSanPham.setRowHeight(60);
+            return (Component)value;
+        }
+        
     }
 }

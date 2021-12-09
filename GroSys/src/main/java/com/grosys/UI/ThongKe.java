@@ -300,7 +300,7 @@ public class ThongKe extends javax.swing.JPanel {
         lblLSP02.setText("21 Sản Phẩm");
         jPanel4.add(lblLSP02, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 100, -1, -1));
 
-        jLabel11.setText("Gia vị, giàu ăn");
+        jLabel11.setText("Gia vị, dầu ăn");
         jPanel4.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 120, -1, -1));
 
         lblLSP03.setForeground(new java.awt.Color(118, 120, 137));
@@ -314,14 +314,14 @@ public class ThongKe extends javax.swing.JPanel {
         lblLSP04.setText("21 Sản Phẩm");
         jPanel4.add(lblLSP04, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 180, -1, -1));
 
-        jLabel15.setText("Sửa uống các loại");
+        jLabel15.setText("Sữa uống các loại");
         jPanel4.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 40, -1, -1));
 
         lblLSP05.setForeground(new java.awt.Color(118, 120, 137));
         lblLSP05.setText("21 Sản Phẩm");
         jPanel4.add(lblLSP05, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 60, -1, -1));
 
-        jLabel17.setText("Chăm sóc các nhân");
+        jLabel17.setText("Chăm sóc cá nhân");
         jPanel4.add(jLabel17, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 80, -1, -1));
 
         lblLSP06.setForeground(new java.awt.Color(118, 120, 137));

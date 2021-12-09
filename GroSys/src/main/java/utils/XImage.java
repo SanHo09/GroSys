@@ -5,12 +5,17 @@
  */
 package utils;
 
+import java.awt.AlphaComposite;
+import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 
@@ -41,4 +46,14 @@ public class XImage {
         ImageIcon image = new ImageIcon(newImg);
         return image;
     }
+    
+    public static ImageIcon readNoResize(String fileName) {
+        File path = new File("logos",fileName);
+        ImageIcon myImage = new ImageIcon(path.getAbsolutePath());
+        Image img = myImage.getImage();
+        ImageIcon image = new ImageIcon(img);
+        return image;
+    }
+    
+    
 }

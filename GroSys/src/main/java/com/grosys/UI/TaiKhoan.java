@@ -26,10 +26,13 @@ public class TaiKhoan extends javax.swing.JPanel {
     /**
      * Creates new form TaiKhoan
      */
+    NhanvienDao dao = new NhanvienDao();
+    
     public TaiKhoan() {
         initComponents();
         setEdit(null);
         setFormTaiKhoan();
+        
     }
 
     /**
@@ -43,7 +46,7 @@ public class TaiKhoan extends javax.swing.JPanel {
 
         pnlITomTat = new RoundedPanel(10);
         pnlAnh = new RoundedPanel(130);
-        lblAnh = new javax.swing.JLabel();
+        lblAnh = new com.grosys.UI.hinhTron();
         jLabel2 = new javax.swing.JLabel();
         lblVaiTro = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -93,7 +96,8 @@ public class TaiKhoan extends javax.swing.JPanel {
 
         pnlAnh.setOpaque(false);
 
-        lblAnh.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        lblAnh.setGradientColor1(new java.awt.Color(102, 102, 255));
+        lblAnh.setGradientColor2(new java.awt.Color(0, 204, 204));
         lblAnh.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 lblAnhMouseClicked(evt);
@@ -104,11 +108,11 @@ public class TaiKhoan extends javax.swing.JPanel {
         pnlAnh.setLayout(pnlAnhLayout);
         pnlAnhLayout.setHorizontalGroup(
             pnlAnhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblAnh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblAnh, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
         );
         pnlAnhLayout.setVerticalGroup(
             pnlAnhLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(lblAnh, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(lblAnh, javax.swing.GroupLayout.DEFAULT_SIZE, 130, Short.MAX_VALUE)
         );
 
         pnlITomTat.add(pnlAnh, new org.netbeans.lib.awtextra.AbsoluteConstraints(57, 30, 130, 130));
@@ -132,6 +136,11 @@ public class TaiKhoan extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(10, 102, 194)));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jPanel1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel1MouseClicked(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("Tahoma", 0, 12)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(10, 102, 194));
@@ -450,11 +459,6 @@ public class TaiKhoan extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtMaNVActionPerformed
 
-    private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
-        // TODO add your handling code here:
-        
-    }//GEN-LAST:event_lblAnhMouseClicked
-
     private void lblSuaHoTenMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblSuaHoTenMouseClicked
         // TODO add your handling code here:
         setEdit(txtHoTen);
@@ -477,17 +481,33 @@ public class TaiKhoan extends javax.swing.JPanel {
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
         // TODO add your handling code here:
-        NhanvienDao dao = new NhanvienDao();
-        Nhanvien nv = new Nhanvien();
-        nv.setMaNV(txtMaNV.getText());
-        nv.setHoten(txtHoTen.getText());
-        nv.setEmail(txtEmail.getText());
-        nv.setSDT(txtSoDienThoai.getText());
-        nv.setMatkhau(txtMatKhau.getText());
-        nv.setAnh(Auth.user.getAnh());
-        dao.update(nv);
-        MsgBox.alert(this, "Cập Nhật thành công !");
+        if(!validates()) {
+            
+        } else {
+            
+            Nhanvien nv = new Nhanvien();
+            nv.setMaNV(txtMaNV.getText());
+            nv.setHoten(txtHoTen.getText());
+            nv.setEmail(txtEmail.getText());
+            nv.setSDT(txtSoDienThoai.getText());
+            nv.setMatkhau(txtMatKhau.getText());
+            nv.setAnh(lblAnh.getToolTipText());
+            Auth.user.setAnh(lblAnh.getToolTipText());
+            dao.update(nv);
+            MsgBox.alert(this, "Cập Nhật thành công !");    
+        }
     }//GEN-LAST:event_jPanel3MouseClicked
+
+    private void lblAnhMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblAnhMouseClicked
+        // TODO add your handling code here:
+        chooseImage(lblAnh);
+    }//GEN-LAST:event_lblAnhMouseClicked
+
+    private void jPanel1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel1MouseClicked
+        // TODO add your handling code here:
+        this.getParent().setVisible(false);
+        new Login().setVisible(true);
+    }//GEN-LAST:event_jPanel1MouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -521,7 +541,7 @@ public class TaiKhoan extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator5;
     private javax.swing.JSeparator jSeparator6;
     private javax.swing.JSeparator jSeparator7;
-    private javax.swing.JLabel lblAnh;
+    private com.grosys.UI.hinhTron lblAnh;
     private javax.swing.JLabel lblSuaEmail;
     private javax.swing.JLabel lblSuaHoTen;
     private javax.swing.JLabel lblSuaMatKhau;
@@ -535,15 +555,15 @@ public class TaiKhoan extends javax.swing.JPanel {
     private javax.swing.JPasswordField txtMatKhau;
     private javax.swing.JTextField txtSoDienThoai;
     // End of variables declaration//GEN-END:variables
-    private void chooseImage(JLabel lblIcon) {
+    private void chooseImage(hinhTron lblIcon) {
         JFileChooser filechooser = new JFileChooser();
         if (filechooser.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
             File file = filechooser.getSelectedFile();
             XImage.save(file);
-            ImageIcon icon = XImage.read(file.getName(), lblIcon);
-            lblIcon.setIcon(icon);
+            ImageIcon icon = XImage.readNoResize(file.getName());
+            lblIcon.setImage(icon);
             lblIcon.setToolTipText(file.getName());
-            lblIcon.setIcon(icon);
+            lblIcon.setImage(icon);
         }
     }
 
@@ -553,7 +573,8 @@ public class TaiKhoan extends javax.swing.JPanel {
         txtSoDienThoai.setText(Auth.user.getSDT());
         txtEmail.setText(Auth.user.getEmail());
         txtMatKhau.setText(Auth.user.getMatkhau());
-        
+        lblAnh.setToolTipText(Auth.user.getAnh());
+        lblAnh.setImage(XImage.readNoResize(Auth.user.getAnh()));
     }
     
     private void setEdit(JTextField txtSelect) {
@@ -565,4 +586,37 @@ public class TaiKhoan extends javax.swing.JPanel {
             }
         }
     }
+    
+    private boolean validates() {
+        if (txtHoTen.getText().equals("")) {
+            MsgBox.alert(this, "Tên của bạn không được để trống");
+            txtHoTen.requestFocus();
+            return false;
+        }
+        if (txtSoDienThoai.getText().matches("")) {
+            MsgBox.alert(this, "Số điện thoại không được để trống");
+            txtSoDienThoai.requestFocus();
+            return false;
+        }
+        if (txtEmail.getText().matches("")) {
+            MsgBox.alert(this, "Email của bạn không được để trống");
+            txtEmail.requestFocus();
+            return false;
+        }
+        if (txtMatKhau.getText().matches("")) {
+            MsgBox.alert(this, "Mật khẩu không được để trống");
+            txtMatKhau.requestFocus();
+            return false;
+        }
+        if(!txtEmail.getText().matches("\\w+@\\w+(\\.\\w+){1,2}")) {
+            MsgBox.alert(this, "Email không hợp lệ !");
+            txtEmail.requestFocus();
+            return false;
+        }
+        if(!txtMatKhau.getText().equals(MsgBox.prompt(this, "Xác Nhận Mật Khẩu "))) {
+            MsgBox.alert(this, "2 mật khẩu không trùng nhau");
+        }
+        return true;
+    }
+    
 }

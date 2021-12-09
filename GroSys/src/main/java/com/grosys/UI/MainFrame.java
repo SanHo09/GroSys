@@ -11,6 +11,7 @@ import com.grosys.untity.SanPham;
 import com.toedter.calendar.JCalendar;
 import java.awt.AlphaComposite;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,7 @@ import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.awt.geom.RoundRectangle2D;
 import java.awt.image.BufferedImage;
+import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -42,8 +44,6 @@ public class MainFrame extends javax.swing.JFrame {
     
     NhanvienDao nvdao = new NhanvienDao();
     public MainFrame() {
-        Auth.user = nvdao.selectById("NV01");
-        Auth.user.setVaitro(true);
         setUndecorated(true);
         initComponents();
         prepareUI();
@@ -71,7 +71,7 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel10 = new javax.swing.JLabel();
         pnlDashBoard = new RoundedPanel(30);
         pnlStaffImage = new RoundedPanel(150);
-        lblImage = new javax.swing.JLabel();
+        lblImage = new com.grosys.UI.hinhTron();
         lblVaiTro = new javax.swing.JLabel();
         lblTenNhanVien = new javax.swing.JLabel();
         pnlKhuyenMai = new RoundedPanel(17);
@@ -299,30 +299,20 @@ public class MainFrame extends javax.swing.JFrame {
         pnlDashBoard.setBackground(new java.awt.Color(255, 255, 255));
         pnlDashBoard.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        pnlStaffImage.setBackground(new java.awt.Color(204, 255, 255));
+        pnlStaffImage.setBackground(new java.awt.Color(255, 255, 255));
 
-        lblImage.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8_contacts_150px_1.png"))); // NOI18N
-        lblImage.setLabelFor(pnlStaffImage);
-        lblImage.setFocusable(false);
-        lblImage.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                lblImageMouseClicked(evt);
-            }
-        });
+        lblImage.setGradientColor1(new java.awt.Color(255, 60, 230));
+        lblImage.setGradientColor2(new java.awt.Color(0, 204, 204));
 
         javax.swing.GroupLayout pnlStaffImageLayout = new javax.swing.GroupLayout(pnlStaffImage);
         pnlStaffImage.setLayout(pnlStaffImageLayout);
         pnlStaffImageLayout.setHorizontalGroup(
             pnlStaffImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
-            .addGroup(pnlStaffImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(lblImage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
         );
         pnlStaffImageLayout.setVerticalGroup(
             pnlStaffImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 150, Short.MAX_VALUE)
-            .addGroup(pnlStaffImageLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(lblImage, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(lblImage, javax.swing.GroupLayout.DEFAULT_SIZE, 150, Short.MAX_VALUE)
         );
 
         pnlDashBoard.add(pnlStaffImage, new org.netbeans.lib.awtextra.AbsoluteConstraints(29, 22, 150, 150));
@@ -919,6 +909,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void lbTrangchuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lbTrangchuMouseClicked
         // TODO add your handling code here:
         setForm(pnlMain);
+        lblImage.setImage(XImage.readNoResize(Auth.user.getAnh()));
     }//GEN-LAST:event_lbTrangchuMouseClicked
 
     private void pnlNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlNhanVienMouseClicked
@@ -955,11 +946,6 @@ public class MainFrame extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnThoatMouseExited
-
-    private void lblImageMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblImageMouseClicked
-        // TODO add your handling code here:
-
-    }//GEN-LAST:event_lblImageMouseClicked
 
     private void pnlGiaoDichMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlGiaoDichMouseClicked
         // TODO add your handling code here:
@@ -1010,12 +996,12 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void lblHuongDanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblHuongDanMouseClicked
         // TODO add your handling code here:
-        huongDan
+        openHelp();
     }//GEN-LAST:event_lblHuongDanMouseClicked
 
     private void lblGioiThieuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblGioiThieuMouseClicked
         // TODO add your handling code here:
-        gioiThieu
+        openAbout();
     }//GEN-LAST:event_lblGioiThieuMouseClicked
 
     private void lblThongBaoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblThongBaoMouseClicked
@@ -1093,7 +1079,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel lblClock;
     private javax.swing.JLabel lblGioiThieu;
     private javax.swing.JLabel lblHuongDan;
-    private javax.swing.JLabel lblImage;
+    private com.grosys.UI.hinhTron lblImage;
     private javax.swing.JLabel lblTaiKhoan;
     private javax.swing.JLabel lblTenNhanVien;
     private javax.swing.JLabel lblThoat;
@@ -1143,7 +1129,7 @@ public class MainFrame extends javax.swing.JFrame {
         pnlStaffImage.setOpaque(false);
         // Thông tin Nhân Viên
         lblTenNhanVien.setText(Auth.user.getHoten());
-        lblImage.setIcon(XImage.read(Auth.user.getAnh(), lblImage));
+        lblImage.setImage(XImage.readNoResize(Auth.user.getAnh()));
         lblVaiTro.setText(Auth.isManager()?"Quản lý":"Nhân Viên");
         setForm(pnlMain);
     }
@@ -1177,6 +1163,26 @@ public class MainFrame extends javax.swing.JFrame {
         }).start();
     
     }
+    
+    private void openHelp() {
+        
+        try {
+            Desktop.getDesktop().browse(new File("src\\main\\java\\help\\index.html").toURI());
+        } catch (Exception ex) {
+            MsgBox.alert(this, "Can't Open Help file");
+            ex.printStackTrace();
+        }
+    }
+
+    private void openAbout() {
+        try {
+            Desktop.getDesktop().browse(new File("src\\main\\java\\help\\About.html").toURI());
+        } catch (Exception ex) {
+            MsgBox.alert(this, "Can't Open About file");
+            ex.printStackTrace();
+        }
+    }
+    
     
     
     

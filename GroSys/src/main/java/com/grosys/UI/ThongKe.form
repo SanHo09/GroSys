@@ -573,7 +573,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel11">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Gia v&#x1ecb;, gi&#xe0;u &#x103;n"/>
+            <Property name="text" type="java.lang.String" value="Gia v&#x1ecb;, d&#x1ea7;u &#x103;n"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -619,7 +619,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel15">
           <Properties>
-            <Property name="text" type="java.lang.String" value="S&#x1eed;a u&#x1ed1;ng c&#xe1;c lo&#x1ea1;i"/>
+            <Property name="text" type="java.lang.String" value="S&#x1eef;a u&#x1ed1;ng c&#xe1;c lo&#x1ea1;i"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -642,7 +642,7 @@
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel17">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Ch&#x103;m s&#xf3;c c&#xe1;c nh&#xe2;n"/>
+            <Property name="text" type="java.lang.String" value="Ch&#x103;m s&#xf3;c c&#xe1; nh&#xe2;n"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">

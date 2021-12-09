@@ -28,7 +28,7 @@ public class SanPhamDAO extends GrosysDAO<SanPham, String>{
     
     public void insert(SanPham model) {
         String sql ="{CALL sp_Them_SanPham (?,?,?,?,?,?,?,?,?,?,?)}";
-        Xjdbc.update(sql,
+        Xjdbc.query(sql,
                 model.getMaNPP(),
                 model.getMaNSX(),
                 model.getMaSP(),
@@ -155,7 +155,7 @@ public void update(SanPham model) {
     }
     
     public String TaoMaSP() throws SQLException {
-        String sql = "SELECT TOP 1 * FROM SanPham ORDER BY MaSP DESC";
+        String sql = "SELECT TOP 1 * FROM HoaDonChiTiet ORDER BY MaSanPham DESC";
         int SoNV = 0;
         String maNV = "";
         ResultSet rs = Xjdbc.query(sql);
