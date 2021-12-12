@@ -914,6 +914,7 @@ public class khuyenMai extends javax.swing.JPanel {
     }
 
     private void insertPGG() {
+        MsgBox.alert(this, "Thêm Phiếu giảm giá thành công");
         for(int i: tblHV.getSelectedRows()) {
             for(int j:tblSP.getSelectedRows()) {
                 String maHV = (String)tblHV.getValueAt(i, 0);
@@ -925,7 +926,6 @@ public class khuyenMai extends javax.swing.JPanel {
                 
             }
         }
-        MsgBox.alert(this, "Thêm Phiếu giảm giá thành công");
         clearFormPGG();
     }
 

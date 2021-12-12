@@ -200,6 +200,11 @@ public class Kho extends javax.swing.JPanel {
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Icons/icons8_chart_20px.png"))); // NOI18N
         jLabel2.setText("Thống kê");
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout btnThongKeLayout = new javax.swing.GroupLayout(btnThongKe);
         btnThongKe.setLayout(btnThongKeLayout);
@@ -274,7 +279,7 @@ public class Kho extends javax.swing.JPanel {
         jLabel19.setText("Số Lượng:");
         tabsCapNhatSanPham.add(jLabel19, new org.netbeans.lib.awtextra.AbsoluteConstraints(365, 147, 103, -1));
 
-        jLabel20.setText("Hạn Sử Dụng: (Năm - Tháng - Ngày)");
+        jLabel20.setText("Hạn Sử Dụng: (Ngày - tháng - năm)");
         tabsCapNhatSanPham.add(jLabel20, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 270, 210, -1));
 
         cbbDonViTinh.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "bịch", "chai", "lon", "hộp", "Chiếc" }));
@@ -569,6 +574,11 @@ public class Kho extends javax.swing.JPanel {
         exportToXls(tblDanhSachSanPham);
     }//GEN-LAST:event_jLabel1MouseClicked
 
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        // TODO add your handling code here:
+        
+    }//GEN-LAST:event_jLabel2MouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnFirst;
@@ -698,7 +708,7 @@ public class Kho extends javax.swing.JPanel {
                     Image imageIc = icon.getImage().getScaledInstance(60, 60, Image.SCALE_SMOOTH);
                     ImageLabel.setIcon(new ImageIcon(imageIc));
                     Object[] row = {sp.getMaSP(), sp.getTenSP(), sp.getTenLSP(),
-                        sp.getGiaBan(), sp.getHanSuDung(),
+                        sp.getGiaBan(), XDate.toString(sp.getHanSuDung(), "dd-MM-yyyy"),
                          sp.getDonViTinh(), sp.getSoLuong(), sp.getTenNSX(), ImageLabel};
                     model.addRow(row);
                 }
@@ -735,16 +745,18 @@ public class Kho extends javax.swing.JPanel {
                 cbbLoaiSanPham.setSelectedIndex(i);
         }
         
-        
-        
+
         cbbLoaiSanPham.getItemCount();
         txtMaSanPham.setText(sp.getMaSP());
         txtGiaBan.setText(String.valueOf(sp.getGiaBan()));
-        txtHanSuDung1.setText(String.valueOf(sp.getHanSuDung()));
+        txtHanSuDung1.setText(XDate.toString(sp.getHanSuDung(), "dd-MM-yyyy"));
         txtSoLuong.setText(String.valueOf(sp.getSoLuong()));
         txtTenSanPham.setText(sp.getTenSP());
         try {
-            lblQrCode.setIcon(new ImageIcon(XQRCode.createQRCode("SP01", lblQrCode.getWidth(), lblQrCode.getHeight())));
+            if(sp.getMaSP()==null||sp.getMaSP().equals("")) {
+                lblQrCode.setIcon(new ImageIcon(XQRCode.createQRCode("QR Code NUll", lblQrCode.getWidth(), lblQrCode.getHeight())));  
+            } else 
+                lblQrCode.setIcon(new ImageIcon(XQRCode.createQRCode(sp.getMaSP(), lblQrCode.getWidth(), lblQrCode.getHeight())));
         } catch (WriterException ex) {
             Logger.getLogger(Kho.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -813,14 +825,13 @@ public class Kho extends javax.swing.JPanel {
        
         SanPham sp = getForm();
         try {
-            MsgBox.alert(this, "Sửa Thành Công!");
+            dao.update(sp);
             this.fillTable();
             this.ClearForm();
-            dao.update(sp);
-            
+            MsgBox.alert(this, "Sửa Thành Công!");
 
         } catch (Exception e) {
-
+            e.printStackTrace();
             this.fillTable();
 
         }

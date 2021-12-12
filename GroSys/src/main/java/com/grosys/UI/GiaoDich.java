@@ -1706,6 +1706,7 @@ public class GiaoDich extends javax.swing.JFrame {
                 double giaBanGioHang = (Double) tblGiohang.getValueAt(i, 2);
                 giaTien += soLuongMua * giaBanGioHang;
             }
+            MsgBox.alert(this, "thêm Thành công");
             lblGiaTien.setText(giaTien + "");
         }
     }

@@ -18,7 +18,8 @@ public class XDate {
 
     public static Date toDate(String date,String...pattern){
         try {
-            if(pattern.length>0)DATE_FORMATER.applyPattern(pattern[0]);
+            if(pattern.length>0)
+                DATE_FORMATER.applyPattern(pattern[0]);
             if(date==null)return XDate.now();
             return DATE_FORMATER.parse(date);
         } catch (ParseException ex) {

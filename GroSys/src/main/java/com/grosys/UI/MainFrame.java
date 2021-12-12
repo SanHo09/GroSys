@@ -915,7 +915,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void pnlNhanVienMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlNhanVienMouseClicked
         // TODO add your handling code here:
         if (!Auth.isManager()) {
-            MsgBox.alert(this, "Bạn không có quyền");
+            MsgBox.alert(this, "Bạn không được phép quản lý nhân viên !");
         }
         else{
             setForm(nhanVien1);
@@ -975,7 +975,12 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void pnlThongKeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlThongKeMouseClicked
         // TODO add your handling code here:
-        setForm(thongKe1);
+        if (!Auth.isManager()) {
+            MsgBox.alert(this, "Bạn không được phép xem thống kê !");
+        }
+        else{
+            setForm(thongKe1);
+        }
     }//GEN-LAST:event_pnlThongKeMouseClicked
 
     private void lblTinNhanMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblTinNhanMouseClicked

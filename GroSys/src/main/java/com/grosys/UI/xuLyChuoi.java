@@ -10,6 +10,7 @@ import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import utils.XDate;
 
 /**
  *
@@ -24,9 +25,6 @@ public class xuLyChuoi {
         return false;
     }
     public static void main(String[] args) {
-        Date date = new Date();
-        LocalDate localDate = date.toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
-        int month = localDate.getMonthValue();
-        System.out.println(month);
+        System.out.println(XDate.toString(XDate.toDate("15-10-2021", "dd-MM-yyyy"),"dd-MM-yyyy"));
     }
 }
